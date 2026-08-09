@@ -32,6 +32,7 @@ PLOT_STEMS = (
     "constraint-tangent",
     "crossing-level-set",
     "lagrange-tangency",
+    "lagrange-surface",
     "multiplier-relaxation",
     "leontief-kink",
 )
@@ -313,6 +314,96 @@ def make_lagrange_tangency() -> None:
     save_vector_pair(fig, "lagrange-tangency")
 
 
+def make_lagrange_surface() -> None:
+    """Show the constrained optimum as height along a feasible curve.
+
+    The styling deliberately follows the Day 3 utility-surface figure: a very
+    transparent Chad Green surface, Chad Blue level curves, transparent panes,
+    and the same camera angle.  The additional gray plane is the equality
+    constraint, while the bold blue intersection is the feasible curve.
+    """
+    grid = np.linspace(0, 2, 120)
+    x1, x2 = np.meshgrid(grid, grid)
+    objective = 4 - (x1 - 1) ** 2 - (x2 - 1) ** 2
+
+    fig = plt.figure(figsize=(5.55, 4.25))
+    ax = fig.add_subplot(111, projection="3d")
+    ax.plot_surface(
+        x1,
+        x2,
+        objective,
+        color=CHAD_GREEN,
+        alpha=0.11,
+        rcount=42,
+        ccount=42,
+        linewidth=0,
+        antialiased=True,
+        shade=False,
+    )
+    ax.contour(
+        x1,
+        x2,
+        objective,
+        levels=(3.0, 3.5, 3.92),
+        colors=CONTOUR_COLORS,
+        linewidths=2.0,
+    )
+
+    # The vertical plane g(x)=x_1+x_2-1.6=0.
+    feasible_parameter = np.linspace(0, 1.6, 180)
+    plane_height = np.linspace(2.05, 4.12, 2)
+    plane_x1, plane_z = np.meshgrid(feasible_parameter, plane_height)
+    plane_x2 = 1.6 - plane_x1
+    ax.plot_surface(
+        plane_x1,
+        plane_x2,
+        plane_z,
+        color=NEUTRAL_GRAY,
+        alpha=0.13,
+        linewidth=0,
+        shade=False,
+    )
+
+    # Lift the feasible line onto the objective surface.
+    curve_x1 = feasible_parameter
+    curve_x2 = 1.6 - feasible_parameter
+    curve_z = 4 - (curve_x1 - 1) ** 2 - (curve_x2 - 1) ** 2
+    ax.plot(curve_x1, curve_x2, curve_z, color=CHAD_BLUE, lw=3.2, zorder=7)
+
+    optimum = np.array([0.8, 0.8, 3.92])
+    tangent_parameter = np.linspace(-0.30, 0.30, 40)
+    ax.plot(
+        optimum[0] + tangent_parameter,
+        optimum[1] - tangent_parameter,
+        np.full_like(tangent_parameter, optimum[2]),
+        color=SIGNAL_RED,
+        lw=2.7,
+        zorder=9,
+    )
+    ax.scatter(*optimum, s=52, color=SIGNAL_RED, depthshade=False, zorder=10)
+    ax.text(0.72, 0.68, 4.08, r"$x^*$", color=SIGNAL_RED, ha="right", fontsize=14)
+    ax.text(1.34, 0.22, 2.32, r"$g(x)=0$", color=NEUTRAL_GRAY, ha="center", fontsize=13)
+    ax.text(0.34, 1.10, 4.08, "tangent", color=SIGNAL_RED, ha="center", fontsize=11)
+
+    ax.set_xlim(0, 2)
+    ax.set_ylim(0, 2)
+    ax.set_zlim(2, 4.18)
+    ax.set_xticks([0, 1, 2])
+    ax.set_yticks([0, 1, 2])
+    ax.set_zticks([2, 3, 4])
+    ax.set_xlabel(r"$x_1$", labelpad=4)
+    ax.set_ylabel(r"$x_2$", labelpad=4)
+    ax.set_zlabel(r"$f(x_1,x_2)$", labelpad=5)
+    ax.view_init(elev=25, azim=-58)
+    ax.set_box_aspect((1, 1, 0.82))
+    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
+        axis.pane.set_facecolor((1, 1, 1, 0))
+        axis.pane.set_edgecolor((1, 1, 1, 0))
+    ax.grid(True, alpha=0.18)
+    fig.subplots_adjust(left=0.01, right=0.92, bottom=0.02, top=0.98)
+    save_vector_pair(fig, "lagrange-surface")
+
+
 def make_multiplier_relaxation() -> None:
     fig, ax = plt.subplots(figsize=(4.8, 3.2))
     center = (3.15, 2.35)
@@ -360,6 +451,7 @@ def make_all() -> None:
     make_constraint_tangent()
     make_crossing_level_set()
     make_lagrange_tangency()
+    make_lagrange_surface()
     make_multiplier_relaxation()
     make_leontief_kink()
 

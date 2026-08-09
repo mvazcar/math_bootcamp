@@ -320,6 +320,39 @@
   Figures 19.10 and 19.12.}
 \end{frame}
 
+\begin{frame}{The Constraint Cuts a Feasible Curve from the Surface}
+  \setlength{\abovedisplayskip}{.35em}
+  \setlength{\belowdisplayskip}{.35em}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.40\textwidth}
+      Consider
+      \[
+        \begin{aligned}
+          f(x)&=4-\bigl[(x_1-1)^2+(x_2-1)^2\bigr],\\
+          g(x)&=x_1+x_2-1.6=0.
+        \end{aligned}
+      \]
+
+      The gray plane cuts a blue feasible curve from the green objective
+      surface. Maximizing $f$ on $g(x)=0$ means choosing its highest point:
+      \[
+        x^*=(0.8,0.8).
+      \]
+
+      At $x^*$ the red tangent is horizontal:
+      \[
+        d=(1,-1),\qquad \nabla f(x^*)\cdot d=0.
+      \]
+    \end{column}
+    \begin{column}{.58\textwidth}
+      \centering
+      \includegraphics[height=.72\textheight]{lagrange-surface.pdf}
+    \end{column}
+  \end{columns}
+  \sources{Visualization follows the Day 3 utility-surface code; Osborne,
+  Equality constraints: motivation and necessary conditions.}
+\end{frame}
+
 \begin{frame}{The Lagrangean Packages Tangency and Feasibility}
   For
   \[
