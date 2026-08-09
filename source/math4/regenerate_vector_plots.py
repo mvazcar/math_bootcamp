@@ -34,6 +34,7 @@ PLOT_STEMS = (
     "lagrange-tangency",
     "lagrange-surface",
     "multiplier-relaxation",
+    "consumer-cases",
     "leontief-kink",
 )
 
@@ -429,6 +430,52 @@ def make_multiplier_relaxation() -> None:
     save_vector_pair(fig, "multiplier-relaxation")
 
 
+def make_consumer_cases() -> None:
+    """Reuse Day 3 indifference-curve styling for the three demand cases."""
+    fig, axes = plt.subplots(1, 3, figsize=(9.2, 3.15))
+    limit = 4.55
+    budget_x = np.linspace(0, 4, 300)
+    budget_y = 4 - budget_x
+
+    for ax in axes:
+        setup_plane(ax, (-0.12, limit), (-0.12, limit), equal=True)
+        ax.plot(budget_x, budget_y, color=NEUTRAL_GRAY, lw=2.6, zorder=4)
+
+    # Cobb-Douglas: the budget is tangent to the highest attainable contour.
+    ax = axes[0]
+    positive_x = np.linspace(0.12, limit, 500)
+    for level, color in zip((1.2, 2.0, 2.7), CONTOUR_COLORS):
+        contour_y = level**2 / positive_x
+        visible = contour_y <= limit
+        ax.plot(positive_x[visible], contour_y[visible], color=color, lw=2.2)
+    ax.scatter([2], [2], s=44, color=CHAD_GREEN, zorder=6)
+    ax.text(2.13, 1.87, r"$x^*$", color=CHAD_GREEN, ha="left", va="top")
+    ax.set_title("Cobb-Douglas\nsmooth tangency", fontsize=17, pad=6)
+
+    # Perfect substitutes: the objective slope selects one budget endpoint.
+    ax = axes[1]
+    line_x = np.linspace(0, limit, 500)
+    for level, color in zip((3.5, 5.5, 8.0), CONTOUR_COLORS):
+        line_y = level - 2 * line_x
+        visible = (line_y >= 0) & (line_y <= limit)
+        ax.plot(line_x[visible], line_y[visible], color=color, lw=2.2)
+    ax.scatter([4], [0], s=44, color=CHAD_GREEN, zorder=6)
+    ax.text(3.83, 0.22, r"$x^*$", color=CHAD_GREEN, ha="right", va="bottom")
+    ax.set_title("Perfect substitutes\ncorner", fontsize=17, pad=6)
+
+    # Leontief: fixed proportions select the kink on the budget line.
+    ax = axes[2]
+    for kink, color in zip((1.0, 2.0, 3.0), CONTOUR_COLORS):
+        ax.plot([kink, kink, limit], [limit, kink, kink], color=color, lw=2.2)
+    ax.plot([0, limit], [0, limit], color=NEUTRAL_GRAY, lw=1.1, ls="--")
+    ax.scatter([2], [2], s=44, color=CHAD_GREEN, zorder=6)
+    ax.text(2.13, 1.87, r"$x^*$", color=CHAD_GREEN, ha="left", va="top")
+    ax.set_title("Leontief\nkink", fontsize=17, pad=6)
+
+    fig.subplots_adjust(left=0.025, right=0.985, bottom=0.12, top=0.82, wspace=0.30)
+    save_vector_pair(fig, "consumer-cases")
+
+
 def make_leontief_kink() -> None:
     fig, ax = plt.subplots(figsize=(4.25, 3.6))
     setup_plane(ax, (0, 5.8), (0, 5.2), equal=True)
@@ -453,6 +500,7 @@ def make_all() -> None:
     make_lagrange_tangency()
     make_lagrange_surface()
     make_multiplier_relaxation()
+    make_consumer_cases()
     make_leontief_kink()
 
 

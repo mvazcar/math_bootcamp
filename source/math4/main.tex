@@ -7,13 +7,13 @@
 \setbeameroption{hide notes}
 
 \tikzset{
-  flowbox/.style={draw=slideblue,fill=slideblue!5,rounded corners=1pt,
-    minimum height=.75cm,align=center,inner xsep=7pt},
-  flowarrow/.style={-{Latex[length=2.2mm]},very thick,draw=slideblue}
+  object/.style={draw=slideblue!55,fill=slideblue!2,rounded corners=1.5pt,
+    minimum height=.82cm,align=center,inner sep=4pt},
+  route/.style={-{Latex[length=2.2mm]},draw=slideblue,line width=.85pt}
 }
 
 \title{\textbf{Mathematics Bootcamp}}
-\subtitle{Optimization: Finding the Best Feasible Choice}
+\subtitle{Optimization and Consumer Demand}
 \author{Miguel V\'azquez-Carrero}
 \date{\textbf{September 2025}}
 
@@ -27,43 +27,48 @@
 
 \begin{frame}{Today}
   \begin{itemize}
-    \item What an optimization problem asks
-    \item Why first-order conditions are necessary
-    \item Equality constraints and Lagrange multipliers
-    \item Inequality constraints and Kuhn--Tucker conditions
-    \item Consumer demand: smooth optima, corners, and kinks
+    \item Optimization Problems and Existence
+    \item First-Order Conditions and Curvature
+    \item Equality and Inequality Constraints
+    \begin{itemize}
+      \item Lagrange Multipliers
+      \item Kuhn--Tucker Conditions
+    \end{itemize}
+    \item Consumer Demand
+    \begin{itemize}
+      \item Smooth Optima, Corners, and Kinks
+    \end{itemize}
   \end{itemize}
-  \vspace{.8em}
-  \textcolor{slideblue}{\bfseries We finish the mathematics before applying it
-  to consumer choice.}
   \sources{Osborne, Optimization: introduction and contents.}
 \end{frame}
 
-\begin{frame}{Optimization Completes the Path from Preferences to Choice}
-  \vspace{.25em}
+\begin{frame}{Optimization Solves the Argmax from Day 1}
+  Day 1 connected preferences and observed choice through rationalization. We
+  now study the mathematical problem inside that connection.
+
+  \vspace{.35em}
   \centering
   \begin{tikzpicture}
-    \node[flowbox,text width=2.35cm] (pref) at (0,1.0)
-      {Preference relation\\$\succeq$};
-    \node[flowbox,text width=2.65cm] (utility) at (3.45,1.0)
-      {Utility function\\$u:X\to\mathbb R$};
-    \node[flowbox,text width=2.35cm] (menu) at (3.45,-.25)
-      {Constraint set\\$D\subseteq X$};
-    \node[flowbox,text width=3.05cm] (choice) at (7.65,.38)
-      {Best feasible\\choices\\$\arg\max\{u(x)\mid x\in D\}$};
-    \draw[flowarrow] (pref) -- (utility);
-    \draw[flowarrow] (utility.east) -- (choice.west);
-    \draw[flowarrow] (menu.east) -- (choice.west);
+    \node[object,text width=2.40cm] (pref) at (0,1.05)
+      {Preference relation $\succeq$\\\textit{primitive object}};
+    \node[object,text width=2.55cm] (utility) at (3.35,1.05)
+      {Utility\\representation\\$u:X\to\mathbb{R}$};
+    \node[object,text width=2.30cm] (feasible) at (3.35,-.45)
+      {Feasible set\\$D\subseteq X$};
+    \node[object,fill=slideblue!8,text width=3.35cm] (choice) at (7.55,.30)
+      {Choice from $D$\\[.1em]
+      $C(D)=\operatorname*{arg\,max}_{x\in D}u(x)$};
+    \draw[route] (pref) -- (utility);
+    \draw[route] (utility.east) -- (choice.west);
+    \draw[route] (feasible.east) -- (choice.west);
   \end{tikzpicture}
 
-  \vspace{.7em}
-  \begin{block}{The Question}
-    Which feasible choices are at least as good as every other feasible choice?
+  \vspace{.40em}
+  \begin{block}{The Mathematical Question}
+    Which points in $D$ maximize the objective, and what assumptions let us
+    find and justify them?
   \end{block}
 
-  \vspace{.4em}
-  An increasing transformation of $u$ changes utility numbers but not the set of
-  maximizers.
   \sources{Osborne, Optimization: introduction and definitions; Math Bootcamp Day 3.}
 \end{frame}
 
@@ -78,7 +83,7 @@
       \begin{definitionbox}[Maximum Value]
         If a solution exists, then
         \[
-          \max\{f(x)\mid x\in D\}=f(x^*)\in\mathbb R.
+          \max\{f(x)\mid x\in D\}=f(x^*)\in\mathbb{R}.
         \]
         This is a number.
       \end{definitionbox}
@@ -88,7 +93,7 @@
       \begin{definitionbox}[Maximizers]
         \[
           \begin{gathered}
-            \arg\max\{f(x)\mid x\in D\}\\[-.2em]
+            \operatorname*{arg\,max}\{f(x)\mid x\in D\}\\[-.2em]
             =\{x\in D:f(x)\geq f(y)\ \forall y\in D\}.
           \end{gathered}
         \]
@@ -131,10 +136,13 @@
     \end{column}
   \end{columns}
 
-  \vspace{.8em}
+  \vspace{.35em}
+  \textbf{In $\mathbb{R}^n$, compactness is equivalent to closedness and boundedness.}
+
+  \vspace{.35em}
   \begin{theorembox}[Extreme Value Theorem]
-    If $D\subseteq\mathbb R^n$ is nonempty and compact and
-    $f:D\to\mathbb R$ is continuous, then $f$ attains a maximum and a minimum on $D$.
+    If $D\subseteq\mathbb{R}^n$ is nonempty and compact and
+    $f:D\to\mathbb{R}$ is continuous, then $f$ attains a maximum and a minimum on $D$.
   \end{theorembox}
   \sources{Sundaram, Theorem 3.1; Osborne, Existence of an optimum.}
 \end{frame}
@@ -150,7 +158,7 @@
   \setlength{\abovedisplayskip}{.35em}
   \setlength{\belowdisplayskip}{.35em}
   \begin{propositionbox}[First-Order Necessary Condition]
-    If $x^*\in\operatorname{int}D\subseteq\mathbb R$ is a local maximizer of $f$
+    If $x^*\in\operatorname{int}D\subseteq\mathbb{R}$ is a local maximizer of $f$
     on $D$ and $f$ is differentiable at $x^*$, then $f'(x^*)=0$.
   \end{propositionbox}
 
@@ -185,7 +193,7 @@
 \begin{frame}{The Gradient Tests Every Direction at Once}
   \begin{columns}[c,onlytextwidth]
     \begin{column}{.51\textwidth}
-      For a direction $d\in\mathbb R^n$,
+      For a direction $d\in\mathbb{R}^n$,
       \[
         f(x+td)-f(x)\approx t\,\nabla f(x)\cdot d.
       \]
@@ -232,7 +240,7 @@
         \[
           \begin{gathered}
             \nabla f(x^*)=0\quad\Longrightarrow\\[-.15em]
-            x^*\in\arg\max\{f(x)\mid x\in D\}.
+            x^*\in\operatorname*{arg\,max}\{f(x)\mid x\in D\}.
           \end{gathered}
         \]
       \end{propositionbox}
@@ -395,10 +403,10 @@
 
 \begin{frame}{Regular Constraints Make the Multiplier Well Defined}
   \begin{theorembox}[Theorem of Lagrange]
-    Let $f,g:\mathbb R^n\to\mathbb R$ be continuously differentiable and let $U$
+    Let $f,g:\mathbb{R}^n\to\mathbb{R}$ be continuously differentiable and let $U$
     be open. If $x^*$ is a local optimum of $f$ on
     $D=U\cap\{x:g(x)=0\}$ and $\nabla g(x^*)\neq0$, then there exists a unique
-    $\lambda^*\in\mathbb R$ such that
+    $\lambda^*\in\mathbb{R}$ such that
     \[
       \nabla f(x^*)+\lambda^*\nabla g(x^*)=0.
     \]
@@ -474,10 +482,10 @@
 \begin{frame}{The Kuhn--Tucker Conditions Are One-Sided}
   \begin{theorembox}[Theorem of Kuhn and Tucker]
     Let $f,h_1,\ldots,h_\ell$ be continuously differentiable, let $U$ be open, and
-    define $D=U\cap\{x\in\mathbb R^n:h_i(x)\geq0,\ i=1,\ldots,\ell\}$.
+    define $D=U\cap\{x\in\mathbb{R}^n:h_i(x)\geq0,\ i=1,\ldots,\ell\}$.
     Suppose $x^*$ is a local maximum of $f$ on $D$. Let
     $E=\{i:h_i(x^*)=0\}$ and suppose $\rho(J_{h_E}(x^*))=|E|$. Then there exists
-    $\lambda^*\in\mathbb R^\ell$ such that
+    $\lambda^*\in\mathbb{R}^\ell$ such that
     \[
       \text{[KT-1]}\quad
       \lambda_i^*\geq0,\qquad \lambda_i^*h_i(x^*)=0,
@@ -494,19 +502,35 @@
   Zak, Figure 20.1.}
 \end{frame}
 
+\begin{frame}{Time for Economics}
+  \begin{itemize}
+    \item The objective $f$ becomes a utility representation $u$.
+    \item The feasible set $D$ becomes the budget set $B(p,I)$.
+    \item The general first-order conditions become restrictions on marginal
+    utility per unit of money.
+    \item Corners and kinks determine when ordinary tangency is the wrong method.
+  \end{itemize}
+
+  \vspace{.7em}
+  \begin{block}{The Same Mathematical Question}
+    Which affordable bundle lies on the highest attainable indifference curve?
+  \end{block}
+  \sources{Math Bootcamp Days 1--3; Osborne, consumer optimization.}
+\end{frame}
+
 \begin{frame}{Consumer Choice Is the Same Optimization Problem}
-  A consumer chooses $x\in\mathbb R_+^n$, has income $I>0$, and faces prices
-  $p\in\mathbb R_{++}^n$.
+  A consumer chooses $x\in\mathbb{R}_+^L$, has income $I>0$, and faces prices
+  $p\in\mathbb{R}_{++}^L$.
 
   \begin{definitionbox}[Walrasian Budget Set]
     \[
-      B(p,I)=\{x\in\mathbb R_+^n:p\cdot x\leq I\}.
+      B(p,I)=\{x\in\mathbb{R}_+^L:p\cdot x\leq I\}.
     \]
   \end{definitionbox}
 
   \begin{definitionbox}[Walrasian Demand Correspondence]
     \[
-      x(p,I)=\arg\max\{u(x)\mid x\in B(p,I)\}.
+      x(p,I)=\operatorname*{arg\,max}\{u(x)\mid x\in B(p,I)\}.
     \]
     A selected optimum is written $x^*\in x(p,I)$.
   \end{definitionbox}
@@ -562,15 +586,15 @@
 \end{frame}
 
 \begin{frame}{A Money-Neutral Reallocation Is a Feasible Direction}
-  Move $\delta>0$ units of money from good $j$ to good $i$:
+  Move $\delta>0$ units of money from good $m$ to good $\ell$:
   \[
-    \Delta x_i=\frac{\delta}{p_i},
+    \Delta x_\ell=\frac{\delta}{p_\ell},
     \qquad
-    \Delta x_j=-\frac{\delta}{p_j}.
+    \Delta x_m=-\frac{\delta}{p_m}.
   \]
   The change in expenditure is zero:
   \[
-    p_i\Delta x_i+p_j\Delta x_j=\delta-\delta=0.
+    p_\ell\Delta x_\ell+p_m\Delta x_m=\delta-\delta=0.
   \]
 
   To first order, the utility change is
@@ -578,9 +602,9 @@
     \Delta u
     \approx
     \delta\left(
-      \frac{\partial u(x)/\partial x_i}{p_i}
+      \frac{\partial u(x)/\partial x_\ell}{p_\ell}
       -
-      \frac{\partial u(x)/\partial x_j}{p_j}
+      \frac{\partial u(x)/\partial x_m}{p_m}
     \right).
   \]
 
@@ -590,13 +614,13 @@
 \end{frame}
 
 \begin{frame}{At an Interior Optimum, No Money Switch Pays}
-  If both goods are consumed in strictly positive amounts, both reallocation
-  directions are feasible. Therefore,
+  If goods $\ell$ and $m$ are consumed in strictly positive amounts, both
+  reallocation directions are feasible. Therefore,
   \[
     \boxed{
-      \frac{\partial u(x^*)/\partial x_i}{p_i}
+      \frac{\partial u(x^*)/\partial x_\ell}{p_\ell}
       =
-      \frac{\partial u(x^*)/\partial x_j}{p_j}
+      \frac{\partial u(x^*)/\partial x_m}{p_m}
       =\lambda^*.}
   \]
 
@@ -604,8 +628,8 @@
   \[
     \nabla u(x^*)=\lambda^*p,
     \qquad
-    \frac{\partial u(x^*)/\partial x_i}{\partial u(x^*)/\partial x_j}
-    =\frac{p_i}{p_j}.
+    \frac{\partial u(x^*)/\partial x_\ell}{\partial u(x^*)/\partial x_m}
+    =\frac{p_\ell}{p_m}.
   \]
 
   \begin{block}{Interpretation}
@@ -617,6 +641,24 @@
   Graduate Microeconomics I, Lecture 5, slides 19--20.}
 \end{frame}
 
+\begin{frame}{The Shape of Indifference Curves Determines the Method}
+  \centering
+  \includegraphics[width=.94\linewidth]{consumer-cases.pdf}
+
+  \vspace{.15em}
+  \begin{block}{The Budget Is the Same; the Utility Geometry Changes}
+    \centering
+    \textbf{Smooth:} tangency
+    \qquad
+    \textbf{Linear:} corner
+    \qquad
+    \textbf{Fixed proportions:} kink
+  \end{block}
+  \sources{Math Bootcamp Day 3 indifference-curve visualizations; Osborne,
+  consumer optimization; standard Cobb--Douglas, perfect-substitutes, and
+  Leontief examples.}
+\end{frame}
+
 \begin{frame}{A Monotone Transformation Simplifies Cobb--Douglas}
   Let
   \[
@@ -625,9 +667,9 @@
   \]
   Because $\log$ is strictly increasing,
   \[
-    \arg\max\{u(x)\mid x\in B(p,I)\}
+    \operatorname*{arg\,max}\{u(x)\mid x\in B(p,I)\}
     =
-    \arg\max\{\alpha\log x_1+(1-\alpha)\log x_2\mid x\in B(p,I)\}.
+    \operatorname*{arg\,max}\{\alpha\log x_1+(1-\alpha)\log x_2\mid x\in B(p,I)\}.
   \]
 
   With local nonsatiation, use the binding budget and write
@@ -686,7 +728,7 @@
       \begin{cases}
         \{(I/p_1,0)\}, & a/p_1>b/p_2,\\[.25em]
         \{(0,I/p_2)\}, & a/p_1<b/p_2,\\[.25em]
-        \{x\in\mathbb R_+^2:p\cdot x=I\}, & a/p_1=b/p_2.
+        \{x\in\mathbb{R}_+^2:p\cdot x=I\}, & a/p_1=b/p_2.
       \end{cases}
     \]
   \end{definitionbox}
@@ -730,34 +772,34 @@
 \begin{frame}{Kuhn--Tucker for the Consumer Problem}
   \setlength{\abovedisplayskip}{.35em}
   \setlength{\belowdisplayskip}{.35em}
-  Write the constraints as $h_i(x)=x_i$ for $i=1,\ldots,n$ and
-  $h_{n+1}(x)=I-p\cdot x$. With nonnegative multipliers,
+  Write the constraints as $h_\ell(x)=x_\ell$ for $\ell=1,\ldots,L$ and
+  $h_{L+1}(x)=I-p\cdot x$. With nonnegative multipliers,
   \[
     L(x;\lambda)
-    =u(x)+\sum_{i=1}^n\lambda_i x_i
-    +\lambda_{n+1}(I-p\cdot x).
+    =u(x)+\sum_{\ell=1}^L\lambda_\ell x_\ell
+    +\lambda_{L+1}(I-p\cdot x).
   \]
   With local nonsatiation, the budget binds. For every good, stationarity and
   complementary slackness give
   \[
-    \frac{\partial u(x^*)}{\partial x_i}
-      +\lambda_i^*-\lambda_{n+1}^*p_i=0,
+    \frac{\partial u(x^*)}{\partial x_\ell}
+      +\lambda_\ell^*-\lambda_{L+1}^*p_\ell=0,
     \qquad
-    \lambda_i^*x_i^*=0.
+    \lambda_\ell^*x_\ell^*=0.
   \]
 
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
-      If $x_i^*>0$, then $\lambda_i^*=0$ and
+      If $x_\ell^*>0$, then $\lambda_\ell^*=0$ and
       \[
-        \frac{\partial u(x^*)/\partial x_i}{p_i}=\lambda_{n+1}^*.
+        \frac{\partial u(x^*)/\partial x_\ell}{p_\ell}=\lambda_{L+1}^*.
       \]
     \end{column}
     \hspace{\twocolumngutter}
     \begin{column}{\tightcolumnwidth}
-      If $x_i^*=0$, then
+      If $x_\ell^*=0$, then
       \[
-        \frac{\partial u(x^*)/\partial x_i}{p_i}\leq\lambda_{n+1}^*.
+        \frac{\partial u(x^*)/\partial x_\ell}{p_\ell}\leq\lambda_{L+1}^*.
       \]
     \end{column}
   \end{columns}
