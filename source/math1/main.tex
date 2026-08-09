@@ -1,0 +1,522 @@
+\documentclass[11pt,aspectratio=169,t]{beamer}
+\input{slides_header.tex}
+\usepackage{tikz}
+
+% Document Title
+\title{\textbf{Mathematics Bootcamp}}
+\subtitle{Introduction to Proofs and Choice Theory}
+\author{Miguel Vázquez-Carrero} 
+\date{\textbf{September 2025}}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\begin{frame}{Logic and Precision}
+
+\begin{itemize}
+    \item From Ordinary Language to Scientific Language.
+    \item Symbols, Ideas and the Real world.
+    \item Ideas, Truth Value and Obscurantism.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{These Slides}
+
+\begin{itemize}
+    \item In general, I will use the slides to save time and keep notation for the theorems: straight book screenshots.
+    \item But most of the work will be in the board. \par \textbf{We learn a language by practice}: trial and error.
+    \item Some believe that studying measure theory is a great way to start. This is like syntactic analysis for a baby in his first words.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Just Prove It.}
+\begin{columns}[c,onlytextwidth] % fixed narrow gutter
+    \column{\tightcolumnwidth}
+        \hfill\includegraphics[height=0.77\textheight,keepaspectratio]{velleman-cover.jpg}
+    \hspace{\twocolumngutter}
+    \column{\tightcolumnwidth}
+    \vspace{-2em}
+\begin{itemize}
+    \item It is important to reflect on the fact that these statements have \textbf{truth value}, i.e. they could be true or false.
+    \item With the elements of logic, we can justify its truth-value.
+    \item Most of what follows is taken from Velleman's book.
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Structured Programming}
+
+\vspace{1.05cm}
+\begin{center}
+\begin{minipage}{0.68\linewidth}
+\large
+\setlength{\parskip}{0.45em}
+do\par
+\hspace*{2.25em}if [condition]\par
+\hspace*{4.5em}[List of instructions goes here.]\par
+\hspace*{2.25em}else\par
+\hspace*{4.5em}[Alternative list of instructions goes here.]\par
+while [condition]
+\end{minipage}
+\end{center}
+\end{frame}
+
+\begin{frame}{Proofs as Structured Programming}
+
+\vspace{0.75cm}
+{\Large
+\begin{gather*}
+\text{Let }x\text{ be arbitrary.}\\
+\text{Suppose }P(x)\text{ is true.}\\
+\text{[Proof of }Q(x)\text{ goes here.]}\\
+\text{Thus, if }P(x)\text{ then }Q(x).\\
+\text{Thus, for all }x\text{, if }P(x)\text{ then }Q(x).
+\end{gather*}
+}
+\end{frame}
+
+
+
+\begin{frame}{Logical Connectives}
+
+\begin{columns}
+
+\column{0.4\textwidth}
+\centering
+\textbf{Conjunction: $P \land Q$} \\[0.5ex]
+\begin{truthtable}
+\begin{array}{ccc}
+\toprule
+P & Q & P \land Q \\
+\midrule
+T & T & T \\
+T & F & F \\
+F & T & F \\
+F & F & F \\
+\bottomrule
+\end{array}
+\end{truthtable}
+
+\column{0.4\textwidth}
+\centering
+\textbf{Disjunction: $P \lor Q$} \\[0.5ex]
+\begin{truthtable}
+\begin{array}{ccc}
+\toprule
+P & Q & P \lor Q \\
+\midrule
+T & T & T \\
+T & F & T \\
+F & T & T \\
+F & F & F \\
+\bottomrule
+\end{array}
+\end{truthtable}
+
+\column{0.2\textwidth}
+\centering
+\textbf{Negation: $\lnot P$} \\[0.5ex]
+\begin{truthtable}
+\begin{array}{cc}
+\toprule
+P & \lnot P \\
+\midrule
+T & F \\
+F & T \\
+\midrule
+\phantom{T} & \phantom{T} \\ 
+\phantom{T} & \phantom{T} \\
+\end{array}
+\end{truthtable}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Quantifiers and De Morgan's Laws}
+\vspace{0.2cm}
+\begin{center}
+\begin{minipage}{0.82\linewidth}
+\large
+\textbf{De Morgan's laws}
+\begin{align*}
+\neg(P\land Q) &\text{ is equivalent to } \neg P\lor\neg Q.\\
+\neg(P\lor Q) &\text{ is equivalent to } \neg P\land\neg Q.
+\end{align*}
+
+\textbf{Quantifier Negation laws}
+\begin{align*}
+\neg\exists x\,P(x) &\text{ is equivalent to } \forall x\,\neg P(x).\\
+\neg\forall x\,P(x) &\text{ is equivalent to } \exists x\,\neg P(x).
+\end{align*}
+\end{minipage}
+\end{center}
+\end{frame}
+
+\begin{frame}{1. Implication: $P \rightarrow Q$}
+\begin{truthtable}
+\begin{array}{ccc}
+\toprule
+P & Q & P \rightarrow Q \\
+\midrule
+T & T & T \\
+T & F & F \\
+F & T & T \\
+F & F & T \\
+\bottomrule
+\end{array}
+\end{truthtable}
+\end{frame}
+
+\begin{frame}{2. Contrapositive: $\lnot Q \rightarrow \lnot P$}
+\begin{truthtable}
+\begin{array}{cccccc}
+\toprule
+P & Q & \lnot Q & \lnot P & \lnot Q \rightarrow \lnot P & P \rightarrow Q \\
+\midrule
+T & T & F & F & T & T \\
+T & F & T & F & F & F \\
+F & T & F & T & T & T \\
+F & F & T & T & T & T \\
+\bottomrule
+\end{array}
+\end{truthtable}
+\end{frame}
+
+\begin{frame}{3. Contradiction: $\lnot(P \land \lnot Q)$ vs $P \rightarrow Q$}
+\begin{truthtable}
+\begin{array}{cccccc}
+\toprule
+P & Q & \lnot Q & P \land \lnot Q & \lnot(P \land \lnot Q) & P \rightarrow Q \\
+\midrule
+T & T & F & F & T & T \\
+T & F & T & T & F & F \\
+F & T & F & F & T & T \\
+F & F & T & F & T & T \\
+\bottomrule
+\end{array}
+\end{truthtable}
+\end{frame}
+
+\begin{frame}{4. Proofs by Induction}
+
+{\small
+\textbf{1.2.2 Principle of Mathematical Induction}\quad
+\emph{Let $S$ be a subset of $\mathbb{N}$ that possesses the two properties:}
+\begin{enumerate}
+    \setlength{\itemsep}{0.15em}
+    \setlength{\topsep}{0.2em}
+    \item \emph{The number $1\in S$.}
+    \item \emph{For every $k\in\mathbb{N}$, if $k\in S$, then $k+1\in S$.}
+\end{enumerate}
+\par\noindent\hspace*{2em}\emph{Then we have $S=\mathbb{N}$.}
+
+\vspace{0.45cm}
+\textbf{1.2.3 Principle of Mathematical Induction (second version)}\quad
+\emph{Let $n_0\in\mathbb{N}$ and let $P(n)$ be a statement for each natural number $n\geq n_0$. Suppose that:}
+\begin{enumerate}
+    \setlength{\itemsep}{0.15em}
+    \setlength{\topsep}{0.2em}
+    \item \emph{The statement $P(n_0)$ is true.}
+    \item \emph{For all $k\geq n_0$, the truth of $P(k)$ implies the truth of $P(k+1)$.}
+\end{enumerate}
+\par\noindent\hspace*{2em}\emph{Then $P(n)$ is true for all $n\geq n_0$.}
+}
+
+\end{frame}
+
+
+\begin{frame}{From Logic to Set Theory}
+\small
+\begin{definitionbox}[Definition 1.4.1]
+The \emph{intersection} of two sets $A$ and $B$ is the set $A\cap B$ defined as follows:
+\[
+A\cap B=\{x\mid x\in A\text{ and }x\in B\}.
+\]
+
+The \emph{union} of $A$ and $B$ is the set $A\cup B$ defined as follows:
+\[
+A\cup B=\{x\mid x\in A\text{ or }x\in B\}.
+\]
+
+The \emph{difference} of $A$ and $B$ is the set $A\setminus B$ defined as follows:
+\[
+A\setminus B=\{x\mid x\in A\text{ and }x\notin B\}.
+\]
+\end{definitionbox}
+\end{frame}
+
+
+\begin{frame}{Set Theory}
+\begin{center}
+\begin{tikzpicture}[line width=0.65pt,font=\small]
+    \begin{scope}[shift={(0,3.0)}]
+        \draw (0,0) rectangle (5.6,2.05);
+        \node[anchor=north west] at (0.08,1.98) {$U$};
+        \draw (2.35,1.05) circle (0.66);
+        \draw (3.25,1.05) circle (0.66);
+        \node at (2.35,1.88) {$A$};
+        \node at (3.25,1.88) {$B$};
+        \node at (2.8,-0.32) {Figure 1.7.};
+    \end{scope}
+    \begin{scope}[shift={(6.0,3.0)}]
+        \draw (0,0) rectangle (5.6,2.05);
+        \node[anchor=north west] at (0.08,1.98) {$U$};
+        \begin{scope}
+            \clip (3.25,1.05) circle (0.66);
+            \fill[black!25] (2.35,1.05) circle (0.66);
+        \end{scope}
+        \draw (2.35,1.05) circle (0.66);
+        \draw (3.25,1.05) circle (0.66);
+        \node at (2.35,1.88) {$A$};
+        \node at (3.25,1.88) {$B$};
+        \node at (2.8,-0.32) {Figure 1.8. $A\cap B$.};
+    \end{scope}
+    \begin{scope}
+        \draw (0,0) rectangle (5.6,2.05);
+        \node[anchor=north west] at (0.08,1.98) {$U$};
+        \fill[black!25] (2.35,1.05) circle (0.66);
+        \fill[black!25] (3.25,1.05) circle (0.66);
+        \draw (2.35,1.05) circle (0.66);
+        \draw (3.25,1.05) circle (0.66);
+        \node at (2.35,1.88) {$A$};
+        \node at (3.25,1.88) {$B$};
+        \node at (2.8,-0.32) {Figure 1.9. $A\cup B$.};
+    \end{scope}
+    \begin{scope}[shift={(6.0,0)}]
+        \draw (0,0) rectangle (5.6,2.05);
+        \node[anchor=north west] at (0.08,1.98) {$U$};
+        \fill[black!25] (2.35,1.05) circle (0.66);
+        \begin{scope}
+            \clip (3.25,1.05) circle (0.66);
+            \fill[white] (2.35,1.05) circle (0.66);
+        \end{scope}
+        \draw (2.35,1.05) circle (0.66);
+        \draw (3.25,1.05) circle (0.66);
+        \node at (2.35,1.88) {$A$};
+        \node at (3.25,1.88) {$B$};
+        \node at (2.8,-0.32) {Figure 1.10. $A\setminus B$.};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Set Theory}
+\small
+\begin{definitionbox}[Definition 1.4.5]
+Suppose $A$ and $B$ are sets. We will say that $A$ is a \emph{subset} of $B$ if every element of $A$ is also an element of $B$. We write $A\subseteq B$ to mean that $A$ is a subset of $B$. $A$ and $B$ are said to be \emph{disjoint} if they have no elements in common. Note that this is the same as saying that the set of elements they have in common is the empty set, or in other words $A\cap B=\varnothing$.
+\end{definitionbox}
+
+\begin{itemize}
+    \item Given a set $A \subseteq U$, define the \textit{complement} $A^C$
+    \item De Morgan's Laws also apply in Sets:
+    \[
+    \begin{aligned}
+    (A \cup B)^{c} &= A^{c} \cap B^{c},\\[0.3em]
+    (A \cap B)^{c} &= A^{c} \cup B^{c}.
+    \end{aligned}
+    \]
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Set Theory}
+\vspace{0.45cm}
+\begin{center}
+\begin{tikzpicture}[line width=0.75pt,font=\small]
+    \begin{scope}
+        \draw (0,0) rectangle (6.0,3.05);
+        \node[anchor=north west] at (0.1,2.95) {$U$};
+        \draw (3.0,1.5) circle (1.03);
+        \draw (3.0,1.5) circle (0.55);
+        \node at (3.0,2.72) {$B$};
+        \node at (3.0,2.22) {$A$};
+        \node at (3.0,-0.38) {Figure 1.14. $A\subseteq B$.};
+    \end{scope}
+    \begin{scope}[shift={(6.55,0)}]
+        \draw (0,0) rectangle (6.0,3.05);
+        \node[anchor=north west] at (0.1,2.95) {$U$};
+        \draw (2.25,1.5) circle (0.82);
+        \draw (4.0,1.5) circle (0.82);
+        \node at (2.25,2.58) {$A$};
+        \node at (4.0,2.58) {$B$};
+        \node at (3.0,-0.38) {Figure 1.15. $A\cap B=\varnothing$.};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Set Theory}
+\vspace{0.55cm}
+\begin{definitionbox}[Definition 4.1.1]
+Suppose $A$ and $B$ are sets. Then the \emph{Cartesian product} of $A$ and $B$, denoted $A\times B$, is the set of all ordered pairs in which the first coordinate is an element of $A$ and the second is an element of $B$. In other words,
+\[
+A\times B=\{(a,b)\mid a\in A\text{ and }b\in B\}.
+\]
+\end{definitionbox}
+\end{frame}
+
+\begin{frame}{Binary Relations}
+\small
+\begin{definitionbox}[Definition 4.2.1]
+Suppose $A$ and $B$ are sets. Then a set $R\subseteq A\times B$ is called a \emph{relation from $A$ to $B$}.
+\end{definitionbox}
+
+\begin{definitionbox}[Definition 4.3.2]
+Suppose $R$ is a relation on $A$.
+\begin{enumerate}
+    \setlength{\itemsep}{0.35em}
+    \item $R$ is said to be \emph{reflexive on $A$} (or just \emph{reflexive}, if $A$ is clear from context) if $\forall x\in A\,(xRx)$, or in other words $\forall x\in A\,((x,x)\in R)$.
+    \item $R$ is \emph{symmetric} if $\forall x\in A\,\forall y\in A\,(xRy\rightarrow yRx)$.
+    \item $R$ is \emph{transitive} if $\forall x\in A\,\forall y\in A\,\forall z\in A\,((xRy\land yRz)\rightarrow xRz)$.
+\end{enumerate}
+\end{definitionbox}
+\end{frame}
+
+\begin{frame}{Time for Economics}
+
+\begin{itemize}
+    \item We have seen some mathematical objects and their properties.
+    \item More importantly, these are the words in the formal language that we use in Economics.
+    \item Let's try to read some Economics.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{MWG: Microeconomic Theory}
+\begin{columns}[c,onlytextwidth] % fixed narrow gutter
+    \column{\tightcolumnwidth}
+        \hfill\includegraphics[height=0.77\textheight,keepaspectratio]{mwg-cover.jpg}
+    \hspace{\twocolumngutter}
+    \column{\tightcolumnwidth}
+    \vspace{-2em}
+        \begin{itemize}
+            \item Direct Screenshots: \par
+            \textit{Feel} that you can learn from it.
+            \item This should not be your unique resource.
+            \item In my 1st year, I also used:
+            \begin{itemize}
+            \item \textbf{Levin Teaching Notes}        
+            \item Rubinstein Notes Book
+            \item Kreps Books: 1990, 2012 
+            \end{itemize}
+        \end{itemize}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}[t]{Individual Decision Making}
+    \par
+    \mwgscanstart
+    {\centering
+        \includegraphics[width=0.78\linewidth,trim=0 18pt 0 10pt,clip]{mwg-p020-header.pdf}
+        \includegraphics[width=0.78\linewidth,trim=0 0 0 7pt,clip]{mwg-p020-intro.pdf}
+    \par}
+\end{frame}
+
+\begin{frame}[t]{Preference-Based Approach}
+\mwgscanstart
+{\centering
+    \includegraphics[height=0.74\textheight,keepaspectratio,trim=0 0 0 3pt,clip]{mwg-p021-preference.pdf}
+\par}    
+\end{frame}
+
+\begin{frame}[t]{Preference-Based Approach}
+\mwgscanstart
+{\centering
+    \includegraphics[width=1\linewidth,trim=0 0 0 1.5pt,clip]{mwg-p021-rationality.pdf}
+\par}    
+
+\begin{itemize}
+    \item \textit{Do not waste any attention} speculating about rationality (yet!).
+    \item \textbf{Assume} a DM with rational preferences and see where it leads... \\[1em] 
+    \hspace{5em} \textbf{This is exactly the approach we follow.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Preference-Based Approach}
+\mwgscanstart
+{\centering
+    \includegraphics[height=0.74\textheight,keepaspectratio,trim=0 0 0 3pt,clip]{mwg-p021-preference.pdf}
+\par}    
+\end{frame}
+
+\begin{frame}[t]{Preference-Based Approach}
+\mwgscanstart
+{\centering
+    \includegraphics[width=1\linewidth,trim=0 0 0 4pt,clip]{mwg-p022-proposition.pdf}
+\par}
+
+\begin{itemize}
+    \item We can prove this proposition. Let's do it.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]{Choice-Based Approach}
+\mwgscanstart
+
+{\centering
+    \includegraphics[width=0.84\linewidth,trim=0 0 0 6pt,clip]{mwg-p024-choice-rule.pdf}
+    \includegraphics[width=0.84\linewidth,trim=0 0 0 5pt,clip]{mwg-p025-choice-definitions.pdf}
+\par} 
+
+\end{frame}
+
+\begin{frame}[t]{Choice-Based Approach}
+\mwgscanstart
+{\centering
+    \includegraphics[width=1\linewidth,trim=0 0 0 2pt,clip]{mwg-p025-p026-rationalization.pdf}
+\par} 
+
+\end{frame}
+
+\end{document}
+
+
+
+
+\begin{frame}{Preference-Based Approach}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{mwg-p024-choice-rule.pdf}
+    \caption{Enter Caption}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \vspace{-1em}
+    \includegraphics[width=1\linewidth]{mwg-p024-choice-rule.pdf}\\[1em]
+    \includegraphics[width=1\linewidth]{mwg-p025-choice-definitions.pdf}
+\end{figure} 
+
+\vspace{-1em}
+\begin{itemize}
+\item We need the Trichotomy Property of Real Numbers.
+\item We can also prove this proposition. Let's do it.
+\end{itemize}
+    
+\end{frame}
+
+
+
+\begin{frame}{This Lecture}
+
+\begin{itemize}
+    \item Introduction to Logic
+    \begin{itemize}
+        \item Sentences and Connectives
+        \item Proofs
+    \end{itemize}
+    \item Sets and Binary Relations
+    \item Preferences as Binary Relations
+\end{itemize}
+    
+\end{frame}

@@ -1,0 +1,416 @@
+\documentclass[11pt,aspectratio=169,t]{beamer}
+\input{slides_header.tex}
+
+\usepackage{hyperref}
+
+\newtheorem{proposition}{Proposition}
+% Document Title
+\title{\textbf{Mathematics Bootcamp}}
+\subtitle{Properties of Preferences and Utility Functions}
+\author{Miguel Vázquez-Carrero} 
+\date{\textbf{September 2025}}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Today}
+
+\begin{itemize}
+    \item Indifference as an Equivalent Relation.
+    \item Utility Function Representation
+    \item Giving Some Structure to Preferences
+    \begin{itemize}
+        \item Monotonicity
+        \item Local Non-Satiation
+        \item Convexity
+        \item Continuity
+    \end{itemize}
+\end{itemize}
+    
+\end{frame}
+
+% --- Slide 7 ---
+\begin{frame}{Preference Relations}
+  \begin{itemize}
+    \item A \textbf{preference relation} $\succeq$ is a binary relation on $X$, that is, a subset of $X \times X$ that describes how the DM ranks any two elements in X.
+    \item $x \succeq y$ reads: $x$ is \textit{at least as good} as y (x is \textit{weakly better} than y).
+    \vspace{1em}
+    \item From $\succeq$ we derive:
+    \begin{itemize}
+      \item Strict preference: $x \succ y \iff (x \succeq y \ \text{and not } y \succeq x)$.
+      \item Indifference: $x \sim y \iff (x \succeq y \ \text{and } y \succeq x)$.
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+% --- Slide 8 ---
+\begin{frame}{Properties of Indifference}
+  \begin{block}{Indifference Relation}
+    If $\succeq$ is rational (i.e., complete and transitive), then the induced indifference relation $\sim$ is:
+    \begin{enumerate}
+      \item \textbf{Reflexive}: $x \sim x$ for all $x \in X$.
+      \item \textbf{Symmetric}: $x \sim y \;\implies\; y \sim x$.
+      \item \textbf{Transitive}: $x \sim y \;\wedge\; y \sim z \;\implies\; x \sim z$.
+    \end{enumerate}
+  \end{block}
+
+    \begin{block}{Equivalence Relation}
+    An equivalence relation is a binary relation that is reflexive, symmetric and transitive. \\
+    \end{block}  
+
+\end{frame}
+
+% --- Slide 9 ---
+\begin{frame}{Equivalence Classes}
+  \begin{block}{Equivalence Classes}  
+    An equivalence relation induces a \textbf{partition} of the set: mutually disjoint subsets whose union equals the entire set.
+  \end{block}
+
+  \vspace{0.3cm}
+  Note that the indifference relation $\sim$
+  \begin{enumerate}
+    \item Is an equivalence relation.
+    \item It generates equivalence classes of indifferent elements.
+  \end{enumerate}
+
+  \vspace{0.3cm}
+  For each $x \in X$, the equivalence class of $x$ is denoted by
+  \[
+    [x] = \{ y \in X \mid x \sim y \}.
+  \]
+\end{frame}
+
+
+\begin{frame}{Equivalence Classes and Utility}
+  \begin{block}{Utility representation}
+    A function $u:X\to\mathbb{R}$ \emph{represents} $\succeq$ if
+    \[
+      x\succeq y \;\;\Leftrightarrow\;\; u(x)\ge u(y).
+    \]
+  \end{block}
+
+    \begin{block}{Corollary.}
+    A function $u:X\to\mathbb{R}$ \emph{represents} $\sim$ if
+    \[
+      x\sim y \;\;\Leftrightarrow\;\; u(x) = u(y).
+    \]
+
+    \begin{itemize}
+        \item Thus, all the elements in a equivalence class are mapped to the \textbf{same utility}!
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Indifference Curves}
+
+\begin{columns}[c,onlytextwidth] % fixed narrow gutter
+    \begin{column}{\tightcolumnwidth}
+        \centering
+        \includegraphics[width=1.0\linewidth]{2d-plot.pdf}
+    \end{column}
+
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+        \begin{itemize}
+            \item Indifference curves are equivalence classes of $X$ that map to the same utility in $\mathbb{R}$.\\[1em]
+            \item Equivalence classes are disjoint, so indifference curves can never cross.
+        \end{itemize}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Utility Representation}
+  \begin{columns}[c,onlytextwidth] % fixed narrow gutter
+    \column{\tightcolumnwidth}
+      \centering
+      \includegraphics[width=1.0\linewidth]{2d-plot.pdf}
+
+    \hspace{\twocolumngutter}
+    \column{\tightcolumnwidth}
+      \centering
+      \includegraphics[width=1.0\linewidth]{3d-plot.pdf}
+  \end{columns}
+  
+\end{frame}
+
+\begin{frame}{Useful Properties of Preferences}
+
+\begin{itemize}
+    \item In addition to rationality, we need more structure in preference relations. That is, we need to assume more properties. \\[0.5em]
+    \item These properties have implications for:
+    \begin{itemize}
+        \item Their utility function representation.
+        \item Their indifference curves.
+    \end{itemize} 
+    \vspace{0.5em}
+    \item The best way to understand and learn them is by practicing proofs, many times.
+    \begin{itemize}
+        \item You will have plenty of Weekly Problem Sets where you will do exactly that.
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]{Represent Commodities with Ordered Lists}
+\mwgscanstart
+{\centering
+     \includegraphics[width=0.80\linewidth,trim=0 0 0 6pt,clip]{mwg-p032-p033-commodity-vector.pdf}
+\par}
+\vspace{-1.3em}
+ \begin{itemize}
+     \item Notation:\\ $x \ge y$ and $x \ne y$ imply that $x_l > y_l$ for some
+$l \in \{1, \ldots, L\}$.
+ \end{itemize}
+\end{frame}
+
+
+% Slide 3 / 17
+\begin{frame}{Monotonicity: More is Better}
+
+\begin{definitionbox}[Definitions]
+A preference relation $\succeq$ is\\
+\quad \emph{weakly monotone} if $x \ge y$ implies $x \succeq y$.\\
+\quad \emph{strictly monotone} if $x \ge y$ and $x \ne y$ imply
+$x \succ y$.\par
+
+A function $f: \mathbb{R}^L \to \mathbb{R}$ is\\
+\quad \emph{non-decreasing} if $x \ge y$ implies $f(x) \ge f(y)$ for all $x,y \in \mathbb{R}^L$;\\
+\quad \emph{strictly increasing} if $x \ge y$ and $x \ne y$ implies $f(x) > f(y)$ $ \forall x,y \in \mathbb{R}^L$.
+\end{definitionbox}
+
+\begin{propositionbox}
+If $u$ represents $\succeq$ then\\
+\quad $\succeq$ is weakly monotone \emph{iff} $u$ is non-decreasing;\\
+\quad $\succeq$ is strictly monotone \emph{iff} $u$ is strictly increasing.
+\end{propositionbox}
+\end{frame}
+
+\begin{frame}{Monotonicity: More is Better}
+
+ \begin{figure}
+     \centering
+     \includegraphics[width=0.51\linewidth]{monotonicity.pdf}
+  \end{figure}   
+\end{frame}
+
+% Slide 6 / 17
+\begin{frame}{Local Non-Satiation: No Thick Indifference Curves}
+\begin{definitionbox}[Definition: Local Nonsatiation]
+A preference relation $\succeq$ on $X$ is \emph{locally nonsatiated} if for every $x \in X$ and
+every $\varepsilon > 0$, there exists $y \in X$ such that $\lVert x - y\rVert \le \varepsilon$ and $y \succ x$.
+\end{definitionbox}
+
+Thus, preferences are locally nonsatiated if for each $x$ you can find an
+arbitrarily close $y$ that is strictly better.\\[0.5em]
+Recall that we are in a Euclidean space, so
+\[
+\lVert x - y\rVert=\sqrt{\sum_{i=1}^L (x_i - y_i)^2}.
+\]
+Local nonsatiation rules out ``thick'' indifference sets.
+\end{frame}
+
+% Slide 7 / 17
+
+\begin{frame}[t]{Local Non-Satiation: No Thick Indifference Curves}
+\par
+\mwgscanstart
+{\centering
+    \includegraphics[width=0.68\linewidth,trim=0 0 0 6pt,clip]{mwg-p058-local-nonsatiation.pdf}
+\par}
+\end{frame}
+
+
+\begin{frame}{Monotonicity and Local Non-Satiation}
+\begin{propositionbox}
+If $\succeq$ is strictly monotone, then $\succeq$ is locally non-satiated.
+\end{propositionbox}
+
+\textbf{Proof.}\quad
+Suppose $\succeq$ is strictly monotone, i.e. $x \ge y$ and $x \ne y$ imply $x \succ y$.\\
+For each $x \in X$ and every $\varepsilon > 0$, let
+$y = x + \frac{\varepsilon}{L}\mathbf{1}$. Then
+\[
+\lVert x - y\rVert=\sqrt{\sum_{i=1}^L \left(\frac{\varepsilon}{L}\right)^2}
+=\sqrt{L\left(\frac{\varepsilon}{L}\right)^2}=\frac{\varepsilon}{\sqrt{L}}\le \varepsilon
+\]
+Strict monotonicity implies that $y \succ x$.\\[0.5em]
+However, local non-satiation does not imply monotonicity.
+\end{frame}
+
+
+\begin{frame}[t]{Convexity: Taste for Variety}
+\mwgscanstart
+{\centering
+    \includegraphics[width=0.78\linewidth,trim=0 0 0 5pt,clip]{mwg-p059-convexity.pdf}
+\par}
+    
+\end{frame}
+
+\begin{frame}{Convexity: Taste for Variety}
+
+\begin{block}{Definitions}
+
+A set $X \subseteq \mathbb{R}^L$ is \\
+\quad \emph{convex} if for all $x,y \in X$, then $\alpha x+(1-\alpha)y \in X \;\;\forall \alpha \in [0,1]$.\\
+
+A preference relation $\succeq$ is \\
+\quad \emph{convex} if $y \succeq x$, $z \succeq x$ imply $\alpha y + (1-\alpha)z \succeq x$ $\forall \alpha \in [0,1]$;\\
+\quad hence, for $x \in X$, the upper contour set, $\{\,y \in X : y \succeq x\,\}$ is convex.\\[0.2em]
+
+\quad \scalebox{0.95}[1]{\emph{str. convex} if $y \succeq x$, $z \succeq x$, $y \ne z$ imply $\alpha y + (1-\alpha)z \succ x$ $\forall \alpha \in (0,1)$.}
+\end{block}
+
+\begin{block}{Implication: Indifference Curves}
+If $\succeq$ is \textit{convex}, there is a preference for mixtures over extremes: \par 
+\begin{itemize}
+\item Indifference curves being “convex to the origin” means they are bowed inward (not outward).
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Level Sets and Quasiconcavity}
+
+\begin{block}{Definitions}
+A function $f: X \to \mathbb{R}$ is\\
+\quad \emph{quasiconcave} if $f(\alpha x + (1-\alpha) y) \ge \min\{f(x), f(y)\}$ $\forall \alpha \in [0,1]$.\\
+\quad \emph{strictly quasiconcave} if, for $x \ne y$ and $\alpha \in (0,1)$,
+\[
+f(\alpha x + (1-\alpha)y) > \min\{f(x),f(y)\}.
+\]
+\end{block}
+
+\begin{block}{A More Transparent Definition}
+A function $f : X \to \mathbb{R}$ is \emph{quasiconcave} if every upper level set of $f$ is convex. That is, $\{\,x \in X \mid f(x) \geq c\,\}$ is convex for every $c \in \mathbb{R}$.
+\end{block}
+\end{frame}
+
+\begin{frame}{Convexity: Taste for Variety}
+
+\begin{block}{Convex Preferences imply Quasiconcave Utility} 
+\begin{itemize}
+    \item If preferences $\succeq$ on $X$ are convex, then mixtures are preferred to extremes.  
+    \item Then, every upper contour set $\{\,y \in X : y \succeq x\,\}$ is convex.  
+    \item Consequently, any utility representation $u: X \to \mathbb{R}$ is quasiconcave.  
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{A Glimpse of Topology}
+
+\begin{block}{Definitions}
+\begin{itemize}
+    \item A \emph{neighborhood} of a point $x \in \mathbb{R}$ is any set $V$ that contains an $\varepsilon$-neighborhood $V_\varepsilon(x) := (x-\varepsilon, x+\varepsilon)$ for some $\varepsilon > 0$.
+    \item A set $G \subset \mathbb{R}$ is \emph{open} if for each $x \in G$ there exists an $\varepsilon$ such that $V_\varepsilon(x) \subset G$.
+    \item A set $F \subset \mathbb{R}$ is \emph{closed} if its complement $C(F) := \mathbb{R}\setminus F$ is open.
+\end{itemize}
+\end{block}
+
+\begin{block}{Implication}
+\begin{itemize}
+    \item Open sets do not contain their boundary points.
+    \item Closed sets, by definition, include their boundary points.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Lower and Upper Contour Sets}
+\begin{itemize}
+
+\item Now consider the \textit{Upper Contour Set} and the \textit{Lower Contour Set} of a preference relation:
+
+\vspace{-1em}
+
+\[
+U(x) := \{ y \in X \mid y \succeq x \} \qquad L(x) := \{ y \in X \mid x \succeq y \}.
+\]
+
+\item Notice how the \textit{indifference points} are both the \textit{boundary points} and the \textit{intersection} of both contour sets.
+
+\item If contour sets are closed, boundary points are included. That is, there are no gaps in the indifference curves.
+
+\item This is one of the ways in which we can characterize continuous preferences (see Kreps 1.14c in the next slide).
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Continuity: No Gaps}
+\begin{propositionbox}[Proposition 1.14]
+\emph{Continuity of preferences $\succeq$ on $\mathbb{R}_+^k$ imply the following,
+and any one of the following imply that preferences $\succeq$ on $\mathbb{R}_+^k$
+are continuous. (Therefore, continuity of preferences could equivalently be defined
+by any one of the following, each of which implies all the others.)}
+
+\begin{description}
+\setlength{\itemsep}{0.35em}
+\item[\emph{a.}] \emph{If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with
+$x_n \succeq y$ for all $n$, and if $\lim_{n\to\infty}x_n=x$, then $x\succeq y$.
+If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with $y\succeq x_n$ for all $n$,
+and if $\lim_{n\to\infty}x_n=x$, then $y\succeq x$.}
+
+\item[\emph{b.}] \emph{If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with
+$\lim_{n\to\infty}x_n=x$, and if $x\succ y$, then for all sufficiently large $n$,
+$x_n\succ y$. And if $\lim_{n\to\infty}x_n=x$, and $y\succ x$, then for all
+sufficiently large $n$, $y\succ x_n$.}
+
+\end{description}
+\end{propositionbox}
+\end{frame}
+
+\begin{frame}{Continuity: No Gaps}
+\begin{propositionbox}[Proposition 1.14 (continued)]
+\begin{description}
+\setlength{\itemsep}{0.35em}
+
+\item[\emph{c.}] \emph{For all $x\in\mathbb{R}_+^k$, the sets $\mathrm{NBT}(x)$ and
+$\mathrm{NWT}(x)=\{y\in\mathbb{R}_+^k:y\succeq x\}$ are both closed sets.
+(NWT is a mnemonic for No Worse Than.)}
+
+\item[\emph{d.}] \emph{For all $x\in\mathbb{R}_+^k$, the sets
+$\mathrm{SBT}(x)=\{y\in\mathbb{R}_+^k:y\succ x\}$ and
+$\mathrm{SWT}(x)=\{y\in\mathbb{R}_+^k:x\succ y\}$ are both (relatively, in
+$\mathbb{R}_+^k$) open sets.}\textsuperscript{4}
+\emph{(SBT is a mnemonic for Strictly Better Than, and SWT stands for Strictly Worse Than.)}
+\end{description}
+\end{propositionbox}
+\end{frame}
+
+\begin{frame}{Debreu's Representation Theorem}
+\begin{propositionbox}[Proposition 1.15]
+\emph{If $X=\mathbb{R}_+^k$ and preferences $\succeq$ are complete, transitive,
+and continuous on $X$, then $\succeq$ can be represented by a utility function $u$;
+that is, $u(x)\ge u(y)$ if and only if $x\succeq y$.}
+\end{propositionbox}
+\vspace{-0.35em}
+
+\begin{itemize}
+\setlength{\itemsep}{0.35em}
+\item Previously we had seen a Necessary Condition for preferences to be represented by a utility function: Rationality.
+\begin{itemize}
+\setlength{\itemsep}{0.2em}
+\item Note that discontinuous preferences and rational can have a utility representation (continuous or not).
+\end{itemize}
+
+
+
+\item With Rationality and \textbf{Continuity}, we have a Sufficient Condition for the existence of a continuous utility function representation.
+\end{itemize}
+
+\vspace{-0.35em}
+\begin{propositionbox}[Proposition 2.9 (Debreu's Theorem)]
+\emph{If a continuous function $u$ represents $\succeq$, then $\succeq$ is continuous.
+Conversely, if $\succeq$ is continuous, it has a continuous utility representation.}\textsuperscript{5}
+\end{propositionbox}
+    
+\end{frame}
+
+\end{document}

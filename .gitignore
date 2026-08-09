@@ -1,0 +1,19 @@
+/tmp/
+
+# LaTeX build products
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+# Private/reference teaching material (not part of the public deck source)
+/choice/
+/1) Slides-20260809T161829Z-1-001.zip
+/Lecture_3.pdf
+/Macro1_GE_theory.pdf
+/Microeconomics_1_Dumav_Jerez.rar
