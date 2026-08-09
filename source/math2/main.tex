@@ -349,28 +349,33 @@ statements (see Figure 2.2.4)
 
 \end{frame}
 
-\begin{frame}{Bounds, Suprema, Infima}
-\begin{definitionbox}[2.3.1 Definition]
-Let $S$ be a nonempty subset of $\mathbb{R}$.
-\begin{description}
-  \item[\textbf{(a)}] The set $S$ is said to be \textbf{bounded above} if there exists a number
-  $u\in\mathbb{R}$ such that $s\leq u$ for all $s\in S$. Each such number $u$ is called an
-  \textbf{upper bound} of $S$.
-
-  \item[\textbf{(b)}] The set $S$ is said to be \textbf{bounded below} if there exists a number
-  $w\in\mathbb{R}$ such that $w\leq s$ for all $s\in S$. Each such number $w$ is called a
-  \textbf{lower bound} of $S$.
-
-  \item[\textbf{(c)}] A set is said to be \textbf{bounded} if it is both bounded above and bounded below.
-  A set is said to be \textbf{unbounded} if it is not bounded.
-\end{description}
+\begin{frame}{Bounds}
+\begin{definitionbox}[2.3.1 Bounds]
+Let $\varnothing\ne S\subseteq\mathbb{R}$.
+\[
+\begin{aligned}
+u\text{ is an upper bound}
+&\quad\Longleftrightarrow\quad s\leq u &&\text{for every }s\in S,\\
+w\text{ is a lower bound}
+&\quad\Longleftrightarrow\quad w\leq s &&\text{for every }s\in S.
+\end{aligned}
+\]
+$S$ is \textbf{bounded} if it has both an upper and a lower bound.
 \end{definitionbox}
+
+\begin{block}{Example}
+For $S=(0,1)$,
+\[
+\text{upper bounds}=[1,\infty),
+\qquad
+\text{lower bounds}=(-\infty,0].
+\]
+\end{block}
 \end{frame}
 
-\begin{frame}{Bounds, Suprema, Infima}
-\small
-{\centering
-\begin{tikzpicture}[x=.78cm,y=.34cm,>=Stealth,font=\scriptsize]
+\begin{frame}{Suprema and Infima}
+\begin{center}
+\begin{tikzpicture}[x=.78cm,y=.38cm,>=Stealth,font=\footnotesize]
   \draw[thick,-{Stealth[length=2mm]}] (-5.2,0)--(5.25,0);
   \foreach \x in {-5,-4.75,...,-2.5}{\draw (\x,-.12)--++(.18,.24);}
   \foreach \x in {1.8,2.05,...,5}{\draw (\x,-.12)--++(.18,.24);}
@@ -388,51 +393,58 @@ Let $S$ be a nonempty subset of $\mathbb{R}$.
     node[midway,below=4pt] {lower bounds of $S$};
   \draw[decorate,decoration={brace,mirror,amplitude=3pt}] (1.65,-.35)--(5,-.35)
     node[midway,below=4pt] {upper bounds of $S$};
-  \node[below] at (0,-1.72) {\textbf{Figure 2.3.1}\qquad $\inf S$ and $\sup S$};
 \end{tikzpicture}
-\par}
+\end{center}
+\vspace{-0.4em}
 
-\begin{definitionbox}[2.3.2 Definition]
-Let $S$ be a nonempty subset of $\mathbb{R}$.
-\statementitem{a}{If $S$ is bounded above, then a number $u$ is said to be a \textbf{supremum}
-(or a \textbf{least upper bound}) of $S$ if it satisfies the conditions:}
-\statementsubitem{1}{$u$ is an upper bound of $S$, and}
-\statementsubitem{2}{if $v$ is any upper bound of $S$, then $u\leq v$.}
-\statementitem{b}{If $S$ is bounded below, then a number $w$ is said to be an \textbf{infimum}
-(or a \textbf{greatest lower bound}) of $S$ if it satisfies the conditions:}
-\statementsubitem{$1'$}{$w$ is a lower bound of $S$, and}
-\statementsubitem{$2'$}{if $t$ is any lower bound of $S$, then $t\leq w$.}
+\begin{columns}[t,onlytextwidth]
+\begin{column}{\tightcolumnwidth}
+\begin{definitionbox}[2.3.2 Supremum = least upper bound]
+\[
+u=\sup S
+\]
+\begin{enumerate}
+    \item $s\leq u$ for every $s\in S$.
+    \item $u\leq v$ for every upper bound $v$.
+\end{enumerate}
 \end{definitionbox}
+\end{column}
+\hspace{\twocolumngutter}
+\begin{column}{\tightcolumnwidth}
+\begin{definitionbox}[Infimum = greatest lower bound]
+\[
+w=\inf S
+\]
+\begin{enumerate}
+    \item $w\leq s$ for every $s\in S$.
+    \item $t\leq w$ for every lower bound $t$.
+\end{enumerate}
+\end{definitionbox}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}{Completeness Property}
-\small
+\begin{frame}{Completeness of the Real Numbers}
 \begin{theorembox}[2.3.6 Completeness Property of $\mathbb{R}$]
-\emph{Every nonempty set of real numbers that has an upper bound also has a supremum in $\mathbb{R}$.}
+For every nonempty $S\subseteq\mathbb{R}$,
+\[
+S\text{ bounded above}
+\quad\Longrightarrow\quad
+\sup S\in\mathbb{R}.
+\]
+Consequently, if $S$ is bounded below, then $\inf S\in\mathbb{R}$.
 \end{theorembox}
 
-\vspace{.08em}
-This property is also called the \textbf{Supremum Property} of $\mathbb{R}$. The analogous property for
-infima can be deduced from the Completeness Property as follows. Suppose that $S$ is a nonempty subset
-of $\mathbb{R}$ that is bounded below. Then the nonempty set
-$\overline{S}:=\{-s:s\in S\}$ is bounded above, and the Supremum Property implies that
-$u:=\sup\overline{S}$ exists in $\mathbb{R}$. The reader should verify in detail that $-u$ is the infimum of $S$.
+\begin{block}{Why $\mathbb{Q}$ Is Not Complete}
+\[
+A=\{q\in\mathbb{Q}:q^2<2\}
+\]
+is bounded above, but its supremum in $\mathbb{R}$ is
+$\sqrt{2}\notin\mathbb{Q}$. Thus $A$ has no supremum in $\mathbb{Q}$.
+\end{block}
 
-\vspace{.15em}
-\begin{itemize}
-\setlength{\itemsep}{.18em}
-\item This is what distinguishes $\mathbb{R}$ from $\mathbb{Q}$. 
-\begin{itemize}
-    \setlength{\itemsep}{.08em}
-    \item Rationals satisfy field and order axioms but not completeness.
-\end{itemize}
-\item No Gaps in $\mathbb{R}$. Key implications for Proofs:
-\begin{itemize}
-\setlength{\itemsep}{.08em}
-\item Archimedean Property
-\item Density of Rationals
-\end{itemize}
-\end{itemize}
+\vfill
+\centering\textbf{Completeness means that $\mathbb{R}$ has no gaps.}
 \end{frame}
 
 \begin{frame}{Key Implications for Proofs}
