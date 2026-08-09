@@ -349,6 +349,23 @@ At a boundary point of $X$---for example, where one commodity is zero---the ball
 \end{block}
 \end{frame}
 
+\begin{frame}{Closed Sets Contain Their Limits}
+\begin{theorembox}[Sequential Test for Closed Sets]
+Let $F\subseteq X\subseteq\mathbb{R}^L$. The set $F$ is closed relative to
+$X$ if and only if
+\[
+x_n\in F\ \text{for every }n,\qquad x_n\to x\in X
+\quad\Longrightarrow\quad x\in F.
+\]
+\end{theorembox}
+
+\begin{block}{Why This Matters}
+Closedness says that a set keeps the limits of all its convergent sequences.
+Applied to contour sets, this turns the topological definition of continuous
+preferences into a test involving limits of rankings.
+\end{block}
+\end{frame}
+
 \begin{frame}{Lower and Upper Contour Sets}
 \begin{definitionbox}[Contour Sets at $x$]
 \[
@@ -408,6 +425,28 @@ x'\in B^X_{\varepsilon_x}(x),\quad y'\in B^X_{\varepsilon_y}(y)
 \end{block}
 \end{frame}
 
+\begin{frame}{A Continuous Representation Gives Closed Contours}
+\begin{theorembox}[Closed Level Sets]
+If $f:X\to\mathbb{R}$ is continuous, then for every $c\in\mathbb{R}$ the sets
+\[
+f^{-1}\bigl([c,\infty)\bigr)
+\qquad\text{and}\qquad
+f^{-1}\bigl((-\infty,c]\bigr)
+\]
+are closed relative to $X$.
+\end{theorembox}
+
+\begin{block}{Apply This to Utility}
+If $u$ represents $\succeq$, then
+\[
+U(x)=u^{-1}\bigl([u(x),\infty)\bigr),
+\qquad
+L(x)=u^{-1}\bigl((-\infty,u(x)]\bigr).
+\]
+Therefore, a continuous utility representation implies continuous preferences.
+\end{block}
+\end{frame}
+
 \begin{frame}{Debreu's Representation Theorem}
 \begin{theorembox}[Continuous Representation]
 Let $X=\mathbb{R}_+^L$. If $\succeq$ is complete, transitive, and continuous on
@@ -418,7 +457,7 @@ x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
 \end{theorembox}
 
 \begin{itemize}
-    \item A continuous utility representation implies continuous preferences.
+    \item The theorem starts from continuous preferences, defined by closed contour sets.
     \item The theorem guarantees at least one continuous representation; it does not make every utility representation continuous.
     \item Rationality is necessary. On $\mathbb{R}_+^L$, continuity supplies enough additional structure for a continuous representation.
 \end{itemize}

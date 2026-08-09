@@ -142,6 +142,27 @@ line exactly once for every $a\in A$.
 \end{center}
 \end{frame}
 
+\begin{frame}{Composition and Inverse Images}
+\begin{definitionbox}[Composition]
+Let $f:X\to Y$ and $g:Y\to Z$. Their composition is the function
+\[
+g\circ f:X\to Z,
+\qquad
+(g\circ f)(x):=g\bigl(f(x)\bigr).
+\]
+The order matters: apply $f$ first and then apply $g$.
+\end{definitionbox}
+
+\begin{definitionbox}[Inverse Image]
+For a set $D\subseteq Y$, the inverse image of $D$ under $f$ is
+\[
+f^{-1}(D):=\{x\in X:f(x)\in D\}.
+\]
+\end{definitionbox}
+
+The notation $f^{-1}(D)$ is defined for every function; $f$ need not be bijective.
+\end{frame}
+
 \begin{frame}{Injective, Surjective, and Bijective}
 \begin{definitionbox}[1.1.9 Definition]
 Let $f:A\to B$ be a function from $A$ to $B$.
@@ -328,6 +349,22 @@ B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
 
 \end{frame}
 
+\begin{frame}{The Triangle Inequality Controls Distances}
+\begin{theorembox}[Triangle Inequality]
+For every $x,y,z\in\mathbb{R}^L$,
+\[
+\lVert x-z\rVert
+\leq
+\lVert x-y\rVert+\lVert y-z\rVert.
+\]
+\end{theorembox}
+
+\begin{block}{Geometric Meaning}
+The direct distance from $x$ to $z$ cannot exceed the distance obtained by
+travelling from $x$ to $z$ through an intermediate point $y$.
+\end{block}
+\end{frame}
+
 \begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
 \begin{definitionbox}[Convergence]
 A sequence $(x_n)$ in $\mathbb{R}^L$ \textbf{converges} to $x\in\mathbb{R}^L$ if
@@ -347,6 +384,23 @@ x_n\to x
 x_{n\ell}\to x_\ell\quad\text{for every }\ell=1,\ldots,L.
 \]
 \end{theorembox}
+\end{frame}
+
+\begin{frame}{Continuity of a Function}
+\begin{definitionbox}[Sequential Definition]
+Let $X\subseteq\mathbb{R}^L$, $Y\subseteq\mathbb{R}^K$, and $f:X\to Y$.
+The function $f$ is \emph{continuous at $x\in X$} if, for every sequence
+$(x_n)$ in $X$,
+\[
+x_n\to x \quad\Longrightarrow\quad f(x_n)\to f(x).
+\]
+It is continuous on $X$ if it is continuous at every $x\in X$.
+\end{definitionbox}
+
+\begin{block}{Keep the Objects Separate}
+This is continuity of the function $f$. Day 3 defines continuity of a
+preference relation through closed upper and lower contour sets.
+\end{block}
 \end{frame}
 
 \begin{frame}{Bounds}
@@ -461,8 +515,8 @@ $\sqrt{2}\notin\mathbb{Q}$. Thus $A$ has no supremum in $\mathbb{Q}$.
 \emph{If $x\in\mathbb{R}$, then there exists $n_x\in\mathbb{N}$ such that $x\leq n_x$.}
 
 \vspace{.25em}
-\textbf{2.4.6 Corollary}\quad
-\emph{If $y>0$, there exists $n_y\in\mathbb{N}$ such that $n_y-1\leq y\leq n_y$.}
+\textbf{2.4.5 Corollary}\quad
+\emph{For every $\varepsilon>0$, there exists $n\in\mathbb{N}$ such that $1/n<\varepsilon$.}
 \end{theorembox}
 
 \begin{theorembox}[Density Results]

@@ -464,12 +464,51 @@ For a relation $R$ on $A$:
 
 \end{frame}
 
+\begin{frame}{Choice Behavior Is the Primitive Object}
+\begin{definitionbox}[A Choice Rule as a Set-Valued Map]
+\[
+C:\mathcal B\to 2^X\setminus\{\varnothing\},
+\qquad B\mapsto C(B)\subseteq B.
+\]
+\end{definitionbox}
+
+\begin{itemize}
+    \item $B$ is the set of alternatives available to the decision maker.
+    \item $C(B)$ is the set of acceptable choices from $B$; it may contain more than one alternative.
+    \item $C$ has exactly one output for each $B$, but that output is itself a set.
+\end{itemize}
+
+\begin{block}{Order of the Argument}
+\textit{Do not waste any attention} speculating about rationality (yet!):
+first record choices, then ask whether one rational relation explains them.
+\end{block}
+\end{frame}
+
 \begin{frame}[t]{Choice-Based Approach}
 \mwgscanstart
 {\centering
     \includegraphics[width=1\linewidth,trim=0 0 0 2pt,clip]{mwg-p025-p026-rationalization.pdf}
 \par} 
 
+\end{frame}
+
+\begin{frame}{WARP Rules Out a Revealed Reversal}
+\begin{definitionbox}[Two Observed Menus]
+\[
+B=\{a,b\},\quad C(B)=\{a\},
+\qquad
+B'=\{a,b,c\},\quad C(B')=\{b\}.
+\]
+\end{definitionbox}
+
+Both $a$ and $b$ are available in both menus. We first observe $a$ chosen
+when $b$ is available; we then observe $b$ chosen while $a$ disappears from
+the choice set. This violates WARP.
+
+\begin{block}{What WARP Does}
+WARP detects a revealed reversal across menus. It requires no story about the
+decision maker's motives.
+\end{block}
 \end{frame}
 
 \begin{frame}{Rationalizing Choice}
@@ -487,7 +526,7 @@ Thus, observed choice contains exactly the best available alternatives according
 to one complete and transitive relation.
 \end{frame}
 
-\begin{frame}{From Preferences to Choice}
+\begin{frame}{From Choice to Rational Preferences}
 \begin{propositionbox}[WARP and Rationalizability]
 Suppose $\mathcal{B}$ contains every nonempty subset of $X$ with at most three
 alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathcal B$. Then $C$ is
@@ -495,9 +534,31 @@ rationalizable if and only if it satisfies WARP.
 \end{propositionbox}
 
 \begin{itemize}
-    \item Rational preferences generate choice sets of best available alternatives.
-    \item On this rich choice domain, WARP tells us whether observed choices can be explained by rational preferences.
+    \item Menus with two alternatives recover pairwise revealed comparisons.
+    \item Menus with three alternatives test whether those comparisons can be transitive.
 \end{itemize}
+
+\begin{block}{Scope}
+This equivalence uses a rich domain of menus. Observed price-income budgets
+require a different revealed-preference theorem.
+\end{block}
+\end{frame}
+
+\begin{frame}{Choice, Preferences, and Utility Are Distinct}
+\begin{itemize}
+    \item \textbf{Choice $\to$ preferences:} Can one complete and transitive
+    relation reproduce every observed choice set?
+    \item \textbf{Preferences $\to$ utility:} Can those rankings be represented
+    by real numbers?
+    \item \textbf{Preferences and a menu $\to$ choice:} Does the menu contain
+    a best alternative?
+\end{itemize}
+
+\begin{block}{Different Questions, Different Assumptions}
+WARP and a rich menu domain address rationalization. Days 2 and 3 study
+utility representation. Existence of a best alternative requires additional
+assumptions on the menu and the representation.
+\end{block}
 \end{frame}
 
 \end{document}
