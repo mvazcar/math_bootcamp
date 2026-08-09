@@ -464,24 +464,49 @@ For a relation $R$ on $A$:
 
 \end{frame}
 
-\begin{frame}{Choice Behavior Is the Primitive Object}
-\begin{definitionbox}[A Choice Rule as a Set-Valued Map]
+\begin{frame}{What Is a Rich Domain of Menus?}
+\begin{definitionbox}[Every Small Menu Is Observable]
+The domain is \emph{rich} if every nonempty $B\subseteq X$ with $|B|\leq 3$
+belongs to $\mathcal B$. Thus, for distinct $x,y,z\in X$, it contains
 \[
-C:\mathcal B\to 2^X\setminus\{\varnothing\},
-\qquad B\mapsto C(B)\subseteq B.
+\{x\},\{y\},\{z\};\quad
+\{x,y\},\{x,z\},\{y,z\};\quad
+\{x,y,z\}.
 \]
 \end{definitionbox}
 
 \begin{itemize}
-    \item $B$ is the set of alternatives available to the decision maker.
-    \item $C(B)$ is the set of acceptable choices from $B$; it may contain more than one alternative.
-    \item $C$ has exactly one output for each $B$, but that output is itself a set.
+    \item \textbf{Singletons} anchor choice: $C(\{x\})=\{x\}$.
+    \item \textbf{Pairs} recover complete pairwise comparisons.
+    \item \textbf{Triples} bring three comparisons together and test transitivity.
 \end{itemize}
 
-\begin{block}{Order of the Argument}
-\textit{Do not waste any attention} speculating about rationality (yet!):
-first record choices, then ask whether one rational relation explains them.
+\begin{block}{Why ``At Most Three''?}
+Pairs build comparisons; triples test them. Larger menus are allowed.
 \end{block}
+\end{frame}
+
+\begin{frame}{Why the Proof Starts with Pairs}
+\begin{propositionbox}[Pairs Recover Revealed Preference]
+Suppose every pair belongs to $\mathcal B$ and choice is nonempty. Under WARP,
+\[
+x\succeq^* y
+\quad\Longleftrightarrow\quad
+x\in C(\{x,y\}).
+\]
+\end{propositionbox}
+
+\begin{itemize}
+    \item $\Leftarrow$ is immediate: the pair itself is an observed menu.
+    \item For $\Rightarrow$, $x$ was chosen somewhere while $y$ was available.
+    If the pair chooses $y$, WARP forces it to choose $x$ as well.
+    \item Since every pair has a choice, either $x\succeq^*y$ or
+    $y\succeq^*x$. Hence $\succeq^*$ is complete.
+\end{itemize}
+
+\medskip
+\textit{Do not waste any attention} speculating about rationality (yet!):
+first record pairwise choices, then ask what they imply.
 \end{frame}
 
 \begin{frame}[t]{Choice-Based Approach}
@@ -492,22 +517,25 @@ first record choices, then ask whether one rational relation explains them.
 
 \end{frame}
 
-\begin{frame}{WARP Rules Out a Revealed Reversal}
-\begin{definitionbox}[Two Observed Menus]
+\begin{frame}{Why the Proof Needs Triples}
+\begin{definitionbox}[A Cycle Hidden in Pair Menus]
 \[
-B=\{a,b\},\quad C(B)=\{a\},
-\qquad
-B'=\{a,b,c\},\quad C(B')=\{b\}.
+C(\{x,y\})=\{x\},\qquad
+C(\{y,z\})=\{y\},\qquad
+C(\{x,z\})=\{z\}.
 \]
 \end{definitionbox}
 
-Both $a$ and $b$ are available in both menus. We first observe $a$ chosen
-when $b$ is available; we then observe $b$ chosen while $a$ disappears from
-the choice set. This violates WARP.
+With pairs alone, WARP does not connect these observations: no two distinct
+pair menus contain the same two alternatives. Yet the choices form the cycle
+\[
+x\text{ over }y,\qquad y\text{ over }z,\qquad z\text{ over }x.
+\]
 
-\begin{block}{What WARP Does}
-WARP detects a revealed reversal across menus. It requires no story about the
-decision maker's motives.
+\begin{block}{Add the Triple $T=\{x,y,z\}$}
+If $T$ chooses $x$, $y$, or $z$, that alternative loses in one of the pair
+menus. WARP would require it to be chosen from that pair too. Thus a cycle
+would force $C(T)=\varnothing$, contradicting nonempty choice.
 \end{block}
 \end{frame}
 
@@ -526,38 +554,25 @@ Thus, observed choice contains exactly the best available alternatives according
 to one complete and transitive relation.
 \end{frame}
 
-\begin{frame}{From Choice to Rational Preferences}
+\begin{frame}{How the Rationalization Proof Works}
 \begin{propositionbox}[WARP and Rationalizability]
 Suppose $\mathcal{B}$ contains every nonempty subset of $X$ with at most three
 alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathcal B$. Then $C$ is
 rationalizable if and only if it satisfies WARP.
 \end{propositionbox}
 
-\begin{itemize}
-    \item Menus with two alternatives recover pairwise revealed comparisons.
-    \item Menus with three alternatives test whether those comparisons can be transitive.
-\end{itemize}
+\begin{enumerate}
+    \item Pair menus recover $\succeq^*$ and make it complete.
+    \item Triple menus and WARP rule out cycles, making $\succeq^*$ transitive.
+    \item WARP then links pairwise comparisons back to every observed menu:
+\end{enumerate}
+\[
+C(B)=\{x\in B:x\succeq^* y\text{ for every }y\in B\}.
+\]
 
-\begin{block}{Scope}
-This equivalence uses a rich domain of menus. Observed price-income budgets
-require a different revealed-preference theorem.
-\end{block}
-\end{frame}
-
-\begin{frame}{Choice, Preferences, and Utility Are Distinct}
-\begin{itemize}
-    \item \textbf{Choice $\to$ preferences:} Can one complete and transitive
-    relation reproduce every observed choice set?
-    \item \textbf{Preferences $\to$ utility:} Can those rankings be represented
-    by real numbers?
-    \item \textbf{Preferences and a menu $\to$ choice:} Does the menu contain
-    a best alternative?
-\end{itemize}
-
-\begin{block}{Different Questions, Different Assumptions}
-WARP and a rich menu domain address rationalization. Days 2 and 3 study
-utility representation. Existence of a best alternative requires additional
-assumptions on the menu and the representation.
+\begin{block}{The Key Step}
+If $y\in C(B)$ and $x\succeq^*y$, the pair menu chooses $x$; WARP therefore
+forces $x\in C(B)$ too.
 \end{block}
 \end{frame}
 
