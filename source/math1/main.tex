@@ -422,6 +422,71 @@ For a relation $R$ on $A$:
     \par}
 \end{frame}
 
+\begin{frame}{The Two Approaches Meet at Rationalization}
+\centering
+Each approach begins with a different primitive and imposes its own
+consistency restriction.
+
+\vspace{0.25cm}
+\begin{tikzpicture}[
+    object/.style={draw=slideblue!55,fill=slideblue!2,rounded corners=1.5pt,
+        minimum width=5.15cm,minimum height=0.82cm,align=center,inner sep=4pt},
+    restriction/.style={object,fill=slideblue!9,minimum height=0.94cm},
+    bridge/.style={object,fill=slideblue!5,minimum width=12.2cm,
+        minimum height=1.50cm},
+    route/.style={->,>=stealth,draw=slideblue,line width=0.85pt}
+]
+\node[font=\bfseries\color{slideblue}] at (-3.55,2.55) {Preference-Based};
+\node[font=\bfseries\color{slideblue}] at ( 3.55,2.55) {Choice-Based};
+
+\node[object] (preference) at (-3.55,1.72)
+    {Preference relation $\succeq$\\\textit{primitive object}};
+\node[object] (choice) at (3.55,1.72)
+    {Choice rule $C$\\\textit{primitive object}};
+
+\node[restriction] (rationality) at (-3.55,0.30)
+    {\textbf{Rationality}\\complete and transitive};
+\node[restriction] (warp) at (3.55,0.30)
+    {\textbf{WARP}\\no revealed reversal};
+
+\node[bridge] (coincide) at (0,-1.55)
+    {\textbf{They coincide when one rational preference rationalizes $C$:}\\[0.15em]
+    $C(B)=\{x\in B:x\succeq y\text{ for every }y\in B\}$.\\[0.15em]
+    If $u$ represents $\succeq$, this is $C(B)=\operatorname*{arg\,max}_{x\in B}u(x)$.};
+
+\draw[route] (preference) -- (rationality);
+\draw[route] (choice) -- (warp);
+\draw[<->,>=stealth,draw=slideblue!65,line width=0.75pt]
+    (rationality.east) -- node[above,fill=white,inner sep=2pt]
+    {\textit{mirror restrictions}} (warp.west);
+\draw[route] (rationality) -- (coincide.north west);
+\draw[route] (warp) -- (coincide.north east);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Preference Is the Primitive Object}
+\begin{definitionbox}[A Preference Relation Is the Starting Point]
+A preference relation $\succeq$ on $X$ records the decision maker's ranking:
+\[
+x\succeq y
+\quad\Longleftrightarrow\quad
+x\text{ is at least as good as }y.
+\]
+\end{definitionbox}
+
+\begin{itemize}
+    \item The ranking is taken as given rather than inferred from observed menus.
+    \item \textbf{Rationality} restricts the primitive relation: it must be complete
+    and transitive.
+    \item A \textbf{utility function} is a numerical representation of that same
+    ranking, when such a representation exists.
+\end{itemize}
+
+\begin{block}{Preference-Based Logic}
+Start with preferences, impose rationality, and derive choice behavior.
+\end{block}
+\end{frame}
+
 \begin{frame}[t]{Preference-Based Approach}
 \mwgscanstart
 {\centering
@@ -452,6 +517,27 @@ For a relation $R$ on $A$:
     \item We can prove this proposition. Let's do it.
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{Choice Behavior Is the Primitive Object}
+\begin{definitionbox}[A Choice Rule Is the Starting Point]
+For each observed menu $B$, the rule records a nonempty choice set:
+\[
+C:\mathcal B\to 2^X\setminus\{\varnothing\},
+\qquad \varnothing\neq C(B)\subseteq B.
+\]
+\end{definitionbox}
+
+\begin{itemize}
+    \item Choices are taken as given rather than derived from an unobserved ranking.
+    \item \textbf{WARP} restricts the primitive rule by ruling out revealed reversals.
+    \item Revealed preference is constructed from the observed choice behavior.
+\end{itemize}
+
+\begin{block}{Choice-Based Logic}
+\textit{Do not waste any attention} speculating about rationality (yet!):
+first record choices, then ask whether one rational relation explains them.
+\end{block}
 \end{frame}
 
 \begin{frame}[t]{Choice-Based Approach}
@@ -504,9 +590,6 @@ x\in C(\{x,y\}).
     $y\succeq^*x$. Hence $\succeq^*$ is complete.
 \end{itemize}
 
-\medskip
-\textit{Do not waste any attention} speculating about rationality (yet!):
-first record pairwise choices, then ask what they imply.
 \end{frame}
 
 \begin{frame}[t]{Choice-Based Approach}
