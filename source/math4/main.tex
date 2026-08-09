@@ -1,0 +1,880 @@
+\documentclass[11pt,aspectratio=169,t]{beamer}
+\input{slides_header.tex}
+
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\pgfplotsset{compat=1.18}
+\setbeameroption{hide notes}
+
+\tikzset{
+  flowbox/.style={draw=slideblue,fill=slideblue!5,rounded corners=1pt,
+    minimum height=.75cm,align=center,inner xsep=7pt},
+  flowarrow/.style={-{Latex[length=2.2mm]},very thick,draw=slideblue},
+  feasible/.style={very thick,draw=slidegray},
+  contour/.style={thick,draw=slideblue!70},
+  improve/.style={-{Latex[length=2.4mm]},very thick,draw=slidegreen},
+  normal/.style={-{Latex[length=2.4mm]},very thick,draw=slidered}
+}
+
+\title{\textbf{Mathematics Bootcamp}}
+\subtitle{Optimization: Finding the Best Feasible Choice}
+\author{Miguel V\'azquez-Carrero}
+\date{\textbf{September 2025}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \sources{The narrative follows Martin J. Osborne, Mathematical Methods for
+  Economic Theory, Parts 4--7.}
+\end{frame}
+
+\begin{frame}{Today}
+  \begin{itemize}
+    \item What an optimization problem asks
+    \item Why first-order conditions are necessary
+    \item Equality constraints and Lagrange multipliers
+    \item Inequality constraints and Kuhn--Tucker conditions
+    \item Consumer demand: smooth optima, corners, and kinks
+  \end{itemize}
+  \vspace{.8em}
+  \textcolor{slideblue}{\bfseries We finish the mathematics before applying it
+  to consumer choice.}
+  \sources{Osborne, Optimization: introduction and contents.}
+\end{frame}
+
+\begin{frame}{Optimization Completes the Path from Preferences to Choice}
+  \vspace{.25em}
+  \centering
+  \begin{tikzpicture}
+    \node[flowbox,text width=2.35cm] (pref) at (0,1.0)
+      {Preference relation\\$\succeq$};
+    \node[flowbox,text width=2.65cm] (utility) at (3.45,1.0)
+      {Utility function\\$u:X\to\mathbb R$};
+    \node[flowbox,text width=2.35cm] (menu) at (3.45,-.25)
+      {Feasible set\\$S\subseteq X$};
+    \node[flowbox,text width=3.05cm] (choice) at (7.65,.38)
+      {Best feasible choices\\$\arg\max_{x\in S}u(x)$};
+    \draw[flowarrow] (pref) -- (utility);
+    \draw[flowarrow] (utility.east) -- (choice.west);
+    \draw[flowarrow] (menu.east) -- (choice.west);
+  \end{tikzpicture}
+
+  \vspace{.7em}
+  \begin{block}{The Question}
+    Which feasible choices are at least as good as every other feasible choice?
+  \end{block}
+
+  \vspace{.4em}
+  An increasing transformation of $u$ changes utility numbers but not the set of
+  maximizers.
+  \sources{Osborne, Optimization: introduction and definitions; Math Bootcamp Day 3.}
+\end{frame}
+
+\begin{frame}{The Maximum and the Maximizers Are Different Objects}
+  Consider
+  \[
+    \max_{x\in S} f(x).
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Maximum Value]
+        If a solution exists, then
+        \[
+          \max_{x\in S}f(x)=f(x^*)\in\mathbb R.
+        \]
+        This is a number.
+      \end{definitionbox}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Maximizers]
+        \[
+          \begin{aligned}
+            \arg\max_{x\in S} f(x)
+              &=\{x\in S:\\[-.2em]
+              &f(x)\geq f(y)\ \forall y\in S\}.
+          \end{aligned}
+        \]
+        This is a set of choices.
+      \end{definitionbox}
+    \end{column}
+  \end{columns}
+
+  \vspace{.5em}
+  The argmax may be empty, contain one point, or contain many points.
+  \sources{Osborne, Optimization: definitions.}
+\end{frame}
+
+\begin{frame}{Existence Comes Before Calculation}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{.315\textwidth}
+      \centering
+      \textbf{Open feasible set}
+      \[
+        \max_{x\in(0,1)}x
+      \]
+      Supremum $1$, but no maximizer.
+    \end{column}
+    \begin{column}{.315\textwidth}
+      \centering
+      \textbf{Unbounded objective}
+      \[
+        \max_{x\geq0}x
+      \]
+      No finite maximum.
+    \end{column}
+    \begin{column}{.315\textwidth}
+      \centering
+      \textbf{Discontinuity}
+      \[
+        f(x)=\begin{cases}x,&x<\frac12,\\x-1,&x\geq\frac12.
+        \end{cases}
+      \]
+      On $[0,1]$, the supremum is not attained.
+    \end{column}
+  \end{columns}
+
+  \vspace{.8em}
+  \begin{theorembox}[Extreme Value Theorem]
+    If $S\subseteq\mathbb R^n$ is nonempty and compact and
+    $f:S\to\mathbb R$ is continuous, then $f$ attains a maximum and a minimum on $S$.
+  \end{theorembox}
+  \sources{Osborne, Existence of an optimum; Weierstrass theorem.}
+\end{frame}
+
+\begin{frame}{If the Slope Is Nonzero, Improvement Is Possible}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=.88\textwidth,height=.66\textheight,
+      axis lines=middle,xmin=-2.25,xmax=2.25,ymin=-.8,ymax=5.0,
+      ticks=none,xlabel={$x$},ylabel={},
+      xlabel style={at={(axis description cs:1,.17)},anchor=north east},
+      ylabel style={at={(axis description cs:.53,1)},anchor=north west},
+      clip=false]
+      \addplot[very thick,slideblue,domain=-2.15:2.15,samples=120]{4-x^2};
+      \addplot[very thick,slidegold,domain=-1.55:-.85]{2.56+2.4*(x+1.2)};
+      \addplot[very thick,slidegreen,domain=-.38:.38]{4};
+      \addplot[very thick,slidered,domain=.85:1.55]{2.56-2.4*(x-1.2)};
+      \addplot[only marks,mark=*,mark size=2.2pt,slidegold] coordinates {(-1.2,2.56)};
+      \addplot[only marks,mark=*,mark size=2.2pt,slidegreen] coordinates {(0,4)};
+      \addplot[only marks,mark=*,mark size=2.2pt,slidered] coordinates {(1.2,2.56)};
+      \node[slidegold,align=center] at (axis cs:-1.23,1.25) {$f'(x)>0$\\move right};
+      \node[slidegreen,align=center] at (axis cs:0,4.58) {$f'(x^*)=0$};
+      \node[slidered,align=center] at (axis cs:1.23,1.25) {$f'(x)<0$\\move left};
+      \draw[densely dashed,slidegray] (axis cs:0,0) -- (axis cs:0,4);
+      \node[below] at (axis cs:0,0) {$x^*$};
+    \end{axis}
+  \end{tikzpicture}
+  \sources{Osborne, Necessary conditions for an interior optimum; Sundaram,
+  Figure 4.2 and Theorem 4.1.}
+\end{frame}
+
+\begin{frame}{Why the First-Order Condition Is Necessary}
+  \begin{propositionbox}[First-Order Necessary Condition]
+    If $x^*$ is an interior local maximizer of $f$ and $f$ is differentiable at
+    $x^*$, then $f'(x^*)=0$.
+  \end{propositionbox}
+
+  \vspace{.3em}
+  \statementitem{1}{For sufficiently small $h>0$, local optimality gives
+  \[
+    f(x^*+h)\leq f(x^*)
+    \quad\Longrightarrow\quad
+    \frac{f(x^*+h)-f(x^*)}{h}\leq0.
+  \]}
+  \statementitem{2}{For sufficiently small $h<0$, the numerator is still
+  nonpositive but the denominator is negative, so
+  \[
+    \frac{f(x^*+h)-f(x^*)}{h}\geq0.
+  \]}
+  \statementitem{3}{The two one-sided limits are equal because $f$ is
+  differentiable. Hence $f'(x^*)\leq0$ and $f'(x^*)\geq0$, so $f'(x^*)=0$.}
+  \sources{Osborne, Proposition 5.1.1; Sundaram, Theorem 4.1 and Section 4.5.}
+\end{frame}
+
+\begin{frame}{A Stationary Point Is Only a Candidate}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.315\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
+          xmin=-1.5,xmax=1.5,ymin=-2.1,ymax=.7,ticks=none]
+          \addplot[very thick,slideblue,domain=-1.35:1.35]{-x^2};
+          \addplot[only marks,mark=*,mark size=2pt,slidegreen] coordinates {(0,0)};
+        \end{axis}
+      \end{tikzpicture}
+      $f(x)=-x^2$\\[.2em]
+      \textcolor{slidegreen}{local and global maximum}
+    \end{column}
+    \begin{column}{.315\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
+          xmin=-1.5,xmax=1.5,ymin=-.7,ymax=2.1,ticks=none]
+          \addplot[very thick,slideblue,domain=-1.35:1.35]{x^2};
+          \addplot[only marks,mark=*,mark size=2pt,slidered] coordinates {(0,0)};
+        \end{axis}
+      \end{tikzpicture}
+      $f(x)=x^2$\\[.2em]
+      \textcolor{slidered}{local and global minimum}
+    \end{column}
+    \begin{column}{.315\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
+          xmin=-1.35,xmax=1.35,ymin=-2.1,ymax=2.1,ticks=none]
+          \addplot[very thick,slideblue,domain=-1.25:1.25]{x^3};
+          \addplot[only marks,mark=*,mark size=2pt,slidegold] coordinates {(0,0)};
+        \end{axis}
+      \end{tikzpicture}
+      $f(x)=x^3$\\[.2em]
+      \textcolor{slidegold}{neither}
+    \end{column}
+  \end{columns}
+
+  \vspace{.65em}
+  All three satisfy $f'(0)=0$. Moreover, a boundary maximizer need not satisfy
+  $f'(x)=0$ because movement may be possible in only one direction.
+  \sources{Osborne, Necessary conditions for an interior optimum; Sundaram,
+  Example 4.2.}
+\end{frame}
+
+\begin{frame}{The Gradient Tests Every Direction at Once}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.51\textwidth}
+      For a direction $d\in\mathbb R^n$,
+      \[
+        f(x+td)-f(x)\approx t\,\nabla f(x)\cdot d.
+      \]
+      If $x^*$ is an interior local maximum, define
+      \[
+        \phi_d(t)=f(x^*+td).
+      \]
+      Then $t=0$ locally maximizes $\phi_d$, so
+      \[
+        \phi_d'(0)=\nabla f(x^*)\cdot d=0
+        \qquad\text{for every }d.
+      \]
+      Therefore,
+      \[
+        \boxed{\nabla f(x^*)=0.}
+      \]
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.82]
+        \draw[->,slidegray] (-.3,0) -- (5.4,0) node[right] {$x_1$};
+        \draw[->,slidegray] (0,-.3) -- (0,4.8) node[above] {$x_2$};
+        \foreach \r in {0.65,1.2,1.75} {
+          \draw[contour] (2.7,2.35) ellipse ({1.25*\r} and {.78*\r});
+        }
+        \fill[slidegold] (1.55,1.65) circle (2pt) node[below left] {$x$};
+        \draw[normal] (1.55,1.65) -- (2.62,2.30) node[midway,above left] {$\nabla f(x)$};
+        \draw[improve] (1.55,1.65) -- (2.1,1.15) node[right] {$d$};
+        \node[slideblue] at (3.9,4.05) {level sets of $f$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{Osborne, Proposition 5.1.2; Sundaram, Section 4.5, directional-derivative proof.}
+\end{frame}
+
+\begin{frame}{Curvature Turns Candidates into Conclusions}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{propositionbox}[Local Conclusion]
+        Suppose $f$ is twice differentiable and
+        \[
+          \nabla f(x^*)=0.
+        \]
+        If $D^2f(x^*)$ is negative definite, then $x^*$ is a strict local maximizer.
+      \end{propositionbox}
+      Negative semidefiniteness at $x^*$ is necessary for a smooth local maximum,
+      but may not be sufficient.
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{propositionbox}[Global Conclusion]
+        Suppose $S$ is convex and $f$ is differentiable and concave on $S$.
+        Then
+        \[
+          \nabla f(x^*)=0
+          \quad\Longrightarrow\quad
+          x^*\in\arg\max_{x\in S} f(x).
+        \]
+      \end{propositionbox}
+      If $f$ is strictly concave, the maximizer is unique whenever it exists.
+    \end{column}
+  \end{columns}
+
+  \vspace{.5em}
+  First-order conditions generate candidates; curvature and concavity tell us
+  what those candidates mean.
+  \sources{Osborne, Local optima and Conditions under which a stationary point
+  is a global optimum; Sundaram, Theorems 4.3, 7.14, and 7.15.}
+\end{frame}
+
+\begin{frame}{A Constraint Removes Directions}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.50\textwidth}
+      Consider
+      \[
+        \max_x f(x)
+        \qquad\text{subject to}\qquad h(x)=c.
+      \]
+      A direction $d$ tangent to the constraint satisfies, to first order,
+      \[
+        \nabla h(x)\cdot d=0.
+      \]
+      At a constrained optimum, the objective must not increase along any such
+      feasible direction.
+
+      \vspace{.5em}
+      The gradient $\nabla h(x)$ is normal to the feasible curve.
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.87]
+        \draw[->,slidegray] (-.2,0) -- (5.3,0) node[right] {$x_1$};
+        \draw[->,slidegray] (0,-.2) -- (0,4.5) node[above] {$x_2$};
+        \draw[feasible] (.3,.7) .. controls (1.4,2.5) and (3.4,1.2) .. (5,3.4)
+          node[right] {$h(x)=c$};
+        \coordinate (p) at (2.55,1.75);
+        \fill[slidegold] (p) circle (2.2pt) node[below right] {$x$};
+        \draw[improve] ($(p)+(-1.05,-.35)$) -- ($(p)+(.95,.32)$) node[right] {$d$};
+        \draw[normal] (p) -- ($(p)+(-.4,1.25)$) node[left] {$\nabla h(x)$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{Osborne, Equality constraints: motivation; Chong and Zak, tangent and
+  normal spaces, printed pp. 368--378.}
+\end{frame}
+
+\begin{frame}{If the Curves Cross, Improvement Remains Possible}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.45\textwidth}
+      If the feasible curve crosses an objective level curve, one of the two
+      feasible directions leads toward a higher level.
+
+      \vspace{.7em}
+      At the marked point,
+      \[
+        \nabla f(x)\cdot d>0.
+      \]
+      A small feasible movement in direction $d$ raises the objective, so the
+      point cannot be optimal.
+    \end{column}
+    \begin{column}{.53\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.83]
+        \draw[->,slidegray] (-.2,0) -- (6,0) node[right] {$x_1$};
+        \draw[->,slidegray] (0,-.2) -- (0,5) node[above] {$x_2$};
+        \foreach \r in {1.0,1.55,2.1} {
+          \draw[contour] (4.1,3.8) ellipse ({1.15*\r} and {.78*\r});
+        }
+        \draw[feasible] (.35,4.35) -- (5.65,.65) node[right] {$h(x)=c$};
+        \coordinate (p) at (2.3,2.99);
+        \fill[slidegold] (p) circle (2.2pt) node[below left] {$x$};
+        \draw[improve] (p) -- ($(p)+(.95,-.66)$) node[below right] {$d$};
+        \node[slideblue] at (4.7,4.65) {higher $f$};
+        \draw[flowarrow,draw=slideblue!70] (4.45,4.45) -- (4.12,4.02);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{Osborne, Equality constraints: necessary conditions, motivation.}
+\end{frame}
+
+\begin{frame}{At a Smooth Constrained Optimum, the Normals Align}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.45\textwidth}
+      At tangency, the objective level curve and the feasible curve share the
+      same tangent direction.
+
+      Their normal vectors must therefore be parallel:
+      \[
+        \boxed{\nabla f(x^*)=\lambda\nabla h(x^*).}
+      \]
+      Equivalently, every feasible tangent direction $d$ satisfies
+      \[
+        \nabla f(x^*)\cdot d=0.
+      \]
+    \end{column}
+    \begin{column}{.53\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.83]
+        \draw[->,slidegray] (-.2,0) -- (6,0) node[right] {$x_1$};
+        \draw[->,slidegray] (0,-.2) -- (0,5) node[above] {$x_2$};
+        \coordinate (c) at (4.1,3.8);
+        \coordinate (p) at (2.9,2.9);
+        \foreach \r in {1.5,2.05,2.6} {\draw[contour] (c) circle (\r cm);}
+        \draw[feasible] (.35,4.81) -- (5.45,1.41) node[right] {$h(x)=c$};
+        \fill[slidegold] (p) circle (2.2pt) node[below left] {$x^*$};
+        \draw[normal] (p) -- ($(p)+(1.05,.79)$) node[above] {$\nabla f(x^*)$};
+        \draw[normal] (p) -- ($(p)+(-.92,-.69)$) node[below] {$-\nabla h(x^*)$};
+        \node[slideblue] at (4.85,4.55) {higher $f$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{Osborne, Equality constraints: necessary conditions; Chong and Zak,
+  Figures 19.10 and 19.12.}
+\end{frame}
+
+\begin{frame}{The Lagrangian Packages Tangency and Feasibility}
+  For
+  \[
+    \max_x f(x)
+    \qquad\text{subject to}\qquad h(x)=c,
+  \]
+  define
+  \[
+    \mathcal L(x,\lambda)=f(x)+\lambda\bigl(c-h(x)\bigr).
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Stationarity}
+        \[
+          \begin{aligned}
+            \nabla_x\mathcal L(x^*,\lambda^*)&=0,\\
+            \nabla f(x^*)&=\lambda^*\nabla h(x^*).
+          \end{aligned}
+        \]
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Feasibility}
+        \[
+          h(x^*)=c.
+        \]
+        The candidate must satisfy the constraint.
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.4em}
+  These equations generate candidates. Concavity or direct comparison is still
+  needed to establish global optimality.
+  \sources{Osborne, Equality constraints: necessary conditions; canonical sign
+  adapted to Lecture 5 notation.}
+\end{frame}
+
+\begin{frame}{Regular Constraints Make the Multiplier Well Defined}
+  \begin{theorembox}[Lagrange Multiplier Theorem]
+    Let $f,h:\mathbb R^n\to\mathbb R$ be continuously differentiable. If $x^*$
+    is a local optimum subject to $h(x)=c$ and $\nabla h(x^*)\neq0$, then there
+    exists a unique $\lambda^*\in\mathbb R$ such that
+    \[
+      \nabla f(x^*)=\lambda^*\nabla h(x^*).
+    \]
+  \end{theorembox}
+
+  For several equality constraints, require their gradients to be linearly independent.
+
+  \vspace{.25em}
+  \begin{itemize}
+    \item Regularity guarantees existence of the multiplier at a local optimum.
+    \item Independence makes its coefficients unique at that fixed $x^*$.
+    \item It does not guarantee that the optimizer itself is unique.
+  \end{itemize}
+  \sources{Osborne, Proposition 6.1.1.1; Sundaram, Theorem 5.1 and constraint
+  qualification; Chong and Zak, Theorem 19.3.}
+\end{frame}
+
+\begin{frame}{A Multiplier Measures the Value of Relaxing a Constraint}
+  Define
+  \[
+    V(c)=\max_x\{f(x):h(x)=c\}
+  \]
+  If the optimal choice and optimized value vary smoothly with $c$, then
+  $\boxed{V'(c)=\lambda^*(c)}$.
+
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.49\textwidth}
+      \begin{itemize}
+        \item $\lambda^*$ is first a coefficient aligning two normal vectors.
+        \item With the additional smoothness, it is the marginal optimized value
+        of relaxing the constraint.
+        \item Its value depends on the chosen representation of the objective.
+      \end{itemize}
+    \end{column}
+    \begin{column}{.49\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.72]
+        \draw[contour] (3.6,3.0) ellipse (1.0 and .65);
+        \draw[contour] (3.6,3.0) ellipse (1.55 and 1.0);
+        \draw[contour] (3.6,3.0) ellipse (2.1 and 1.35);
+        \draw[feasible] (.4,3.9) -- (5.9,.85) node[right] {$c$};
+        \draw[feasible,dashed] (.8,4.25) -- (6.3,1.2) node[right] {$c+\Delta c$};
+        \draw[improve] (3.0,2.46) -- (3.35,2.82) node[right] {$\Delta V\approx\lambda^*\Delta c$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{Osborne, Interpretation of Lagrange multipliers; Sundaram, printed
+  pp. 116--117.}
+\end{frame}
+
+\begin{frame}{Inequalities Create Active and Inactive Constraints}
+  Write each inequality as $g_m(x)\geq0$. At a candidate $x^*$:
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Inactive Constraint}
+        \[
+          g_m(x^*)>0.
+        \]
+        The constraint is slack. Small changes in its boundary do not affect the
+        local choice, so its multiplier is zero.
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Active Constraint}
+        \[
+          g_m(x^*)=0.
+        \]
+        The boundary restricts feasible directions and may carry a positive multiplier.
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.25em}
+  Both cases are summarized by
+  \[
+    \lambda_m\geq0,\qquad g_m(x^*)\geq0,\qquad
+    \lambda_m g_m(x^*)=0.
+  \]
+  \sources{Osborne, Kuhn--Tucker conditions, active versus slack cases; Lecture 5 notation.}
+\end{frame}
+
+\begin{frame}{Kuhn--Tucker Conditions Are the One-Sided Version}
+  \begin{theorembox}[Kuhn--Tucker: Necessary Conditions]
+    Consider
+    \[
+      \max_x f(x)
+      \qquad\text{subject to}\qquad
+      g_m(x)\geq0,\quad m=1,\ldots,M.
+    \]
+    If $f$ and the $g_m$ are continuously differentiable, $x^*$ is a local
+    solution, and a constraint qualification holds, then there exist
+    multipliers $\lambda_m\geq0$ such that
+    \[
+      \nabla f(x^*)+\sum_{m=1}^M\lambda_m\nabla g_m(x^*)=0,
+    \]
+    \[
+      g_m(x^*)\geq0,\qquad
+      \lambda_m g_m(x^*)=0,\quad m=1,\ldots,M.
+    \]
+  \end{theorembox}
+
+  Only active normals contribute; they generate a nonnegative cone, not a linear span.
+  \sources{Osborne, Kuhn--Tucker conditions; Sundaram, Theorem 6.1; Chong and
+  Zak, Figure 20.1. Signs adapted to $g_m\geq0$.}
+\end{frame}
+
+\begin{frame}{Consumer Choice Is the Same Optimization Problem}
+  A consumer chooses $x\in\mathbb R_+^L$, has wealth $w>0$, and faces prices
+  $p\in\mathbb R_{++}^L$.
+
+  \begin{definitionbox}[Walrasian Budget Set]
+    \[
+      B(p,w)=\{x\in\mathbb R_+^L:p\cdot x\leq w\}.
+    \]
+  \end{definitionbox}
+
+  \begin{definitionbox}[Walrasian Demand Correspondence]
+    \[
+      x(p,w)=\arg\max_{x\in B(p,w)}u(x).
+    \]
+    A selected optimum is written $x^*\in x(p,w)$.
+  \end{definitionbox}
+
+  Demand is a correspondence because several bundles may maximize utility.
+  \sources{Graduate Microeconomics I, Lecture 5, slides 3--7; Osborne,
+  Optimization: introduction.}
+\end{frame}
+
+\begin{frame}{The Assumptions from Day 3 Now Do Specific Jobs}
+  \renewcommand{\arraystretch}{1.35}
+  \centering
+  \begin{tabular}{@{}p{.37\textwidth}p{.56\textwidth}@{}}
+    \toprule
+    \textbf{Assumption} & \textbf{Consequence for consumer choice}\\
+    \midrule
+    $p\gg0$ and $w>0$ & $B(p,w)$ is nonempty, compact, and convex.\\
+    Continuity of $u$ & $x(p,w)$ is nonempty and compact.\\
+    Strict quasiconcavity of $u$ & At most one bundle maximizes $u$ on the convex budget set.\\
+    Local nonsatiation & Every optimal bundle exhausts the budget.\\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{1em}
+  These are distinct conclusions: existence of a maximizer, uniqueness of the
+  maximizer, and existence of multipliers are different questions.
+  \sources{Graduate Microeconomics I, Lecture 5, slides 4 and 9--12; Osborne,
+  Existence of an optimum.}
+\end{frame}
+
+\begin{frame}{Local Nonsatiation Makes the Budget Bind}
+  \begin{propositionbox}[Walras' Law for Individual Demand]
+    If preferences are locally nonsatiated and $x^*\in x(p,w)$, then
+    \[
+      p\cdot x^*=w.
+    \]
+  \end{propositionbox}
+
+  \statementitem{1}{Suppose instead that $p\cdot x^*<w$. There is positive
+  spending slack.}
+  \statementitem{2}{Because prices are finite, every sufficiently close bundle
+  remains affordable.}
+  \statementitem{3}{Local nonsatiation gives a sufficiently close bundle $y$
+  with $y\succ x^*$.}
+  \statementitem{4}{Then $y\in B(p,w)$ and $y\succ x^*$, contradicting
+  $x^*\in x(p,w)$.}
+
+  \vspace{.5em}
+  Hence the inequality constraint may be treated as the equality
+  $p\cdot x=w$ when solving a locally nonsatiated consumer problem.
+  \sources{Graduate Microeconomics I, Lecture 5, slide 9; Day 3 local
+  nonsatiation.}
+\end{frame}
+
+\begin{frame}{A Money-Neutral Reallocation Is a Feasible Direction}
+  Move $\delta>0$ units of money from good $j$ to good $i$:
+  \[
+    \Delta x_i=\frac{\delta}{p_i},
+    \qquad
+    \Delta x_j=-\frac{\delta}{p_j}.
+  \]
+  The change in expenditure is zero:
+  \[
+    p_i\Delta x_i+p_j\Delta x_j=\delta-\delta=0.
+  \]
+
+  To first order, the utility change is
+  \[
+    \Delta u
+    \approx
+    \delta\left(
+      \frac{\partial u(x)/\partial x_i}{p_i}
+      -
+      \frac{\partial u(x)/\partial x_j}{p_j}
+    \right).
+  \]
+
+  If the expression in parentheses is positive, the current bundle is not optimal.
+  \sources{Dixit, Optimization in Economic Theory, printed pp. 4--8; canonical
+  notation adapted to Lecture 5.}
+\end{frame}
+
+\begin{frame}{At an Interior Optimum, No Money Switch Pays}
+  If both goods are consumed in strictly positive amounts, both reallocation
+  directions are feasible. Therefore,
+  \[
+    \boxed{
+      \frac{\partial u(x^*)/\partial x_i}{p_i}
+      =
+      \frac{\partial u(x^*)/\partial x_j}{p_j}
+      =\lambda_w.}
+  \]
+
+  Equivalently,
+  \[
+    \nabla u(x^*)=\lambda_w p,
+    \qquad
+    \frac{\partial u(x^*)/\partial x_i}{\partial u(x^*)/\partial x_j}
+    =\frac{p_i}{p_j}.
+  \]
+
+  \begin{block}{Interpretation}
+    Each consumed good produces the same marginal utility per unit of money.
+    Under the smooth value-function assumptions,
+    $\lambda_w=\partial v(p,w)/\partial w$.
+  \end{block}
+  \sources{Dixit, printed pp. 4--8; Graduate Microeconomics I, Lecture 5,
+  slides 19--20; Osborne, multiplier interpretation.}
+\end{frame}
+
+\begin{frame}{A Monotone Transformation Simplifies Cobb--Douglas}
+  Let
+  \[
+    u(x_1,x_2)=x_1^\alpha x_2^{1-\alpha},
+    \qquad 0<\alpha<1.
+  \]
+  Because $\log$ is strictly increasing,
+  \[
+    \arg\max_{x\in B(p,w)}u(x)
+    =
+    \arg\max_{x\in B(p,w)}
+    \left[\alpha\log x_1+(1-\alpha)\log x_2\right].
+  \]
+
+  With local nonsatiation, use the binding budget and write
+  \[
+    \mathcal L(x,\lambda_w)
+    =\alpha\log x_1+(1-\alpha)\log x_2
+     +\lambda_w(w-p_1x_1-p_2x_2).
+  \]
+
+  The maximizing bundle is unchanged by the transformation; the numerical value
+  of the multiplier is not.
+  \sources{Osborne, Optimization: definitions and Example 6.1.1.3; Graduate
+  Microeconomics I, Lecture 5, slide 18.}
+\end{frame}
+
+\begin{frame}{Cobb--Douglas Demand Allocates Fixed Shares of Wealth}
+  The first-order conditions are
+  \[
+    \frac{\alpha}{x_1}=\lambda_w p_1,
+    \qquad
+    \frac{1-\alpha}{x_2}=\lambda_w p_2,
+    \qquad
+    p_1x_1+p_2x_2=w.
+  \]
+  Multiplying the first two equations by $x_1$ and $x_2$ gives
+  \[
+    \alpha=\lambda_w p_1x_1,
+    \qquad
+    1-\alpha=\lambda_w p_2x_2.
+  \]
+  Summing and using the budget yields $\lambda_w=1/w$, so
+  \[
+    \boxed{
+      x_1(p,w)=\frac{\alpha w}{p_1},
+      \qquad
+      x_2(p,w)=\frac{(1-\alpha)w}{p_2}.}
+  \]
+
+  The consumer spends the shares $\alpha$ and $1-\alpha$ of wealth on the two goods.
+  \sources{Osborne, Example 6.1.1.3; Dixit, Cobb--Douglas example, printed
+  pp. 19--25.}
+\end{frame}
+
+\begin{frame}{Perfect Substitutes Turn Tangency into a Comparison}
+  Let $u(x_1,x_2)=a x_1+b x_2$, where $a,b>0$. Marginal utility per unit of
+  money is constant:
+  \[
+    \frac{a}{p_1}
+    \qquad\text{and}\qquad
+    \frac{b}{p_2}.
+  \]
+
+  \begin{definitionbox}[Walrasian Demand]
+    \[
+      x(p,w)=
+      \begin{cases}
+        \{(w/p_1,0)\}, & a/p_1>b/p_2,\\[.25em]
+        \{(0,w/p_2)\}, & a/p_1<b/p_2,\\[.25em]
+        \{x\in\mathbb R_+^2:p\cdot x=w\}, & a/p_1=b/p_2.
+      \end{cases}
+    \]
+  \end{definitionbox}
+
+  Unless the two returns are equal, the optimum is a corner rather than a tangency.
+  \sources{Dixit, corner solutions, printed pp. 6--8; standard consumer theory.}
+\end{frame}
+
+\begin{frame}{Leontief Utility Is Solved at the Kink}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.56\textwidth}
+      Let
+      \[
+        u(x_1,x_2)=\min\{a x_1,b x_2\},
+        \qquad a,b>0.
+      \]
+      Unmatched units do not raise utility, so an optimum satisfies
+      \[
+        a x_1=b x_2.
+      \]
+      Together with $p_1x_1+p_2x_2=w$,
+      \[
+        \boxed{
+        x_1(p,w)=\frac{bw}{bp_1+ap_2},
+        \qquad
+        x_2(p,w)=\frac{aw}{bp_1+ap_2}.}
+      \]
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=.70]
+        \draw[->,slidegray] (0,0) -- (5.8,0) node[right] {$x_1$};
+        \draw[->,slidegray] (0,0) -- (0,5.2) node[above] {$x_2$};
+        \foreach \k in {1.1,1.8,2.5} {
+          \draw[contour] (\k,5) -- (\k,\k) -- (5.5,\k);
+        }
+        \draw[densely dashed,slidegray] (0,0) -- (4.7,4.7) node[above right] {$a x_1=b x_2$};
+        \draw[feasible] (.45,4.7) -- (5.3,.45);
+        \fill[slidegold] (2.575,2.575) circle (2.5pt) node[below right] {$x^*$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \vspace{.4em}
+  Ordinary smooth tangency conditions do not apply at the economically relevant kink.
+  \sources{Standard Leontief consumer problem; geometric method consistent with
+  Osborne's emphasis on boundary and nonsmooth cases.}
+\end{frame}
+
+\begin{frame}{Kuhn--Tucker for the Consumer Problem}
+  Use $g_w(x)=w-p\cdot x\geq0$ and $g_i(x)=x_i\geq0$, $i=1,\ldots,L$,
+  with nonnegative multipliers $\lambda_w$ and $\lambda_i$. Then
+  \[
+    \mathcal L(x,\lambda_w,\lambda)
+    =u(x)+\lambda_w(w-p\cdot x)+\sum_{i=1}^L\lambda_i x_i.
+  \]
+  With local nonsatiation, the budget binds. For every good, stationarity and
+  complementary slackness give
+  \[
+    \frac{\partial u(x^*)}{\partial x_i}-\lambda_w p_i+\lambda_i=0,
+    \qquad
+    \lambda_i x_i^*=0.
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      If $x_i^*>0$, then $\lambda_i=0$ and
+      \[
+        \frac{\partial u(x^*)/\partial x_i}{p_i}=\lambda_w.
+      \]
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      If $x_i^*=0$, then
+      \[
+        \frac{\partial u(x^*)/\partial x_i}{p_i}\leq\lambda_w.
+      \]
+    \end{column}
+  \end{columns}
+  \sources{Graduate Microeconomics I, Lecture 5, slides 14--20; Osborne,
+  nonnegativity conditions.}
+\end{frame}
+
+\begin{frame}{Every Case Asks the Same Question}
+  \begin{block}{Central Question}
+    \centering
+    \Large Is there a feasible direction that raises the objective?
+  \end{block}
+
+  \vspace{.45em}
+  \begin{enumerate}
+    \item Write the objective and the feasible set.
+    \item Establish existence and uniqueness separately.
+    \item Identify whether the candidate is interior, on a smooth boundary, at a
+    corner, or at a kink.
+    \item Generate candidates using first-order conditions, Lagrange,
+    Kuhn--Tucker, or geometry.
+    \item Verify feasibility, complementary slackness, and global optimality.
+  \end{enumerate}
+
+  \vspace{.4em}
+  \centering
+  \textcolor{slideblue}{\bfseries First-order conditions reduce the search;
+  assumptions and verification finish it.}
+  \sources{Osborne, Optimization summary; synthesis of the lecture.}
+\end{frame}
+
+\end{document}
