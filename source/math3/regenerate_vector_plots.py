@@ -1,7 +1,8 @@
-"""Regenerate the math3 notebook plots as vector PDF/SVG assets.
+"""Regenerate the clean Day 3 Matplotlib figures as PDF and SVG assets.
 
-The plotting logic is transcribed from UtilityPlots.ipynb and
-convexity(2).ipynb. Existing PNG assets and notebooks are left untouched.
+The palette is the one used in the original utility notebooks.  The figure
+sizes and type sizes are chosen for the final Beamer placements, so labels
+remain readable after the vector art is scaled on a slide.
 """
 
 from pathlib import Path
@@ -13,19 +14,35 @@ matplotlib.use("Agg")
 import matplotlib.patheffects as path_effects
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.lines import Line2D
 
 
 OUTPUT_DIR = Path(__file__).resolve().parent
+
+# Canonical notebook palette.
 CHAD_BLUE = (0.1, 0.1, 0.5)
 CHAD_GREEN = (0.0, 0.4, 0.0)
+SIGNAL_RED = (1.0, 0.0, 0.0)
+NEUTRAL_GRAY = (0.40, 0.40, 0.40)
+
 LEVELS = [0.5, 0.8, 1.2, 1.8, 2.6]
 T_VALUES = [0.35, 0.50, 0.65, 0.80, 1.00]
+PLOT_STEMS = ("2d-plot", "3d-plot", "monotonicity")
 
 
 plt.rcParams.update(
     {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
         "font.size": 16,
+        "mathtext.fontset": "cm",
+        "axes.labelsize": 18,
+        "xtick.labelsize": 13,
+        "ytick.labelsize": 13,
+        "axes.edgecolor": NEUTRAL_GRAY,
+        "axes.linewidth": 0.8,
+        "grid.color": NEUTRAL_GRAY,
+        "grid.alpha": 0.18,
+        "grid.linewidth": 0.6,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
         "svg.fonttype": "path",
@@ -47,167 +64,165 @@ def save_vector_pair(fig: plt.Figure, stem: str) -> None:
         fig.savefig(
             OUTPUT_DIR / f"{stem}.{suffix}",
             bbox_inches="tight",
+            pad_inches=0.035,
             facecolor="white",
         )
+    svg_path = OUTPUT_DIR / f"{stem}.svg"
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
     plt.close(fig)
 
 
-def make_2d_plot() -> None:
-    x1 = np.linspace(0.1, 5, 300)
-    x2 = np.linspace(0.1, 5, 300)
-    x1_grid, x2_grid = np.meshgrid(x1, x2)
-    utility = np.sqrt(x1_grid * x2_grid)
+def style_2d_axes(ax: plt.Axes) -> None:
+    ax.set_xlim(0.1, 5.0)
+    ax.set_ylim(0.1, 5.0)
+    ax.set_xticks([1, 2, 3, 4, 5])
+    ax.set_yticks([1, 2, 3, 4, 5])
+    ax.set_xlabel(r"$x_1$")
+    ax.set_ylabel(r"$x_2$", rotation=0, labelpad=12)
+    ax.grid(True)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.set_aspect("equal", adjustable="box")
 
-    fig, ax = plt.subplots(figsize=(7, 6))
+
+def utility_grid(points: int = 500) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    x1 = np.linspace(0.1, 5.0, points)
+    x2 = np.linspace(0.1, 5.0, points)
+    x1_grid, x2_grid = np.meshgrid(x1, x2)
+    return x1_grid, x2_grid, np.sqrt(x1_grid * x2_grid)
+
+
+def add_utility_contours(
+    ax: plt.Axes,
+    x1: np.ndarray,
+    x2: np.ndarray,
+    utility: np.ndarray,
+    *,
+    show_labels: bool = True,
+) -> None:
     contours = ax.contour(
-        x1_grid,
-        x2_grid,
+        x1,
+        x2,
         utility,
         levels=LEVELS,
         colors=COLORS,
-        linewidths=2,
+        linewidths=2.2,
     )
-    ax.clabel(
-        contours,
-        inline=True,
-        fontsize=9,
-        fmt=LABELS,
-        manual=[(level, level) for level in LEVELS],
-    )
-    ax.set_xlabel(r"$x_1$", color="black")
-    ax.set_ylabel(r"$x_2$", color="black")
-    ax.set_title(
-        r"Indifference Curves: $u(x_1,x_2)=x_1^{1/2}x_2^{1/2}$",
-        pad=30,
-    )
-    ax.grid(True, alpha=0.25)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    handles = [
-        Line2D([0], [0], color=COLORS[index], lw=2, label=LABELS[level])
-        for index, level in enumerate(LEVELS)
-    ]
-    ax.legend(handles=handles, loc="upper right", frameon=False)
-    fig.tight_layout()
+    if show_labels:
+        ax.clabel(
+            contours,
+            inline=True,
+            inline_spacing=2,
+            use_clabeltext=True,
+            fontsize=13,
+            fmt=LABELS,
+            manual=[(level, level) for level in LEVELS],
+        )
+
+
+def make_2d_plot() -> None:
+    x1, x2, utility = utility_grid()
+    fig, ax = plt.subplots(figsize=(4.25, 3.45))
+    add_utility_contours(ax, x1, x2, utility)
+    style_2d_axes(ax)
+    fig.tight_layout(pad=0.35)
     save_vector_pair(fig, "2d-plot")
 
 
 def make_3d_plot() -> None:
-    x1 = np.linspace(0.1, 5, 300)
-    x2 = np.linspace(0.1, 5, 300)
-    x1_grid, x2_grid = np.meshgrid(x1, x2)
-    utility = np.sqrt(x1_grid * x2_grid)
-
-    fig = plt.figure(figsize=(9, 7))
+    x1, x2, utility = utility_grid(points=120)
+    fig = plt.figure(figsize=(4.55, 3.55))
     ax = fig.add_subplot(111, projection="3d")
-    surface_color = (CHAD_GREEN[0], CHAD_GREEN[1], CHAD_GREEN[2], 0.08)
     ax.plot_surface(
-        x1_grid,
-        x2_grid,
+        x1,
+        x2,
         utility,
-        color=surface_color,
-        rstride=4,
-        cstride=4,
-        linewidth=0.2,
+        color=CHAD_GREEN,
+        alpha=0.11,
+        rcount=42,
+        ccount=42,
+        linewidth=0,
         antialiased=True,
+        shade=False,
     )
     ax.contour(
-        x1_grid,
-        x2_grid,
+        x1,
+        x2,
         utility,
         levels=LEVELS,
         colors=COLORS,
-        linewidths=2,
+        linewidths=2.2,
     )
-    ax.set_xlabel(r"$x_1$", color="black")
-    ax.set_ylabel(r"$x_2$", color="black")
-    ax.set_zlabel(r"$u(x_1,x_2)$", color="black")
-    ax.set_title(
-        r"Utility Surface + Indifference Curves: "
-        r"$u(x_1,x_2)=x_1^{1/2}x_2^{1/2}$",
-        y=1.02,
-    )
-    fig.tight_layout()
+    ax.set_xlim(0, 5)
+    ax.set_ylim(0, 5)
+    ax.set_zlim(0, 5)
+    ax.set_xticks([0, 1, 2, 3, 4, 5])
+    ax.set_yticks([0, 1, 2, 3, 4, 5])
+    ax.set_zticks([0, 1, 2, 3, 4, 5])
+    ax.set_xlabel(r"$x_1$", labelpad=4)
+    ax.set_ylabel(r"$x_2$", labelpad=4)
+    ax.set_zlabel(r"$u(x_1,x_2)$", labelpad=5)
+    ax.view_init(elev=25, azim=-58)
+    ax.set_box_aspect((1, 1, 0.82))
+    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
+        axis.pane.set_facecolor((1, 1, 1, 0))
+        axis.pane.set_edgecolor((1, 1, 1, 0))
+    ax.grid(True, alpha=0.18)
+    fig.subplots_adjust(left=0.01, right=0.91, bottom=0.02, top=0.98)
     save_vector_pair(fig, "3d-plot")
 
 
 def make_monotonicity_plot() -> None:
-    x1 = np.linspace(0.1, 5, 400)
-    x2 = np.linspace(0.1, 5, 400)
-    x1_grid, x2_grid = np.meshgrid(x1, x2)
-    utility = np.sqrt(x1_grid * x2_grid)
+    x1, x2, utility = utility_grid()
+    fig, ax = plt.subplots(figsize=(4.25, 3.45))
+    add_utility_contours(ax, x1, x2, utility, show_labels=False)
+    style_2d_axes(ax)
 
-    fig, ax = plt.subplots(figsize=(7, 6))
-    contours = ax.contour(
-        x1_grid,
-        x2_grid,
-        utility,
-        levels=LEVELS,
-        colors=COLORS,
-        linewidths=2,
-    )
-    ax.clabel(
-        contours,
-        inline=True,
-        inline_spacing=1,
-        use_clabeltext=True,
-        fontsize=9,
-        fmt=LABELS,
-        manual=[(level, level) for level in LEVELS],
-    )
-    ax.scatter([1], [1], s=30, color="red", zorder=5)
-    ax.annotate(
-        "",
-        xy=(1, 4.75),
-        xytext=(1, 1),
-        arrowprops={"arrowstyle": "->", "color": "red", "lw": 2},
-    )
-    ax.annotate(
-        "",
-        xy=(4.75, 1),
-        xytext=(1, 1),
-        arrowprops={"arrowstyle": "->", "color": "red", "lw": 2},
-    )
+    ax.scatter([1], [1], s=34, color=SIGNAL_RED, zorder=5)
+    arrow = {"arrowstyle": "->", "color": SIGNAL_RED, "lw": 2.2}
+    ax.annotate("", xy=(1, 4.75), xytext=(1, 1), arrowprops=arrow)
+    ax.annotate("", xy=(4.75, 1), xytext=(1, 1), arrowprops=arrow)
+
     horizontal_text = ax.text(
-        2.8,
-        0.55,
-        "If $x_1$ increases,\nutility will increase",
-        color="red",
-        fontsize=12,
+        2.85,
+        0.58,
+        "If $x_1$ increases,\nutility increases",
+        color=SIGNAL_RED,
+        fontsize=13,
         ha="center",
+        va="center",
     )
     vertical_text = ax.text(
-        0.65,
+        0.63,
         3.0,
-        "If $x_2$ increases,\nutility will increase",
-        color="red",
-        fontsize=12,
+        "If $x_2$ increases,\nutility increases",
+        color=SIGNAL_RED,
+        fontsize=13,
+        ha="center",
         va="center",
         rotation=90,
     )
     for text in (horizontal_text, vertical_text):
         text.set_path_effects(
             [
-                path_effects.Stroke(linewidth=2.5, foreground="white"),
+                path_effects.Stroke(linewidth=2.7, foreground="white"),
                 path_effects.Normal(),
             ]
         )
-    ax.set_xlabel(r"$x_1$", color="black")
-    ax.set_ylabel(r"$x_2$", color="black")
-    ax.set_title("Strict Monotonicity", pad=30)
-    ax.grid(True, alpha=0.25)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    handles = [
-        Line2D([0], [0], color=COLORS[index], lw=2, label=LABELS[level])
-        for index, level in enumerate(LEVELS)
-    ]
-    ax.legend(handles=handles, loc="upper right", frameon=False)
-    fig.tight_layout()
+
+    fig.tight_layout(pad=0.35)
     save_vector_pair(fig, "monotonicity")
 
 
-if __name__ == "__main__":
+def make_all() -> None:
     make_2d_plot()
     make_3d_plot()
     make_monotonicity_plot()
+
+
+if __name__ == "__main__":
+    make_all()

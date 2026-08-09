@@ -3,19 +3,13 @@
 
 \usepackage{hyperref}
 \usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{arrows.meta,calc,positioning}
-\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta}
 \setbeameroption{hide notes}
 
 \tikzset{
   flowbox/.style={draw=slideblue,fill=slideblue!5,rounded corners=1pt,
     minimum height=.75cm,align=center,inner xsep=7pt},
-  flowarrow/.style={-{Latex[length=2.2mm]},very thick,draw=slideblue},
-  feasible/.style={very thick,draw=slidegray},
-  contour/.style={thick,draw=slideblue!70},
-  improve/.style={-{Latex[length=2.4mm]},very thick,draw=slidegreen},
-  normal/.style={-{Latex[length=2.4mm]},very thick,draw=slidered}
+  flowarrow/.style={-{Latex[length=2.2mm]},very thick,draw=slideblue}
 }
 
 \title{\textbf{Mathematics Bootcamp}}
@@ -147,28 +141,7 @@
 
 \begin{frame}{If the Slope Is Nonzero, Improvement Is Possible}
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-      width=.88\textwidth,height=.66\textheight,
-      axis lines=middle,xmin=-2.25,xmax=2.25,ymin=-.8,ymax=5.0,
-      ticks=none,xlabel={$x$},ylabel={},
-      xlabel style={at={(axis description cs:1,.17)},anchor=north east},
-      ylabel style={at={(axis description cs:.53,1)},anchor=north west},
-      clip=false]
-      \addplot[very thick,slideblue,domain=-2.15:2.15,samples=120]{4-x^2};
-      \addplot[very thick,slidegold,domain=-1.55:-.85]{2.56+2.4*(x+1.2)};
-      \addplot[very thick,slidegreen,domain=-.38:.38]{4};
-      \addplot[very thick,slidered,domain=.85:1.55]{2.56-2.4*(x-1.2)};
-      \addplot[only marks,mark=*,mark size=2.2pt,slidegold] coordinates {(-1.2,2.56)};
-      \addplot[only marks,mark=*,mark size=2.2pt,slidegreen] coordinates {(0,4)};
-      \addplot[only marks,mark=*,mark size=2.2pt,slidered] coordinates {(1.2,2.56)};
-      \node[slidegold,align=center] at (axis cs:-1.23,1.25) {$f'(x)>0$\\move right};
-      \node[slidegreen,align=center] at (axis cs:0,4.58) {$f'(x^*)=0$};
-      \node[slidered,align=center] at (axis cs:1.23,1.25) {$f'(x)<0$\\move left};
-      \draw[densely dashed,slidegray] (axis cs:0,0) -- (axis cs:0,4);
-      \node[below] at (axis cs:0,0) {$x^*$};
-    \end{axis}
-  \end{tikzpicture}
+  \includegraphics[width=.88\textwidth]{foc-slope.pdf}
   \sources{Osborne, Necessary conditions for an interior optimum; Sundaram,
   Figure 4.2 and Theorem 4.1.}
 \end{frame}
@@ -199,46 +172,10 @@
 \end{frame}
 
 \begin{frame}{A Critical Point Is Only a Candidate}
-  \begin{columns}[c,onlytextwidth]
-    \begin{column}{.315\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
-          xmin=-1.5,xmax=1.5,ymin=-2.1,ymax=.7,ticks=none]
-          \addplot[very thick,slideblue,domain=-1.35:1.35]{-x^2};
-          \addplot[only marks,mark=*,mark size=2pt,slidegreen] coordinates {(0,0)};
-        \end{axis}
-      \end{tikzpicture}
-      $f(x)=-x^2$\\[.2em]
-      \textcolor{slidegreen}{local and global maximum}
-    \end{column}
-    \begin{column}{.315\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
-          xmin=-1.5,xmax=1.5,ymin=-.7,ymax=2.1,ticks=none]
-          \addplot[very thick,slideblue,domain=-1.35:1.35]{x^2};
-          \addplot[only marks,mark=*,mark size=2pt,slidered] coordinates {(0,0)};
-        \end{axis}
-      \end{tikzpicture}
-      $f(x)=x^2$\\[.2em]
-      \textcolor{slidered}{local and global minimum}
-    \end{column}
-    \begin{column}{.315\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[width=\linewidth,height=3.4cm,axis lines=middle,
-          xmin=-1.35,xmax=1.35,ymin=-2.1,ymax=2.1,ticks=none]
-          \addplot[very thick,slideblue,domain=-1.25:1.25]{x^3};
-          \addplot[only marks,mark=*,mark size=2pt,slidegold] coordinates {(0,0)};
-        \end{axis}
-      \end{tikzpicture}
-      $f(x)=x^3$\\[.2em]
-      \textcolor{slidegold}{neither}
-    \end{column}
-  \end{columns}
+  \centering
+  \includegraphics[width=.96\textwidth]{critical-points.pdf}
 
-  \vspace{.65em}
+  \vspace{.4em}
   All three satisfy $f'(0)=0$. Moreover, a boundary maximizer need not satisfy
   $f'(x)=0$ because movement may be possible in only one direction.
   \sources{Osborne, Necessary conditions for an interior optimum; Sundaram,
@@ -268,17 +205,7 @@
     \end{column}
     \begin{column}{.47\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.82]
-        \draw[->,slidegray] (-.3,0) -- (5.4,0) node[right] {$x_1$};
-        \draw[->,slidegray] (0,-.3) -- (0,4.8) node[above] {$x_2$};
-        \foreach \r in {0.65,1.2,1.75} {
-          \draw[contour] (2.7,2.35) ellipse ({1.25*\r} and {.78*\r});
-        }
-        \fill[slidegold] (1.55,1.65) circle (2pt) node[below left] {$x$};
-        \draw[normal] (1.55,1.65) -- (2.62,2.30) node[midway,above left] {$\nabla f(x)$};
-        \draw[improve] (1.55,1.65) -- (2.1,1.15) node[right] {$d$};
-        \node[slideblue] at (3.9,4.05) {level sets of $f$};
-      \end{tikzpicture}
+      \includegraphics[width=.96\linewidth]{gradient-directions.pdf}
     \end{column}
   \end{columns}
   \sources{Osborne, Proposition 5.1.2; Sundaram, Section 4.5, directional-derivative proof.}
@@ -340,16 +267,7 @@
     \end{column}
     \begin{column}{.48\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.87]
-        \draw[->,slidegray] (-.2,0) -- (5.3,0) node[right] {$x_1$};
-        \draw[->,slidegray] (0,-.2) -- (0,4.5) node[above] {$x_2$};
-        \draw[feasible] (.3,.7) .. controls (1.4,2.5) and (3.4,1.2) .. (5,3.4)
-          node[right] {$g(x)=0$};
-        \coordinate (p) at (2.55,1.75);
-        \fill[slidegold] (p) circle (2.2pt) node[below right] {$x$};
-        \draw[improve] ($(p)+(-1.05,-.35)$) -- ($(p)+(.95,.32)$) node[right] {$d$};
-        \draw[normal] (p) -- ($(p)+(-.4,1.25)$) node[left] {$\nabla g(x)$};
-      \end{tikzpicture}
+      \includegraphics[width=.96\linewidth]{constraint-tangent.pdf}
     \end{column}
   \end{columns}
   \sources{Osborne, Equality constraints: motivation; Chong and Zak, tangent and
@@ -372,19 +290,7 @@
     \end{column}
     \begin{column}{.53\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.83]
-        \draw[->,slidegray] (-.2,0) -- (6,0) node[right] {$x_1$};
-        \draw[->,slidegray] (0,-.2) -- (0,5) node[above] {$x_2$};
-        \foreach \r in {1.0,1.55,2.1} {
-          \draw[contour] (4.1,3.8) ellipse ({1.15*\r} and {.78*\r});
-        }
-        \draw[feasible] (.35,4.35) -- (5.65,.65) node[right] {$g(x)=0$};
-        \coordinate (p) at (2.3,2.99);
-        \fill[slidegold] (p) circle (2.2pt) node[below left] {$x$};
-        \draw[improve] (p) -- ($(p)+(.95,-.66)$) node[below right] {$d$};
-        \node[slideblue] at (4.7,4.65) {higher $f$};
-        \draw[flowarrow,draw=slideblue!70] (4.45,4.45) -- (4.12,4.02);
-      \end{tikzpicture}
+      \includegraphics[width=.96\linewidth]{crossing-level-set.pdf}
     \end{column}
   \end{columns}
   \sources{Osborne, Equality constraints: necessary conditions, motivation.}
@@ -407,18 +313,7 @@
     \end{column}
     \begin{column}{.53\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.83]
-        \draw[->,slidegray] (-.2,0) -- (6,0) node[right] {$x_1$};
-        \draw[->,slidegray] (0,-.2) -- (0,5) node[above] {$x_2$};
-        \coordinate (c) at (4.1,3.8);
-        \coordinate (p) at (2.9,2.9);
-        \foreach \r in {1.5,2.05,2.6} {\draw[contour] (c) circle (\r cm);}
-        \draw[feasible] (.35,4.81) -- (5.45,1.41) node[right] {$g(x)=0$};
-        \fill[slidegold] (p) circle (2.2pt) node[below left] {$x^*$};
-        \draw[normal] (p) -- ($(p)+(1.05,.79)$) node[above] {$\nabla f(x^*)$};
-        \draw[normal] (p) -- ($(p)+(-.92,-.69)$) node[below] {$\lambda^*\nabla g(x^*)$};
-        \node[slideblue] at (4.85,4.55) {higher $f$};
-      \end{tikzpicture}
+      \includegraphics[width=.90\linewidth]{lagrange-tangency.pdf}
     \end{column}
   \end{columns}
   \sources{Osborne, Equality constraints: necessary conditions; Chong and Zak,
@@ -504,17 +399,7 @@
     \end{column}
     \begin{column}{.49\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.72]
-        \draw[contour] (3.6,3.0) ellipse (1.0 and .65);
-        \draw[contour] (3.6,3.0) ellipse (1.55 and 1.0);
-        \draw[contour] (3.6,3.0) ellipse (2.1 and 1.35);
-        \draw[feasible] (.4,3.9) -- (5.9,.85)
-          node[below right,yshift=-2pt] {$c$};
-        \draw[feasible,dashed] (.8,4.25) -- (6.3,1.2)
-          node[above right,yshift=2pt] {$c+\Delta c$};
-        \draw[improve] (3.0,2.46) -- (3.35,2.82)
-          node[right] {$\Delta F\approx\lambda^*\Delta c$};
-      \end{tikzpicture}
+      \includegraphics[width=.98\linewidth]{multiplier-relaxation.pdf}
     \end{column}
   \end{columns}
   \sources{Sundaram, Section 5.2.3; Osborne, Interpretation of Lagrange multipliers.}
@@ -799,16 +684,7 @@
     \end{column}
     \begin{column}{.42\textwidth}
       \centering
-      \begin{tikzpicture}[scale=.70]
-        \draw[->,slidegray] (0,0) -- (5.8,0) node[right] {$x_1$};
-        \draw[->,slidegray] (0,0) -- (0,5.2) node[above] {$x_2$};
-        \foreach \k in {1.1,1.8,2.5} {
-          \draw[contour] (\k,5) -- (\k,\k) -- (5.5,\k);
-        }
-        \draw[densely dashed,slidegray] (0,0) -- (4.7,4.7) node[above right] {$a x_1=b x_2$};
-        \draw[feasible] (.45,4.7) -- (5.3,.45);
-        \fill[slidegold] (2.575,2.575) circle (2.5pt) node[below right] {$x^*$};
-      \end{tikzpicture}
+      \includegraphics[width=.98\linewidth]{leontief-kink.pdf}
     \end{column}
   \end{columns}
 
