@@ -1,3 +1,4 @@
+\pdfminorversion=7
 \documentclass[11pt,aspectratio=169,t]{beamer}
 \input{slides_header.tex}
 \usepackage{tikz}
@@ -42,8 +43,8 @@
     \column{\tightcolumnwidth}
     \vspace{-2em}
 \begin{itemize}
-    \item It is important to reflect on the fact that these statements have \textbf{truth value}, i.e. they could be true or false.
-    \item With the elements of logic, we can justify its truth-value.
+    \item Mathematical statements have a \textbf{truth value}: each is either true or false.
+    \item Logic tells us which conclusions follow from stated assumptions.
     \item Most of what follows is taken from Velleman's book.
 \end{itemize}
 
@@ -139,27 +140,28 @@ F & T \\
 \end{columns}
 \end{frame}
 
-\begin{frame}{Quantifiers and De Morgan's Laws}
-\vspace{0.2cm}
-\begin{center}
-\begin{minipage}{0.82\linewidth}
-\large
-\textbf{De Morgan's laws}
-\begin{align*}
-\neg(P\land Q) &\text{ is equivalent to } \neg P\lor\neg Q.\\
-\neg(P\lor Q) &\text{ is equivalent to } \neg P\land\neg Q.
-\end{align*}
+\begin{frame}{Quantifiers and Negation}
+\begin{definitionbox}[Quantifiers]
+Fix a domain $X$. A quantifier binds the variable $x$:
+\[
+\begin{aligned}
+\forall x\in X\;P(x)&:&& P(x)\text{ holds for every }x\in X,\\
+\exists x\in X\;P(x)&:&& P(x)\text{ holds for at least one }x\in X.
+\end{aligned}
+\]
+An occurrence of $x$ outside the scope of a quantifier is \emph{free}.
+\end{definitionbox}
 
-\textbf{Quantifier Negation laws}
+\textbf{Negation laws}\qquad($\Longleftrightarrow$ means ``logically equivalent'')
 \begin{align*}
-\neg\exists x\,P(x) &\text{ is equivalent to } \forall x\,\neg P(x).\\
-\neg\forall x\,P(x) &\text{ is equivalent to } \exists x\,\neg P(x).
+\neg(P\land Q)&\Longleftrightarrow \neg P\lor\neg Q,
+&\neg(P\lor Q)&\Longleftrightarrow \neg P\land\neg Q,\\
+\neg\bigl[\exists x\in X\;P(x)\bigr]&\Longleftrightarrow \forall x\in X\;\neg P(x),
+&\neg\bigl[\forall x\in X\;P(x)\bigr]&\Longleftrightarrow \exists x\in X\;\neg P(x).
 \end{align*}
-\end{minipage}
-\end{center}
 \end{frame}
 
-\begin{frame}{1. Implication: $P \rightarrow Q$}
+\begin{frame}{Implication: $P \rightarrow Q$}
 \begin{truthtable}
 \begin{array}{ccc}
 \toprule
@@ -172,9 +174,12 @@ F & F & T \\
 \bottomrule
 \end{array}
 \end{truthtable}
+\begin{center}
+$P\rightarrow Q$ is false only when $P$ is true and $Q$ is false.
+\end{center}
 \end{frame}
 
-\begin{frame}{2. Contrapositive: $\lnot Q \rightarrow \lnot P$}
+\begin{frame}{The Contrapositive Is Equivalent}
 \begin{truthtable}
 \begin{array}{cccccc}
 \toprule
@@ -187,9 +192,13 @@ F & F & T & T & T & T \\
 \bottomrule
 \end{array}
 \end{truthtable}
+\begin{center}
+$P\rightarrow Q$ and $\neg Q\rightarrow\neg P$ have identical truth values.
+Thus either statement may be proved by proving the other.
+\end{center}
 \end{frame}
 
-\begin{frame}{3. Contradiction: $\lnot(P \land \lnot Q)$ vs $P \rightarrow Q$}
+\begin{frame}{Proof by Contradiction}
 \begin{truthtable}
 \begin{array}{cccccc}
 \toprule
@@ -202,33 +211,23 @@ F & F & T & F & T & T \\
 \bottomrule
 \end{array}
 \end{truthtable}
+
+\begin{propositionbox}[Method for proving $P\rightarrow Q$]
+Assume $P$ and $\neg Q$. If these assumptions imply a contradiction $\bot$, then
+$P\land\neg Q$ is impossible. Therefore $P\rightarrow Q$.
+\end{propositionbox}
 \end{frame}
 
-\begin{frame}{4. Proofs by Induction}
-
-{\small
-\textbf{1.2.2 Principle of Mathematical Induction}\quad
-\emph{Let $S$ be a subset of $\mathbb{N}$ that possesses the two properties:}
+\begin{frame}{Mathematical Induction}
+\begin{theorembox}[Principle of Mathematical Induction]
+Let $\mathbb N=\{1,2,3,\ldots\}$ and fix $n_0\in\mathbb N$.  For each natural
+number $n\geq n_0$, let $P(n)$ be a statement. Suppose that:
 \begin{enumerate}
-    \setlength{\itemsep}{0.15em}
-    \setlength{\topsep}{0.2em}
-    \item \emph{The number $1\in S$.}
-    \item \emph{For every $k\in\mathbb{N}$, if $k\in S$, then $k+1\in S$.}
+    \item $P(n_0)$ is true.
+    \item For every $k\geq n_0$, if $P(k)$ is true, then $P(k+1)$ is true.
 \end{enumerate}
-\par\noindent\hspace*{2em}\emph{Then we have $S=\mathbb{N}$.}
-
-\vspace{0.45cm}
-\textbf{1.2.3 Principle of Mathematical Induction (second version)}\quad
-\emph{Let $n_0\in\mathbb{N}$ and let $P(n)$ be a statement for each natural number $n\geq n_0$. Suppose that:}
-\begin{enumerate}
-    \setlength{\itemsep}{0.15em}
-    \setlength{\topsep}{0.2em}
-    \item \emph{The statement $P(n_0)$ is true.}
-    \item \emph{For all $k\geq n_0$, the truth of $P(k)$ implies the truth of $P(k+1)$.}
-\end{enumerate}
-\par\noindent\hspace*{2em}\emph{Then $P(n)$ is true for all $n\geq n_0$.}
-}
-
+Then $P(n)$ is true for every natural number $n\geq n_0$.
+\end{theorembox}
 \end{frame}
 
 
@@ -314,7 +313,10 @@ Suppose $A$ and $B$ are sets. We will say that $A$ is a \emph{subset} of $B$ if 
 \end{definitionbox}
 
 \begin{itemize}
-    \item Given a set $A \subseteq U$, define the \textit{complement} $A^C$
+    \item Given $A\subseteq U$, its \emph{complement in $U$} is
+    \[
+    A^c=U\setminus A=\{x\in U\mid x\notin A\}.
+    \]
     \item De Morgan's Laws also apply in Sets:
     \[
     \begin{aligned}
@@ -363,18 +365,19 @@ A\times B=\{(a,b)\mid a\in A\text{ and }b\in B\}.
 \end{frame}
 
 \begin{frame}{Binary Relations}
-\small
 \begin{definitionbox}[Definition 4.2.1]
-Suppose $A$ and $B$ are sets. Then a set $R\subseteq A\times B$ is called a \emph{relation from $A$ to $B$}.
+Suppose $A$ and $B$ are sets. A set $R\subseteq A\times B$ is a
+\emph{relation from $A$ to $B$}. A \emph{relation on $A$} is a set
+$R\subseteq A\times A$.
 \end{definitionbox}
 
-\begin{definitionbox}[Definition 4.3.2]
-Suppose $R$ is a relation on $A$.
+\begin{definitionbox}[Properties of a Relation on $A$]
+For a relation $R$ on $A$:
 \begin{enumerate}
-    \setlength{\itemsep}{0.35em}
-    \item $R$ is said to be \emph{reflexive on $A$} (or just \emph{reflexive}, if $A$ is clear from context) if $\forall x\in A\,(xRx)$, or in other words $\forall x\in A\,((x,x)\in R)$.
-    \item $R$ is \emph{symmetric} if $\forall x\in A\,\forall y\in A\,(xRy\rightarrow yRx)$.
-    \item $R$ is \emph{transitive} if $\forall x\in A\,\forall y\in A\,\forall z\in A\,((xRy\land yRz)\rightarrow xRz)$.
+    \item \emph{Reflexive}: $xRx$ for every $x\in A$.
+    \item \emph{Complete}: $xRy$ or $yRx$ (or both) for every $x,y\in A$.
+    \item \emph{Symmetric}: $xRy\rightarrow yRx$ for every $x,y\in A$.
+    \item \emph{Transitive}: $(xRy\land yRz)\rightarrow xRz$ for every $x,y,z\in A$.
 \end{enumerate}
 \end{definitionbox}
 \end{frame}
@@ -442,13 +445,6 @@ Suppose $R$ is a relation on $A$.
 \begin{frame}[t]{Preference-Based Approach}
 \mwgscanstart
 {\centering
-    \includegraphics[height=0.74\textheight,keepaspectratio,trim=0 0 0 3pt,clip]{mwg-p021-preference.pdf}
-\par}    
-\end{frame}
-
-\begin{frame}[t]{Preference-Based Approach}
-\mwgscanstart
-{\centering
     \includegraphics[width=1\linewidth,trim=0 0 0 4pt,clip]{mwg-p022-proposition.pdf}
 \par}
 
@@ -476,14 +472,30 @@ Suppose $R$ is a relation on $A$.
 
 \end{frame}
 
+\begin{frame}{Rationalizing Choice}
+\begin{definitionbox}[Rationalization]
+A preference relation $\succeq$ \emph{rationalizes} a choice rule $C$ on
+$\mathcal B$ if, for every $B\in\mathcal B$,
+\[
+C(B)=\{x\in B:x\succeq y\text{ for every }y\in B\}.
+\]
+The choice rule is \emph{rationalizable} if some rational preference relation
+rationalizes it.
+\end{definitionbox}
+
+Thus, observed choice contains exactly the best available alternatives according
+to one complete and transitive relation.
+\end{frame}
+
 \begin{frame}{From Preferences to Choice}
 \begin{propositionbox}[WARP and Rationalizability]
-Suppose $\mathcal{B}$ contains every subset of $X$ with at most three elements.
-Then a nonempty choice rule $C$ is rationalizable if and only if it satisfies WARP.
+Suppose $\mathcal{B}$ contains every nonempty subset of $X$ with at most three
+alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathcal B$. Then $C$ is
+rationalizable if and only if it satisfies WARP.
 \end{propositionbox}
 
 \begin{itemize}
-    \item Preferences generate choices.
+    \item Rational preferences generate choice sets of best available alternatives.
     \item On this rich choice domain, WARP tells us whether observed choices can be explained by rational preferences.
 \end{itemize}
 \end{frame}

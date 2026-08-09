@@ -19,12 +19,12 @@
 \begin{frame}{Today}
 
 \begin{itemize}
-    \item Indifference as an Equivalent Relation.
-    \item Utility Function Representation
-    \item Giving Some Structure to Preferences
+    \item Indifference as an Equivalence Relation
+    \item Utility Representation
+    \item Adding Structure to Preferences
     \begin{itemize}
         \item Monotonicity
-        \item Local Non-Satiation
+        \item Local Nonsatiation
         \item Convexity
         \item Continuity
     \end{itemize}
@@ -35,7 +35,7 @@
 % --- Slide 7 ---
 \begin{frame}{Preference Relations}
   \begin{itemize}
-    \item A \textbf{preference relation} $\succeq$ is a binary relation on $X$, that is, a subset of $X \times X$ that describes how the DM ranks any two elements in X.
+    \item A \textbf{preference relation} $\succeq$ is a binary relation on $X$: a subset of $X \times X$ recording the comparisons made by the DM. It need not compare every pair unless completeness is imposed.
     \item $x \succeq y$ reads: $x$ is \textit{at least as good} as y (x is \textit{weakly better} than y).
     \vspace{1em}
     \item From $\succeq$ we derive:
@@ -71,10 +71,10 @@
   \end{block}
 
   \vspace{0.3cm}
-  Note that the indifference relation $\sim$
+  If $\succeq$ is rational, its induced indifference relation $\sim$
   \begin{enumerate}
-    \item Is an equivalence relation.
-    \item It generates equivalence classes of indifferent elements.
+    \item is an equivalence relation;
+    \item generates equivalence classes of indifferent elements.
   \end{enumerate}
 
   \vspace{0.3cm}
@@ -160,12 +160,13 @@
 \begin{frame}[t]{Represent Commodities with Ordered Lists}
 \mwgscanstart
 {\centering
-     \includegraphics[width=0.80\linewidth,trim=0 0 0 6pt,clip]{mwg-p032-p033-commodity-vector.pdf}
+     \includegraphics[width=0.72\linewidth,trim=0 0 0 6pt,clip]{mwg-p032-p033-commodity-vector.pdf}
 \par}
-\vspace{-1.3em}
+\vspace{-0.2em}
  \begin{itemize}
-     \item Notation:\\ $x \ge y$ and $x \ne y$ imply that $x_l > y_l$ for some
-$l \in \{1, \ldots, L\}$.
+     \item Coordinatewise order: $x\geq y$ iff $x_\ell\geq y_\ell$ for every
+     $\ell\in\{1,\ldots,L\}$.
+     \item Hence, $x\geq y$ and $x\ne y$ imply $x_\ell>y_\ell$ for some $\ell$.
  \end{itemize}
 \end{frame}
 
@@ -174,18 +175,19 @@ $l \in \{1, \ldots, L\}$.
 \begin{frame}{Monotonicity: More is Better}
 
 \begin{definitionbox}[Definitions]
-A preference relation $\succeq$ is\\
-\quad \emph{weakly monotone} if $x \ge y$ implies $x \succeq y$.\\
-\quad \emph{strictly monotone} if $x \ge y$ and $x \ne y$ imply
-$x \succ y$.\par
+Let $X\subseteq\mathbb{R}^L$. A preference relation $\succeq$ on $X$ is\\
+\quad \emph{weakly monotone} if $x\geq y$ implies $x\succeq y$;\\
+\quad \emph{strictly monotone} if $x\geq y$ and $x\ne y$ imply $x\succ y$,\\
+for all $x,y\in X$.\par
 
-A function $f: \mathbb{R}^L \to \mathbb{R}$ is\\
-\quad \emph{non-decreasing} if $x \ge y$ implies $f(x) \ge f(y)$ for all $x,y \in \mathbb{R}^L$;\\
-\quad \emph{strictly increasing} if $x \ge y$ and $x \ne y$ implies $f(x) > f(y)$ $ \forall x,y \in \mathbb{R}^L$.
+A function $f:X\to\mathbb{R}$ is\\
+\quad \emph{non-decreasing} if $x\geq y$ implies $f(x)\geq f(y)$;\\
+\quad \emph{strictly increasing} if $x\geq y$ and $x\ne y$ imply $f(x)>f(y)$,
+for all $x,y\in X$.
 \end{definitionbox}
 
 \begin{propositionbox}
-If $u$ represents $\succeq$ then\\
+If $u:X\to\mathbb{R}$ represents $\succeq$, then\\
 \quad $\succeq$ is weakly monotone \emph{iff} $u$ is non-decreasing;\\
 \quad $\succeq$ is strictly monotone \emph{iff} $u$ is strictly increasing.
 \end{propositionbox}
@@ -195,8 +197,12 @@ If $u$ represents $\succeq$ then\\
 
  \begin{figure}
      \centering
-     \includegraphics[width=0.51\linewidth]{monotonicity.pdf}
-  \end{figure}   
+     \includegraphics[width=0.46\linewidth]{monotonicity.pdf}
+  \end{figure}
+  \vspace{-0.7em}
+  \centering
+  \textbf{Domain:} $X=\mathbb{R}_{++}^2$. The function is not strictly
+  increasing on the axes of $\mathbb{R}_+^2$.
 \end{frame}
 
 % Slide 6 / 17
@@ -302,20 +308,24 @@ A function $f : X \to \mathbb{R}$ is \emph{quasiconcave} if every upper level se
 \begin{propositionbox}[Exact Equivalence]
 Let $X$ be convex and let $u:X\to\mathbb{R}$ represent $\succeq$. Then
 \[
+\begin{aligned}
 \succeq\ \text{is convex}
-\quad\Longleftrightarrow\quad
-u\ \text{is quasiconcave}.
+&\quad\Longleftrightarrow\quad
+u\ \text{is quasiconcave},\\
+\succeq\ \text{is strictly convex}
+&\quad\Longleftrightarrow\quad
+u\ \text{is strictly quasiconcave}.
+\end{aligned}
 \]
 \end{propositionbox}
 
 \begin{block}{Why}
-For every $x\in X$,
 \[
 U(x)=\{y\in X:y\succeq x\}
 =\{y\in X:u(y)\geq u(x)\}.
 \]
-Upper contour sets of preferences are upper level sets of any representing
-utility function. Their convexity is therefore the same property.
+Thus upper contour sets are upper level sets of $u$; replacing weak with
+strict inequalities gives the second equivalence.
 \end{block}
 
 \end{frame}
@@ -350,21 +360,27 @@ I(x):=\{y\in X:y\sim x\}=U(x)\cap L(x).
 \]
 \end{definitionbox}
 
-\begin{propositionbox}[What Continuity Adds]
-If preferences are continuous, $U(x)$ and $L(x)$ are closed relative to $X$,
-while $\{y\in X:y\succ x\}$ and $\{y\in X:x\succ y\}$ are open relative to $X$.
+\begin{propositionbox}[Weak and Strict Sections]
+If $\succeq$ is complete, then
+\[
+\{y\in X:y\succ x\}=X\setminus L(x),
+\qquad
+\{y\in X:x\succ y\}=X\setminus U(x).
+\]
 \end{propositionbox}
 \end{frame}
 
 \begin{frame}{Continuity: Equivalent Tests}
-\begin{propositionbox}[Continuity of Preferences]
-Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. The following are equivalent:
-\begin{enumerate}
-    \item $\succeq$ is continuous.
-    \item For every $x\in X$, $U(x)$ and $L(x)$ are closed relative to $X$.
-    \item For every $x\in X$, $\{y\in X:y\succ x\}$ and
-    $\{y\in X:x\succ y\}$ are open relative to $X$.
-\end{enumerate}
+\begin{definitionbox}[Continuity via Contour Sets]
+Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. We call
+$\succeq$ \emph{continuous} if, for every $x\in X$, the weak contour sets
+$U(x)$ and $L(x)$ are closed relative to $X$.
+\end{definitionbox}
+
+\begin{propositionbox}[Equivalent Open-Set Test]
+Under completeness, continuity is equivalent to requiring
+$\{y\in X:y\succ x\}$ and $\{y\in X:x\succ y\}$ to be open relative to $X$
+for every $x\in X$.
 \end{propositionbox}
 
 \begin{block}{Interpretation}
@@ -373,18 +389,22 @@ Small changes in a bundle cannot cause a strict ranking to reverse abruptly.
 \end{frame}
 
 \begin{frame}{Continuity: Rankings Survive Limits}
-\begin{propositionbox}[Sequence Test]
-Let $x_n\to x$ in $X$.
-\begin{enumerate}
-    \item If $x_n\succeq y$ for every $n$, then $x\succeq y$.
-    \item If $y\succeq x_n$ for every $n$, then $y\succeq x$.
-\end{enumerate}
+\begin{propositionbox}[Equivalent Sequence Test]
+Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete and transitive.
+Continuity is equivalent to
+\[
+(x_n,y_n)\to(x,y),\quad x_n\succeq y_n\ \text{for every }n
+\quad\Longrightarrow\quad x\succeq y.
+\]
 \end{propositionbox}
 
 \begin{block}{Equivalent Local Test}
-If $x\succ y$, then every bundle $x'$ sufficiently close to $x$ also satisfies
-$x'\succ y$. Likewise, if $y\succ x$, then $y\succ x'$ for all $x'$ sufficiently
-close to $x$.
+Equivalently, strict preference is open in $X\times X$: if $x\succ y$, there
+exist $\varepsilon_x,\varepsilon_y>0$ such that
+\[
+x'\in B^X_{\varepsilon_x}(x),\quad y'\in B^X_{\varepsilon_y}(y)
+\quad\Longrightarrow\quad x'\succ y'.
+\]
 \end{block}
 \end{frame}
 

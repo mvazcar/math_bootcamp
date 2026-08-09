@@ -101,19 +101,15 @@ by $D(f)$. The set of all second elements in $f$ is called the \textbf{range} of
 $R(f)$. Note that, although $D(f)=A$, we only have $R(f)\subseteq B$. (See Figure 1.1.4.)
 
 \vspace{.65em}
-The essential condition that
-\[
-  (a,b)\in f\qquad\text{and}\qquad(a,b')\in f
-  \qquad\text{implies that}\qquad b=b'
-\]
-is sometimes called the \emph{vertical line test}. In geometrical terms it says every vertical line
-$x=a$ with $a\in A$ intersects the graph of $f$ exactly once.
+When $A,B\subseteq\mathbb{R}$, uniqueness is the \emph{vertical line test}:
+the graph meets each line $x=a$ at most once. Since $D(f)=A$, it meets that
+line exactly once for every $a\in A$.
 \end{frame}
 
 \begin{frame}{Functions as Graphs}
  
 \begin{itemize}
-    \item A function $f$ maps $a$ into \textit{exactly one} $b$: 
+    \item A function $f$ maps $a$ to \textit{exactly one} $b$:
     $f(a) = b$ or $a \mapsto b$
 \end{itemize}
     
@@ -126,6 +122,7 @@ $x=a$ with $a\in A$ intersects the graph of $f$ exactly once.
       (7.15,2.18) (8,2.05)};
   \draw[dashed] (0,.95)--(5.15,.95);
   \draw[dashed] (0,2.92)--(6.55,2.92);
+  \draw[dashed] (0,.72)--(1.15,.72);
   \draw[dashed] (5.15,0)--(5.15,.95);
   \fill (5.15,.95) circle (1.6pt);
   \node[above left] at (5.15,.95) {$(a,b)$};
@@ -136,8 +133,8 @@ $x=a$ with $a\in A$ intersects the graph of $f$ exactly once.
 
   \draw[<->] (-1.55,0)--(-1.55,4);
   \node[anchor=east] at (-1.72,2) {$B$};
-  \draw[<->] (-.72,.95)--(-.72,2.92);
-  \node[anchor=west] at (-.58,1.95) {$R(f)$};
+  \draw[<->] (-.72,.72)--(-.72,2.92);
+  \node[anchor=west] at (-.58,1.82) {$R(f)$};
   \draw[<->] (0,-.72)--(8,-.72);
   \node[below] at (4,-.72) {$A=D(f)$};
   \node[below] at (4,-1.18) {\textbf{Figure 1.1.4}\qquad A function as a graph};
@@ -145,11 +142,11 @@ $x=a$ with $a\in A$ intersects the graph of $f$ exactly once.
 \end{center}
 \end{frame}
 
-\begin{frame}{Functions - Injective and Surjective}
+\begin{frame}{Injective, Surjective, and Bijective}
 \begin{definitionbox}[1.1.9 Definition]
 Let $f:A\to B$ be a function from $A$ to $B$.
 \begin{description}
-  \item[\textbf{(a)}] The function $f$ is said to be \textbf{injective} (or to be \textbf{one-one})
+  \item[\textbf{(a)}] The function $f$ is said to be \textbf{injective} (or \textbf{one-to-one})
   if whenever $x_1\neq x_2$, then $f(x_1)\neq f(x_2)$. If $f$ is an injective function,
   we also say that $f$ is an \textbf{injection}.
 
@@ -196,77 +193,62 @@ if there exists a bijection of $\mathbb{N}$ onto $S$.}
 \end{frame}
 
 
-\begin{frame}{Paradoxes from Infinity}
-\begin{itemize}
+\begin{frame}{Infinite Sets Can Have Different Cardinalities}
+\begin{definitionbox}[Comparing Sizes]
+Two sets have the same cardinality when there is a bijection between them.
+This definition applies to both finite and infinite sets.
+\end{definitionbox}
 
-\item Many of our intuitions and even formal notions break when we deal with infinity.
-
-\item For instance, the idea of cardinality:
 \begin{itemize}
-    \item In finite sets is coherent with number of elements in the set.
-    \item In infinite sets it characterizes the size of that infinity.
+    \item $\mathbb{N}$, $\mathbb{Z}$, and $\mathbb{Q}$ are countably infinite:
+    each can be put in bijection with $\mathbb{N}$.
+    \item $\mathbb{R}$ is uncountable: there is no bijection
+    $\mathbb{N}\to\mathbb{R}$.
 \end{itemize}
 
-\item In particular, number sets:
-\begin{itemize}
-\item $\mathbb{N, Z, Q}$ are countably infinite, they share the same cardinality. 
-\item However, $\mathbb{R}$ is uncountable, from a bigger size of infinity. \par
-See Cantor's Diagonal Argument: \href{https://www.youtube.com/watch?v=YIZd23zGV3M}{Link}.
-\end{itemize}
-
-\end{itemize}
+\centering
+Cantor's diagonal argument proves the second claim:
+\href{https://www.youtube.com/watch?v=YIZd23zGV3M}{video}.
 \end{frame}
 
 
 
 
 
-\begin{frame}{The Real Numbers}
-
+\begin{frame}{Why the Real Numbers Matter}
 \begin{itemize}
-\item Most of the functions we use are mappings from (and into) $\mathbb{R}$.
-\item There are many ways to construct the Real Numbers.
-
-\item I will take a pragmatic approach to characterize the set.
-\begin{itemize}
-\item Focus on useful properties for mathematical proofs. 
-\item Rely on minimal assumptions.
+    \item Economic alternatives often lie in $\mathbb{R}^L$, while utility is
+    real-valued.
+    \item We need the structure of $\mathbb{R}$, not a construction of it.
+    \item Three ingredients will matter:
+    \begin{itemize}
+        \item order, for comparisons;
+        \item completeness, for limits and extrema;
+        \item distance, for neighborhoods and convergence.
+    \end{itemize}
 \end{itemize}
-\end{itemize}
-    
 \end{frame}
 
-\begin{frame}{Field and Order Axioms}
+\begin{frame}{$\mathbb{R}$ Is a Complete Ordered Field}
+\begin{definitionbox}[Ordered Field]
+A \textbf{field} supports addition and multiplication satisfying the field
+axioms. A \textbf{total order} compares every pair of elements and is
+compatible with the field operations.
+\[
+\begin{gathered}
+a<b \;\Longrightarrow\; a+c<b+c,\\
+0<a\text{ and }0<b \;\Longrightarrow\; 0<ab.
+\end{gathered}
+\]
+Totality gives \textbf{trichotomy}: for any $a,b$, exactly one of
+$a<b$, $a=b$, or $a>b$ holds.
+\end{definitionbox}
 
-\begin{itemize}
-\item Field Axioms characterize how the operations of addition and multiplication behave for elements of the set.
-
-\item Order Axioms characterize how inequalities (e.g.\ $(\mathbb{R},>)$) behave, ensuring that any two field elements are comparable. 
-
-\item Any reasonable foundation will guarantee that the Trichotomy Property holds for all the elements in $\mathbb{R}$.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Field and Order Axioms}
-
-\begin{block}{Trichotomy Property.} For any $a, b \in \mathbb{R}$, exactly one of the following holds:
-\begin{enumerate}
-    \item $a>b$
-    \item $a<b$
-    \item $a=b$
-\end{enumerate}
-\end{block}
-
-\begin{block}{Corollary.} For any $a \in \mathbb{R}$, exactly one of the following holds:
-
-\begin{enumerate}
-\item $a > 0$ \quad (\text{$a$ is positive}), \qquad
-\item $a < 0$ \quad (\text{$a$ is negative}), \qquad
-\item $a = 0$
-\end{enumerate}
-\end{block}
-
+\begin{theorembox}[The Structural Difference]
+Both $\mathbb{Q}$ and $\mathbb{R}$ are ordered fields. Of these two, only $\mathbb{R}$ is
+\textbf{complete}: every nonempty set of real numbers bounded above has a
+least upper bound in $\mathbb{R}$.
+\end{theorembox}
 \end{frame}
 
 
@@ -274,7 +256,7 @@ See Cantor's Diagonal Argument: \href{https://www.youtube.com/watch?v=YIZd23zGV3
 \small
 \begin{definitionbox}[2.2.1 Definition]
 \begin{minipage}[c]{.46\linewidth}
-The \textbf{absolute value} of a real number $a$, denoted by $|a|$, is defined by
+For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
 \end{minipage}\hfill
 \begin{minipage}[c]{.49\linewidth}
 \[
@@ -299,7 +281,7 @@ in $\mathbb{R}$ is $|a-b|$. (See Figure 2.2.3.)
 \vspace{.2em}
 \begin{center}
 \begin{tikzpicture}[x=.74cm,y=.58cm,>=Stealth,font=\scriptsize]
-  \draw[thick,-{Stealth[length=2mm]}] (-4.65,0)--(4.75,0);
+  \draw[thick,<->] (-4.65,0)--(4.75,0);
   \foreach \x in {-4,-3,...,4}{
     \draw[thick] (\x,-.13)--(\x,.18);
     \node[above] at (\x,.18) {$\x$};
@@ -311,42 +293,60 @@ in $\mathbb{R}$ is $|a-b|$. (See Figure 2.2.3.)
 \end{center}
 \end{frame}
 
-\begin{frame}{Distance within the Real Line}
-\small
+\begin{frame}{Neighborhoods in $\mathbb{R}$ and $\mathbb{R}^L$}
 \begin{definitionbox}[2.2.7 Definition]
-Let $a\in\mathbb{R}$ and $\varepsilon>0$. Then the $\varepsilon$-\textbf{neighborhood} of $a$ is the set
+For $a\in\mathbb{R}$ and $\varepsilon>0$, the $\varepsilon$-\textbf{neighborhood} of $a$ is
 \[
-  V_{\varepsilon}(a):=\{x\in\mathbb{R}:|x-a|<\varepsilon\}.
+V_{\varepsilon}(a):=\{x\in\mathbb{R}:|x-a|<\varepsilon\}
+=(a-\varepsilon,a+\varepsilon).
 \]
 \end{definitionbox}
 
-For $a\in\mathbb{R}$, the statement that $x$ belongs to $V_{\varepsilon}(a)$ is equivalent to either of the
-statements (see Figure 2.2.4)
-\[
-  -\varepsilon<x-a<\varepsilon
-  \quad\Longleftrightarrow\quad
-  a-\varepsilon<x<a+\varepsilon.
-\]
-
 \begin{center}
-\begin{tikzpicture}[x=1.12cm,y=.65cm,>=Stealth,font=\scriptsize]
+\begin{tikzpicture}[x=1.12cm,y=.55cm,>=Stealth,font=\scriptsize]
   \draw[thick,-{Stealth[length=2mm]}] (-3.2,0)--(3.25,0);
   \draw[very thick] (-1.55,0)--(1.55,0);
-  \node at (-1.55,0) {$($};
-  \node at (1.55,0) {$)$};
-  \draw[fill=white,thick] (0,0) circle (2.2pt);
+  \draw[fill=white,thick] (-1.55,0) circle (2.2pt);
+  \fill (0,0) circle (2.2pt);
+  \draw[fill=white,thick] (1.55,0) circle (2.2pt);
   \node[below] at (-1.55,-.12) {$a-\varepsilon$};
   \node[below] at (0,-.12) {$a$};
   \node[below] at (1.55,-.12) {$a+\varepsilon$};
-  \node[below] at (0,-.82) {\textbf{Figure 2.2.4}\qquad An $\varepsilon$-neighborhood of $a$};
+  \node[below] at (0,-.82) {An $\varepsilon$-neighborhood of $a$};
 \end{tikzpicture}
 \end{center}
 
-\begin{itemize}
-    \item How does a Neighborhood look in a 2D, 3D Space?
-    \item What about more than 3 Dimensions?
-\end{itemize}
+\vspace{-.45em}
+\begin{definitionbox}[Euclidean Neighborhood]
+For $x\in\mathbb{R}^L$ and $\varepsilon>0$,
+\[
+B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
+\qquad
+\lVert z\rVert:=\sqrt{\textstyle\sum_{\ell=1}^{L}z_\ell^2}.
+\]
+\end{definitionbox}
 
+\end{frame}
+
+\begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
+\begin{definitionbox}[Convergence]
+A sequence $(x_n)$ in $\mathbb{R}^L$ \textbf{converges} to $x\in\mathbb{R}^L$ if
+\[
+\forall\varepsilon>0\;\exists N\in\mathbb{N}\;\forall n\geq N,
+\qquad \lVert x_n-x\rVert<\varepsilon.
+\]
+We write $x_n\to x$. Equivalently, every neighborhood of $x$ contains all
+terms of the sequence from some point onward.
+\end{definitionbox}
+
+\begin{theorembox}[Coordinatewise Convergence]
+For $x_n=(x_{n1},\ldots,x_{nL})$ and $x=(x_1,\ldots,x_L)$,
+\[
+x_n\to x
+\quad\Longleftrightarrow\quad
+x_{n\ell}\to x_\ell\quad\text{for every }\ell=1,\ldots,L.
+\]
+\end{theorembox}
 \end{frame}
 
 \begin{frame}{Bounds}
@@ -375,7 +375,7 @@ For $S=(0,1)$,
 
 \begin{frame}{Suprema and Infima}
 \begin{center}
-\begin{tikzpicture}[x=.78cm,y=.38cm,>=Stealth,font=\footnotesize]
+\begin{tikzpicture}[x=.78cm,y=.33cm,>=Stealth,font=\footnotesize]
   \draw[thick,-{Stealth[length=2mm]}] (-5.2,0)--(5.25,0);
   \foreach \x in {-5,-4.75,...,-2.5}{\draw (\x,-.12)--++(.18,.24);}
   \foreach \x in {1.8,2.05,...,5}{\draw (\x,-.12)--++(.18,.24);}
@@ -395,7 +395,7 @@ For $S=(0,1)$,
     node[midway,below=4pt] {upper bounds of $S$};
 \end{tikzpicture}
 \end{center}
-\vspace{-0.4em}
+\vspace{-0.8em}
 
 \begin{columns}[t,onlytextwidth]
 \begin{column}{\tightcolumnwidth}
@@ -407,6 +407,9 @@ u=\sup S
     \item $s\leq u$ for every $s\in S$.
     \item $u\leq v$ for every upper bound $v$.
 \end{enumerate}
+\centering
+$u\in S\Rightarrow u=\max S$;\\[-.1em]
+$u\notin S\Rightarrow\text{no maximum}$.\par
 \end{definitionbox}
 \end{column}
 \hspace{\twocolumngutter}
@@ -419,9 +422,13 @@ w=\inf S
     \item $w\leq s$ for every $s\in S$.
     \item $t\leq w$ for every lower bound $t$.
 \end{enumerate}
+\centering
+$w\in S\Rightarrow w=\min S$;\\[-.1em]
+$w\notin S\Rightarrow\text{no minimum}$.\par
 \end{definitionbox}
 \end{column}
 \end{columns}
+
 \end{frame}
 
 \begin{frame}{Completeness of the Real Numbers}
@@ -481,8 +488,10 @@ represents the same preferences. Utility levels and differences have no intrinsi
 \end{definitionbox}
 
 \begin{block}{Existence}
-Rationality is necessary. On arbitrary uncountable choice sets, it need not be
-sufficient; additional structure such as continuity may be required.
+Every utility representation induces rational preferences. On finite or
+countable $X$, rationality is also sufficient. On the standard Euclidean
+choice set $X=\mathbb{R}_+^L$, continuity is sufficient for a continuous
+representation; Day 3 states the theorem.
 \end{block}
 \end{frame}
 
@@ -494,16 +503,16 @@ sufficient; additional structure such as continuity may be required.
 
 \end{frame}
 
-\begin{frame}[t]{Utility Functions are Real-Valued Functions}
+\begin{frame}[t]{Utility Representation Implies Rationality}
 \par
 \mwgscanstart
 {\centering
     \includegraphics[width=0.96\linewidth,trim=0 0 0 .5pt,clip]{mwg-p024-proposition.pdf}
 \par}
 \end{frame}
-\begin{frame}[t]{Utility Functions}
+\begin{frame}[t]{MWG Exercises: Utility Representation}
 \par
-\mwgscanstart
+\vspace{.1em}
 {\centering
         \includegraphics[width=1\linewidth,trim=0 0 0 3pt,clip]{mwg-p030-exercises.pdf}
 \par}    
