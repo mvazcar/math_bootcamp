@@ -93,15 +93,14 @@
     \]
   \end{block}
 
-    \begin{block}{Corollary.}
-    A function $u:X\to\mathbb{R}$ \emph{represents} $\sim$ if
+  \begin{block}{What the Representation Implies}
+    If $u$ represents $\succeq$, then
     \[
       x\sim y \;\;\Leftrightarrow\;\; u(x) = u(y).
     \]
-
-    \begin{itemize}
-        \item Thus, all the elements in a equivalence class are mapped to the \textbf{same utility}!
-    \end{itemize}
+    Thus, every equivalence class is mapped to a single utility level. Moreover, if
+    $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then $\phi\circ u$
+    represents the same preferences: utility is \textbf{ordinal}.
   \end{block}
 
 \end{frame}
@@ -201,7 +200,7 @@ If $u$ represents $\succeq$ then\\
 \end{frame}
 
 % Slide 6 / 17
-\begin{frame}{Local Non-Satiation: No Thick Indifference Curves}
+\begin{frame}{Local Nonsatiation: No Thick Indifference Curves}
 \begin{definitionbox}[Definition: Local Nonsatiation]
 A preference relation $\succeq$ on $X$ is \emph{locally nonsatiated} if for every $x \in X$ and
 every $\varepsilon > 0$, there exists $y \in X$ such that $\lVert x - y\rVert \le \varepsilon$ and $y \succ x$.
@@ -218,7 +217,7 @@ Local nonsatiation rules out ``thick'' indifference sets.
 
 % Slide 7 / 17
 
-\begin{frame}[t]{Local Non-Satiation: No Thick Indifference Curves}
+\begin{frame}[t]{Local Nonsatiation: No Thick Indifference Curves}
 \par
 \mwgscanstart
 {\centering
@@ -227,21 +226,21 @@ Local nonsatiation rules out ``thick'' indifference sets.
 \end{frame}
 
 
-\begin{frame}{Monotonicity and Local Non-Satiation}
+\begin{frame}{Monotonicity and Local Nonsatiation}
 \begin{propositionbox}
-If $\succeq$ is strictly monotone, then $\succeq$ is locally non-satiated.
+On $X=\mathbb{R}_+^L$, strict monotonicity implies local nonsatiation.
 \end{propositionbox}
 
 \textbf{Proof.}\quad
 Suppose $\succeq$ is strictly monotone, i.e. $x \ge y$ and $x \ne y$ imply $x \succ y$.\\
-For each $x \in X$ and every $\varepsilon > 0$, let
-$y = x + \frac{\varepsilon}{L}\mathbf{1}$. Then
+For each $x \in \mathbb{R}_+^L$ and every $\varepsilon > 0$, let
+$y = x + \frac{\varepsilon}{L}\mathbf{1}$. Then $y\in\mathbb{R}_+^L$ and
 \[
 \lVert x - y\rVert=\sqrt{\sum_{i=1}^L \left(\frac{\varepsilon}{L}\right)^2}
 =\sqrt{L\left(\frac{\varepsilon}{L}\right)^2}=\frac{\varepsilon}{\sqrt{L}}\le \varepsilon
 \]
 Strict monotonicity implies that $y \succ x$.\\[0.5em]
-However, local non-satiation does not imply monotonicity.
+However, local nonsatiation does not imply monotonicity.
 \end{frame}
 
 
@@ -255,23 +254,25 @@ However, local non-satiation does not imply monotonicity.
 
 \begin{frame}{Convexity: Taste for Variety}
 
-\begin{block}{Definitions}
+\begin{definitionbox}[Convex Sets and Preferences]
+A set $X\subseteq\mathbb{R}^L$ is \emph{convex} if $x,y\in X$ and
+$\alpha\in[0,1]$ imply $\alpha x+(1-\alpha)y\in X$.
 
-A set $X \subseteq \mathbb{R}^L$ is \\
-\quad \emph{convex} if for all $x,y \in X$, then $\alpha x+(1-\alpha)y \in X \;\;\forall \alpha \in [0,1]$.\\
+Let $X$ be convex. For each $x\in X$, define
+$U(x):=\{y\in X:y\succeq x\}$. A preference relation $\succeq$ on $X$ is
+\emph{convex} if
+\[
+y,z\in U(x),\ \alpha\in[0,1]
+\quad\Longrightarrow\quad
+\alpha y+(1-\alpha)z\in U(x).
+\]
+It is \emph{strictly convex} if $y\ne z$ and $\alpha\in(0,1)$ imply
+$\alpha y+(1-\alpha)z\succ x$ whenever $y,z\in U(x)$.
+\end{definitionbox}
 
-A preference relation $\succeq$ is \\
-\quad \emph{convex} if $y \succeq x$, $z \succeq x$ imply $\alpha y + (1-\alpha)z \succeq x$ $\forall \alpha \in [0,1]$;\\
-\quad hence, for $x \in X$, the upper contour set, $\{\,y \in X : y \succeq x\,\}$ is convex.\\[0.2em]
-
-\quad \scalebox{0.95}[1]{\emph{str. convex} if $y \succeq x$, $z \succeq x$, $y \ne z$ imply $\alpha y + (1-\alpha)z \succ x$ $\forall \alpha \in (0,1)$.}
-\end{block}
-
-\begin{block}{Implication: Indifference Curves}
-If $\succeq$ is \textit{convex}, there is a preference for mixtures over extremes: \par 
-\begin{itemize}
-\item Indifference curves being “convex to the origin” means they are bowed inward (not outward).
-\end{itemize}
+\begin{block}{Precise Geometric Statement}
+Convex preferences mean that every upper contour set $U(x)$ is convex. This is
+the precise statement behind the informal ``taste for variety'' description.
 \end{block}
 
 \end{frame}
@@ -280,9 +281,12 @@ If $\succeq$ is \textit{convex}, there is a preference for mixtures over extreme
 \begin{frame}{Level Sets and Quasiconcavity}
 
 \begin{block}{Definitions}
-A function $f: X \to \mathbb{R}$ is\\
-\quad \emph{quasiconcave} if $f(\alpha x + (1-\alpha) y) \ge \min\{f(x), f(y)\}$ $\forall \alpha \in [0,1]$.\\
-\quad \emph{strictly quasiconcave} if, for $x \ne y$ and $\alpha \in (0,1)$,
+Let $X\subseteq\mathbb{R}^L$ be convex. A function $f:X\to\mathbb{R}$ is
+\emph{quasiconcave} if, for $x,y\in X$ and $\alpha\in[0,1]$,
+\[
+f(\alpha x+(1-\alpha)y)\geq\min\{f(x),f(y)\}.
+\]
+It is \emph{strictly quasiconcave} if, for $x \ne y$ and $\alpha \in (0,1)$,
 \[
 f(\alpha x + (1-\alpha)y) > \min\{f(x),f(y)\}.
 \]
@@ -293,123 +297,111 @@ A function $f : X \to \mathbb{R}$ is \emph{quasiconcave} if every upper level se
 \end{block}
 \end{frame}
 
-\begin{frame}{Convexity: Taste for Variety}
+\begin{frame}{Convex Preferences and Quasiconcave Utility}
 
-\begin{block}{Convex Preferences imply Quasiconcave Utility} 
-\begin{itemize}
-    \item If preferences $\succeq$ on $X$ are convex, then mixtures are preferred to extremes.  
-    \item Then, every upper contour set $\{\,y \in X : y \succeq x\,\}$ is convex.  
-    \item Consequently, any utility representation $u: X \to \mathbb{R}$ is quasiconcave.  
-\end{itemize}
+\begin{propositionbox}[Exact Equivalence]
+Let $X$ be convex and let $u:X\to\mathbb{R}$ represent $\succeq$. Then
+\[
+\succeq\ \text{is convex}
+\quad\Longleftrightarrow\quad
+u\ \text{is quasiconcave}.
+\]
+\end{propositionbox}
+
+\begin{block}{Why}
+For every $x\in X$,
+\[
+U(x)=\{y\in X:y\succeq x\}
+=\{y\in X:u(y)\geq u(x)\}.
+\]
+Upper contour sets of preferences are upper level sets of any representing
+utility function. Their convexity is therefore the same property.
 \end{block}
 
 \end{frame}
 
-\begin{frame}{A Glimpse of Topology}
+\begin{frame}{Topology on the Choice Set}
 
-\begin{block}{Definitions}
+\begin{definitionbox}[Relative Topology on $X\subseteq\mathbb{R}^L$]
+For $x\in X$ and $\varepsilon>0$, the relative open ball is
+\[
+B^X_\varepsilon(x)=\{y\in X:\lVert y-x\rVert<\varepsilon\}.
+\]
 \begin{itemize}
-    \item A \emph{neighborhood} of a point $x \in \mathbb{R}$ is any set $V$ that contains an $\varepsilon$-neighborhood $V_\varepsilon(x) := (x-\varepsilon, x+\varepsilon)$ for some $\varepsilon > 0$.
-    \item A set $G \subset \mathbb{R}$ is \emph{open} if for each $x \in G$ there exists an $\varepsilon$ such that $V_\varepsilon(x) \subset G$.
-    \item A set $F \subset \mathbb{R}$ is \emph{closed} if its complement $C(F) := \mathbb{R}\setminus F$ is open.
+    \item A set $G\subseteq X$ is \emph{open relative to $X$} if every $x\in G$
+    has some $\varepsilon>0$ with $B^X_\varepsilon(x)\subseteq G$.
+    \item A set $F\subseteq X$ is \emph{closed relative to $X$} if $X\setminus F$ is open relative to $X$.
 \end{itemize}
-\end{block}
+\end{definitionbox}
 
-\begin{block}{Implication}
-\begin{itemize}
-    \item Open sets do not contain their boundary points.
-    \item Closed sets, by definition, include their boundary points.
-\end{itemize}
+\begin{block}{Why ``Relative'' Matters}
+At a boundary point of $X$---for example, where one commodity is zero---the ball is intersected with the feasible choice set $X$.
 \end{block}
 \end{frame}
 
 \begin{frame}{Lower and Upper Contour Sets}
-\begin{itemize}
-
-\item Now consider the \textit{Upper Contour Set} and the \textit{Lower Contour Set} of a preference relation:
-
-\vspace{-1em}
-
+\begin{definitionbox}[Contour Sets at $x$]
 \[
 U(x) := \{ y \in X \mid y \succeq x \} \qquad L(x) := \{ y \in X \mid x \succeq y \}.
 \]
+The indifference set through $x$ is always
+\[
+I(x):=\{y\in X:y\sim x\}=U(x)\cap L(x).
+\]
+\end{definitionbox}
 
-\item Notice how the \textit{indifference points} are both the \textit{boundary points} and the \textit{intersection} of both contour sets.
-
-\item If contour sets are closed, boundary points are included. That is, there are no gaps in the indifference curves.
-
-\item This is one of the ways in which we can characterize continuous preferences (see Kreps 1.14c in the next slide).
-
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Continuity: No Gaps}
-\begin{propositionbox}[Proposition 1.14]
-\emph{Continuity of preferences $\succeq$ on $\mathbb{R}_+^k$ imply the following,
-and any one of the following imply that preferences $\succeq$ on $\mathbb{R}_+^k$
-are continuous. (Therefore, continuity of preferences could equivalently be defined
-by any one of the following, each of which implies all the others.)}
-
-\begin{description}
-\setlength{\itemsep}{0.35em}
-\item[\emph{a.}] \emph{If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with
-$x_n \succeq y$ for all $n$, and if $\lim_{n\to\infty}x_n=x$, then $x\succeq y$.
-If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with $y\succeq x_n$ for all $n$,
-and if $\lim_{n\to\infty}x_n=x$, then $y\succeq x$.}
-
-\item[\emph{b.}] \emph{If $\{x_n\}$ is a sequence from $\mathbb{R}_+^k$ with
-$\lim_{n\to\infty}x_n=x$, and if $x\succ y$, then for all sufficiently large $n$,
-$x_n\succ y$. And if $\lim_{n\to\infty}x_n=x$, and $y\succ x$, then for all
-sufficiently large $n$, $y\succ x_n$.}
-
-\end{description}
+\begin{propositionbox}[What Continuity Adds]
+If preferences are continuous, $U(x)$ and $L(x)$ are closed relative to $X$,
+while $\{y\in X:y\succ x\}$ and $\{y\in X:x\succ y\}$ are open relative to $X$.
 \end{propositionbox}
 \end{frame}
 
-\begin{frame}{Continuity: No Gaps}
-\begin{propositionbox}[Proposition 1.14 (continued)]
-\begin{description}
-\setlength{\itemsep}{0.35em}
-
-\item[\emph{c.}] \emph{For all $x\in\mathbb{R}_+^k$, the sets $\mathrm{NBT}(x)$ and
-$\mathrm{NWT}(x)=\{y\in\mathbb{R}_+^k:y\succeq x\}$ are both closed sets.
-(NWT is a mnemonic for No Worse Than.)}
-
-\item[\emph{d.}] \emph{For all $x\in\mathbb{R}_+^k$, the sets
-$\mathrm{SBT}(x)=\{y\in\mathbb{R}_+^k:y\succ x\}$ and
-$\mathrm{SWT}(x)=\{y\in\mathbb{R}_+^k:x\succ y\}$ are both (relatively, in
-$\mathbb{R}_+^k$) open sets.}\textsuperscript{4}
-\emph{(SBT is a mnemonic for Strictly Better Than, and SWT stands for Strictly Worse Than.)}
-\end{description}
+\begin{frame}{Continuity: Equivalent Tests}
+\begin{propositionbox}[Continuity of Preferences]
+Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. The following are equivalent:
+\begin{enumerate}
+    \item $\succeq$ is continuous.
+    \item For every $x\in X$, $U(x)$ and $L(x)$ are closed relative to $X$.
+    \item For every $x\in X$, $\{y\in X:y\succ x\}$ and
+    $\{y\in X:x\succ y\}$ are open relative to $X$.
+\end{enumerate}
 \end{propositionbox}
+
+\begin{block}{Interpretation}
+Small changes in a bundle cannot cause a strict ranking to reverse abruptly.
+\end{block}
+\end{frame}
+
+\begin{frame}{Continuity: Rankings Survive Limits}
+\begin{propositionbox}[Sequence Test]
+Let $x_n\to x$ in $X$.
+\begin{enumerate}
+    \item If $x_n\succeq y$ for every $n$, then $x\succeq y$.
+    \item If $y\succeq x_n$ for every $n$, then $y\succeq x$.
+\end{enumerate}
+\end{propositionbox}
+
+\begin{block}{Equivalent Local Test}
+If $x\succ y$, then every bundle $x'$ sufficiently close to $x$ also satisfies
+$x'\succ y$. Likewise, if $y\succ x$, then $y\succ x'$ for all $x'$ sufficiently
+close to $x$.
+\end{block}
 \end{frame}
 
 \begin{frame}{Debreu's Representation Theorem}
-\begin{propositionbox}[Proposition 1.15]
-\emph{If $X=\mathbb{R}_+^k$ and preferences $\succeq$ are complete, transitive,
-and continuous on $X$, then $\succeq$ can be represented by a utility function $u$;
-that is, $u(x)\ge u(y)$ if and only if $x\succeq y$.}
-\end{propositionbox}
-\vspace{-0.35em}
+\begin{theorembox}[Continuous Representation]
+Let $X=\mathbb{R}_+^L$. If $\succeq$ is complete, transitive, and continuous on
+$X$, then there exists a \emph{continuous} utility function $u:X\to\mathbb{R}$ such that
+\[
+x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
+\]
+\end{theorembox}
 
 \begin{itemize}
-\setlength{\itemsep}{0.35em}
-\item Previously we had seen a Necessary Condition for preferences to be represented by a utility function: Rationality.
-\begin{itemize}
-\setlength{\itemsep}{0.2em}
-\item Note that discontinuous preferences and rational can have a utility representation (continuous or not).
+    \item A continuous utility representation implies continuous preferences.
+    \item The theorem guarantees at least one continuous representation; it does not make every utility representation continuous.
+    \item Rationality is necessary. On $\mathbb{R}_+^L$, continuity supplies enough additional structure for a continuous representation.
 \end{itemize}
-
-
-
-\item With Rationality and \textbf{Continuity}, we have a Sufficient Condition for the existence of a continuous utility function representation.
-\end{itemize}
-
-\vspace{-0.35em}
-\begin{propositionbox}[Proposition 2.9 (Debreu's Theorem)]
-\emph{If a continuous function $u$ represents $\succeq$, then $\succeq$ is continuous.
-Conversely, if $\succeq$ is continuous, it has a continuous utility representation.}\textsuperscript{5}
-\end{propositionbox}
     
 \end{frame}
 
