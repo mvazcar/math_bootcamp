@@ -29,53 +29,24 @@
 
 \begin{frame}{Today}
   \begin{itemize}
-    \item The Mathematics of Infinite Paths
-    \item The Environment
-      \begin{itemize}
-        \item Dated Goods, the Household, and the Firm
-      \end{itemize}
+    \item Infinite Paths and Boundary Conditions
+    \begin{itemize}
+      \item Linking choices, recurrences, and the condition at infinity
+    \end{itemize}
+    \item The Household's Dynamic Optimization Problem
+    \begin{itemize}
+      \item Dated goods, shadow values, and the Euler equation
+    \end{itemize}
     \item Competitive Equilibrium
-      \begin{itemize}
-        \item Definition and Characterization
-      \end{itemize}
-    \item Efficiency and the Social Planner
-      \begin{itemize}
-        \item Welfare and Decentralization
-      \end{itemize}
+    \begin{itemize}
+      \item Definition, market clearing, and characterization
+    \end{itemize}
+    \item The Planner as a Concluding Application
+    \begin{itemize}
+      \item Efficiency, supporting prices, and existence
+    \end{itemize}
   \end{itemize}
   \sources{AdvancedMacro Book, Chapters 4--5.}
-\end{frame}
-
-\begin{frame}{General Equilibrium Makes Separate Choices Compatible}
-  Day 4 studied one decision maker facing a feasible set. General equilibrium
-  asks whether several optimal decisions can hold at the same prices.
-
-  \vspace{.35em}
-  \centering
-  \begin{tikzpicture}
-    \node[object,text width=2.55cm] (prices) at (0,0)
-      {Candidate price paths\\$\{w_t,r_t\}_{t=0}^{\infty}$};
-    \node[object,text width=2.55cm] (household) at (3.25,.85)
-      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{\infty}$};
-    \node[object,text width=2.55cm] (firm) at (3.25,-.85)
-      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{\infty}$};
-    \node[object,fill=slideblue!8,text width=2.65cm] (clearing) at (6.75,0)
-      {Compatibility test\\Do quantities match?};
-    \node[object,fill=slidegreen!8,draw=slidegreen,text width=2.05cm] (eq) at (9.85,0)
-      {Competitive\\equilibrium};
-    \draw[route] (prices) -- (household);
-    \draw[route] (prices) -- (firm);
-    \draw[route] (household) -- (clearing);
-    \draw[route] (firm) -- (clearing);
-    \draw[route,draw=slidegreen] (clearing) -- (eq);
-  \end{tikzpicture}
-
-  \vspace{.55em}
-  \begin{block}{The Definition Is a Test, Not an Adjustment Story}
-    It says which price-allocation paths qualify as equilibria. It does not say
-    how an economy discovers those prices.
-  \end{block}
-  \sources{AdvancedMacro Book, printed pp. 69--71; Lecture 3, slides 23--30.}
 \end{frame}
 
 \begin{frame}{Day 4 Chose a Point; Day 5 Chooses an Infinite Path}
@@ -128,7 +99,7 @@
   \vspace{.10em}
   \begin{block}{Regularity and Interpretation}
     Assume an infinite-horizon multiplier theorem supplies $\lambda$.
-    Independent gradients make the multiplier sequence unique. For
+    Under its regularity conditions, the multiplier sequence is unique. For
     $g_t(z)+b_t=0$ and differentiable $V$,
     $\lambda_t=\partial V(b)/\partial b_t$.
   \end{block}
@@ -600,44 +571,36 @@
   \sources{Lecture 3, slides 20--22; AdvancedMacro Book, printed pp. 68--69.}
 \end{frame}
 
-\begin{frame}{Equilibrium Combines Behavior and Consistency}
-  \begin{columns}[t,onlytextwidth]
-    \begin{column}{\tightcolumnwidth}
-      \begin{block}{Behavior}
-        \begin{minipage}[t][3.05cm][t]{\dimexpr\linewidth-.76em\relax}
-          \begin{itemize}
-            \item The household maximizes lifetime utility.
-            \item The firm maximizes date-$t$ profit.
-            \item Both take prices as given.
-          \end{itemize}
-        \end{minipage}
-      \end{block}
-    \end{column}
-    \hspace{\twocolumngutter}
-    \begin{column}{\tightcolumnwidth}
-      \begin{block}{Consistency}
-        \begin{minipage}[t][3.05cm][t]{\dimexpr\linewidth-.76em\relax}
-          \begin{itemize}
-            \item Asset supply equals capital demand.
-            \item Labor supply equals labor demand.
-            \item Goods demanded equal goods available.
-          \end{itemize}
-        \end{minipage}
-      \end{block}
-    \end{column}
-  \end{columns}
+\begin{frame}{General Equilibrium Makes Separate Choices Compatible}
+  The household and firm have now solved separate optimization problems.
+  General equilibrium asks whether their choices can hold at the same prices.
 
-  \vspace{.30em}
-  \[
-    \boxed{
-      \text{individual optimization}
-      +
-      \text{market clearing}
-      =
-      \text{competitive equilibrium}.
-    }
-  \]
-  \sources{AdvancedMacro Book, printed pp. 69--71; Macro1 GE Theory, slide 16.}
+  \vspace{.35em}
+  \centering
+  \begin{tikzpicture}
+    \node[object,text width=2.55cm] (prices) at (0,0)
+      {Candidate price paths\\$\{w_t,r_t\}_{t=0}^{\infty}$};
+    \node[object,text width=2.55cm] (household) at (3.25,.85)
+      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{\infty}$};
+    \node[object,text width=2.55cm] (firm) at (3.25,-.85)
+      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{\infty}$};
+    \node[object,fill=slideblue!8,text width=2.65cm] (clearing) at (6.75,0)
+      {Compatibility test\\Do quantities match?};
+    \node[object,fill=slidegreen!8,draw=slidegreen,text width=2.05cm] (eq) at (9.85,0)
+      {Competitive\\equilibrium};
+    \draw[route] (prices) -- (household);
+    \draw[route] (prices) -- (firm);
+    \draw[route] (household) -- (clearing);
+    \draw[route] (firm) -- (clearing);
+    \draw[route,draw=slidegreen] (clearing) -- (eq);
+  \end{tikzpicture}
+
+  \vspace{.55em}
+  \begin{block}{The Definition Is a Test, Not an Adjustment Story}
+    It says which price-allocation paths qualify as equilibria. It does not say
+    how an economy discovers those prices.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 69--71; Lecture 3, slides 23--30.}
 \end{frame}
 
 \begin{frame}{Optimal Choice May Be Set-Valued}
@@ -769,40 +732,6 @@
     \end{column}
   \end{columns}
   \sources{AdvancedMacro Book, printed pp. 69--70.}
-\end{frame}
-
-\begin{frame}{Equilibrium Does Not Mean a Rest Point}
-  \begin{columns}[t,onlytextwidth]
-    \begin{column}{\tightcolumnwidth}
-      \begin{definitionbox}[Equilibrium Path]
-        \begin{minipage}[t][2.55cm][t]{\dimexpr\linewidth-.76em\relax}
-          All agents optimize and all markets clear at every date. Quantities
-          and prices may rise, fall, or fluctuate over time.
-        \end{minipage}
-      \end{definitionbox}
-    \end{column}
-    \hspace{\twocolumngutter}
-    \begin{column}{\tightcolumnwidth}
-      \begin{definitionbox}[Steady State]
-        \begin{minipage}[t][2.55cm][t]{\dimexpr\linewidth-.76em\relax}
-          A special equilibrium path in which the relevant quantities and
-          prices do not vary over time.
-        \end{minipage}
-      \end{definitionbox}
-    \end{column}
-  \end{columns}
-
-  \vspace{.55em}
-  \[
-    \text{steady state}
-    \quad\Longrightarrow\quad
-    \text{equilibrium},
-    \qquad
-    \text{equilibrium}
-    \quad\not\Longrightarrow\quad
-    \text{steady state}.
-  \]
-  \sources{AdvancedMacro Book, printed pp. 60--61 and 70--71.}
 \end{frame}
 
 \begin{frame}{Walras' Law Makes One Clearing Condition Redundant}
@@ -1165,28 +1094,6 @@
   \end{block}
   \sources{AdvancedMacro Book, Appendix A, printed p. 86; Macro1 GE Theory,
   slides 3 and 24--26.}
-\end{frame}
-
-\begin{frame}{The Representative Household Hides Distribution}
-  In this model, one household owns the capital and constant-returns firms earn
-  zero profits. In an economy with many households:
-
-  \begin{itemize}
-    \item endowments and firm-ownership shares determine individual wealth;
-    \item under convexity, positive planner weights select different
-    Pareto-efficient allocations;
-    \item the Second Welfare Theorem generally requires transfers that make the
-    selected bundles affordable;
-    \item externalities, market power, taxes, or missing markets can separate
-    equilibrium from the planner allocation.
-  \end{itemize}
-
-  \vspace{.25em}
-  \begin{block}{What the Welfare Theorems Do Not Say}
-    They do not say that every market economy is efficient. They identify the
-    assumptions under which decentralization and planning select the same allocation.
-  \end{block}
-  \sources{Lecture 3, slides 17--25; Macro1 GE Theory, slides 34--46.}
 \end{frame}
 
 \begin{frame}{Definition Comes First; Characterization Makes It Usable}

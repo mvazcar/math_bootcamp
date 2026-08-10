@@ -27,16 +27,21 @@
 
 \begin{frame}{Today}
   \begin{itemize}
-    \item Optimization Problems and Existence
-    \item First-Order Conditions and Curvature
-    \item Equality and Inequality Constraints
+    \item Existence
     \begin{itemize}
-      \item Lagrange Multipliers
-      \item Kuhn--Tucker Conditions
+      \item Maximum versus argmax; failure and the Extreme Value Theorem
+    \end{itemize}
+    \item Candidates and Verification
+    \begin{itemize}
+      \item First-order conditions; curvature and concavity
+    \end{itemize}
+    \item Constraints
+    \begin{itemize}
+      \item Lagrange multipliers; complementary slackness and Kuhn--Tucker
     \end{itemize}
     \item Consumer Demand
     \begin{itemize}
-      \item Smooth Optima, Corners, and Kinks
+      \item Cobb--Douglas in full; corners and kinks as contrasts
     \end{itemize}
   \end{itemize}
   \sources{Osborne, Optimization: introduction and contents.}
@@ -107,7 +112,7 @@
   \sources{Sundaram, Section 2.1; Osborne, Optimization: definitions.}
 \end{frame}
 
-\begin{frame}{Existence Comes Before Calculation}
+\begin{frame}{A Maximizer Can Fail to Exist in Three Different Ways}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{.315\textwidth}
       \centering
@@ -136,14 +141,33 @@
     \end{column}
   \end{columns}
 
-  \vspace{.35em}
-  \textbf{In $\mathbb{R}^n$, compactness is equivalent to closedness and boundedness.}
+  \vspace{.65em}
+  \begin{block}{Three Distinct Failures}
+    The feasible set may omit its boundary, the objective may be unbounded, or
+    the objective may fail to preserve limits. In each case the argmax is empty.
+  \end{block}
+  \sources{Sundaram, Sections 2.1 and 3.1; Osborne, Existence of an optimum.}
+\end{frame}
 
-  \vspace{.35em}
+\begin{frame}{The Extreme Value Theorem Supplies an Existence Checklist}
+  In $\mathbb{R}^n$, a set is compact if and only if it is closed and bounded.
+
   \begin{theorembox}[Extreme Value Theorem]
     If $D\subseteq\mathbb{R}^n$ is nonempty and compact and
     $f:D\to\mathbb{R}$ is continuous, then $f$ attains a maximum and a minimum on $D$.
   \end{theorembox}
+
+  \vspace{.35em}
+  Before calculating, verify four separate facts:
+  \begin{enumerate}
+    \item $D$ is nonempty;
+    \item $D$ is closed;
+    \item $D$ is bounded;
+    \item $f$ is continuous on $D$.
+  \end{enumerate}
+
+  \centering
+  \textcolor{slideblue}{\bfseries These assumptions guarantee existence, not uniqueness.}
   \sources{Sundaram, Theorem 3.1; Osborne, Existence of an optimum.}
 \end{frame}
 
@@ -412,16 +436,13 @@
     \]
   \end{theorembox}
 
-  For $g=(g_1,\ldots,g_k)$, let $J_g$ denote its Jacobian. The constraint
-  qualification is $\rho(J_g(x^*))=k$.
-
-  \vspace{.25em}
   \begin{itemize}
-    \item Regularity guarantees existence of the multiplier at a local optimum.
-    \item Independence makes its coefficients unique at that fixed $x^*$.
+    \item The condition $\nabla g(x^*)\neq0$ rules out a locally degenerate boundary.
+    \item It guarantees existence and uniqueness of the multiplier at that fixed $x^*$.
     \item It does not guarantee that the optimizer itself is unique.
   \end{itemize}
-  \sources{Sundaram, Theorem 5.1 and Section 5.2.2; Chong and Zak, Theorem 19.3.}
+  \sources{Sundaram, Theorem 5.1 and Section 5.2.2; Osborne, Equality
+  constraints: necessary conditions.}
 \end{frame}
 
 \begin{frame}{A Multiplier Measures the Value of Relaxing a Constraint}
@@ -452,20 +473,25 @@
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{block}{Slack Constraint}
-        \[
-          h_i(x^*)>0.
-        \]
-        The constraint is slack. Small changes in its boundary do not affect the
-        local choice, so $\lambda_i^*=0$.
+        \begin{minipage}[t][2.30cm][t]{\dimexpr\linewidth-.76em\relax}
+          \[
+            h_i(x^*)>0.
+          \]
+          The constraint is slack. Small changes in its boundary do not affect
+          the local choice, so $\lambda_i^*=0$.
+        \end{minipage}
       \end{block}
     \end{column}
     \hspace{\twocolumngutter}
     \begin{column}{\tightcolumnwidth}
       \begin{block}{Effective Constraint}
-        \[
-          h_i(x^*)=0.
-        \]
-        The boundary restricts feasible directions and may carry a positive multiplier.
+        \begin{minipage}[t][2.30cm][t]{\dimexpr\linewidth-.76em\relax}
+          \[
+            h_i(x^*)=0.
+          \]
+          The boundary restricts feasible directions and may carry a positive
+          multiplier.
+        \end{minipage}
       \end{block}
     \end{column}
   \end{columns}
@@ -479,27 +505,34 @@
   \sources{Sundaram, Sections 6.1.1 and 6.1.3; Osborne, Kuhn--Tucker conditions.}
 \end{frame}
 
-\begin{frame}{The Kuhn--Tucker Conditions Are One-Sided}
-  \begin{theorembox}[Theorem of Kuhn and Tucker]
-    Let $f,h_1,\ldots,h_\ell$ be continuously differentiable, let $U$ be open, and
-    define $D=U\cap\{x\in\mathbb{R}^n:h_i(x)\geq0,\ i=1,\ldots,\ell\}$.
-    Suppose $x^*$ is a local maximum of $f$ on $D$. Let
-    $E=\{i:h_i(x^*)=0\}$ and suppose $\rho(J_{h_E}(x^*))=|E|$. Then there exists
-    $\lambda^*\in\mathbb{R}^\ell$ such that
-    \[
-      \text{[KT-1]}\quad
-      \lambda_i^*\geq0,\qquad \lambda_i^*h_i(x^*)=0,
-      \quad i=1,\ldots,\ell,
-    \]
-    \[
-      \text{[KT-2]}\quad
-      \nabla f(x^*)+\sum_{i=1}^{\ell}\lambda_i^*\nabla h_i(x^*)=0.
-    \]
-  \end{theorembox}
+\begin{frame}{Kuhn--Tucker Adds One-Sided Feasibility}
+  Consider
+  \[
+    \max_x f(x)
+    \qquad\text{subject to}\qquad
+    h_i(x)\geq0,\quad i=1,\ldots,m,
+  \]
+  and define $L(x;\lambda)=f(x)+\sum_{i=1}^m\lambda_i h_i(x)$.
 
-  Only effective normals contribute; they generate a nonnegative cone, not a linear span.
-  \sources{Sundaram, Theorem 6.1; Osborne, Kuhn--Tucker conditions; Chong and
-  Zak, Figure 20.1.}
+  \begin{propositionbox}[Kuhn--Tucker Conditions]
+    Under a constraint qualification, a smooth local maximizer has multipliers
+    $\lambda_i^*\geq0$ satisfying
+    \[
+      \nabla f(x^*)+\sum_{i=1}^m\lambda_i^*\nabla h_i(x^*)=0,
+    \]
+    \[
+      h_i(x^*)\geq0,
+      \qquad
+      \lambda_i^*\geq0,
+      \qquad
+      \lambda_i^*h_i(x^*)=0.
+    \]
+  \end{propositionbox}
+
+  Slack constraints have zero multipliers; effective constraints may have
+  positive multipliers. If $f$ and the $h_i$ are concave, these conditions also
+  verify global optimality.
+  \sources{Sundaram, Theorem 6.1 and Section 6.2; Osborne, Kuhn--Tucker conditions.}
 \end{frame}
 
 \begin{frame}{Time for Economics}
