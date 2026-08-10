@@ -291,6 +291,8 @@ def make_crossing_level_set() -> None:
 def make_lagrange_tangency() -> None:
     fig, ax = plt.subplots(figsize=(4.8, 3.75))
     setup_plane(ax, (-0.2, 6.8), (-0.2, 6.4), equal=True)
+    ax.set_xlabel("$x$", labelpad=4)
+    ax.set_ylabel("$y$", rotation=0, labelpad=10)
     center = np.array([4.0, 3.7])
     for radius, color in zip((2.6, 2.05, 1.5), CONTOUR_COLORS):
         draw_ellipse(ax, tuple(center), (radius, radius), color)
@@ -302,15 +304,20 @@ def make_lagrange_tangency() -> None:
     ax.plot(*zip(line_start, line_end), color=NEUTRAL_GRAY, lw=2.6)
     ax.scatter(*point, s=40, color=NEUTRAL_GRAY, zorder=5)
 
-    objective_end = point + np.array([1.05, 0.79])
-    constraint_end = point - np.array([0.92, 0.69])
-    draw_arrow(ax, point, objective_end, SIGNAL_RED)
-    draw_arrow(ax, point, constraint_end, CHAD_GREEN)
-    ax.text(4.55, 0.52, "$g(x)=0$", ha="left", va="top")
-    ax.text(2.93, 2.72, "$x^*$", ha="left", va="top")
-    ax.text(3.52, 3.72, r"$\nabla f(x^*)$", color=SIGNAL_RED, ha="center", va="bottom")
-    ax.text(1.55, 1.68, r"$\lambda^*\nabla g(x^*)$", color=CHAD_GREEN, ha="center", va="top")
+    # Keep this diagram in scalar coordinate notation.  It communicates only
+    # the shared tangent; the slide derives the equality of the two slopes.
+    ax.text(4.55, 0.52, "$g(x,y)=0$", ha="left", va="top")
+    ax.text(2.92, 2.69, "$(x^*,y^*)$", ha="left", va="top")
+    ax.text(1.15, 4.92, "$f(x,y)=\\bar f$", color=CHAD_BLUE, ha="left")
     ax.text(4.58, 4.58, "higher $f$", color=CHAD_BLUE, ha="center")
+    ax.annotate(
+        "same tangent",
+        xy=(2.24, 3.55),
+        xytext=(0.58, 5.62),
+        color=NEUTRAL_GRAY,
+        ha="left",
+        arrowprops={"arrowstyle": "-|>", "color": NEUTRAL_GRAY, "lw": 1.5},
+    )
     fig.tight_layout(pad=0.25)
     save_vector_pair(fig, "lagrange-tangency")
 
