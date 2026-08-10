@@ -29,19 +29,19 @@
 
 \begin{frame}{Today}
   \begin{itemize}
-    \item The Basic Dynamic Economy
-    \item Optimization at Given Prices
-    \begin{itemize}
-      \item The Household and the Firm
-    \end{itemize}
+    \item The Mathematics of Infinite Paths
+    \item The Environment
+      \begin{itemize}
+        \item Dated Goods, the Household, and the Firm
+      \end{itemize}
     \item Competitive Equilibrium
-    \begin{itemize}
-      \item Definition and Characterization
-    \end{itemize}
-    \item The Social Planner
-    \begin{itemize}
-      \item Welfare and Decentralization
-    \end{itemize}
+      \begin{itemize}
+        \item Definition and Characterization
+      \end{itemize}
+    \item Efficiency and the Social Planner
+      \begin{itemize}
+        \item Welfare and Decentralization
+      \end{itemize}
   \end{itemize}
   \sources{AdvancedMacro Book, Chapters 4--5.}
 \end{frame}
@@ -252,39 +252,46 @@
   \sources{Lecture 3, slides 4--6; Macro1 GE Theory, slides 6 and 9--13.}
 \end{frame}
 
-\begin{frame}{The Model Separates Primitives from Equilibrium Objects}
+\begin{frame}{The Environment Is a List of Primitives}
+  \begin{definitionbox}[Dynamic Production Economy]
+    The environment is
+    \[
+      E=
+      \left(
+        \mathbb{N}_0,\beta,u,f,(A_t)_{t=0}^{\infty},k_0
+      \right).
+    \]
+    These primitives are fixed before prices and allocations are determined.
+  \end{definitionbox}
+
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{block}{Primitives}
-        \begin{minipage}[t][4.0cm][t]{\dimexpr\linewidth-.76em\relax}
+        \begin{minipage}[t][1.95cm][t]{\dimexpr\linewidth-.76em\relax}
           \begin{itemize}
             \item Dates $t=0,1,\ldots$
             \item Preferences: $\beta$ and $u$
             \item Technology: $f$ and $A_t$
-            \item Initial capital: $k_0=a_0$
           \end{itemize}
         \end{minipage}
       \end{block}
     \end{column}
     \hspace{\twocolumngutter}
     \begin{column}{\tightcolumnwidth}
-      \begin{block}{Equilibrium Objects}
-        \begin{minipage}[t][4.0cm][t]{\dimexpr\linewidth-.76em\relax}
+      \begin{block}{Initial Resources}
+        \begin{minipage}[t][1.95cm][t]{\dimexpr\linewidth-.76em\relax}
           \begin{itemize}
-            \item Consumption and assets: $c_t,a_{t+1}$
-            \item Capital and labor: $k_t,\ell_t$
-            \item Output: $y_t$
-            \item Prices: $w_t,r_t$
+            \item The household owns $a_0=k_0>0$.
+            \item Labor supply is one unit each date.
+            \item Capital does not depreciate: $\delta=0$.
           \end{itemize}
         \end{minipage}
       \end{block}
     \end{column}
   \end{columns}
 
-  \vspace{.4em}
-  A solution takes the primitives as given and determines all equilibrium
-  objects jointly.
-  \sources{AdvancedMacro Book, printed pp. 39--41, 61--69.}
+  \sources{Macro1 GE Theory, slides 3--5; Lecture 3, slides 3--19;
+  AdvancedMacro Book, printed pp. 39--41 and 61--69.}
 \end{frame}
 
 \begin{frame}{Infinite Horizon Adds a Boundary at Infinity}
@@ -486,9 +493,9 @@
   In every date $t$, the firm rents capital $k_t$, hires labor $\ell_t$, and
   produces the single final good:
   \[
-    y_t=f(k_t,A_t\ell_t)
+    y_t=A_t f(k_t,\ell_t)
     =
-    k_t^\alpha(A_t\ell_t)^{1-\alpha},
+    A_t k_t^\alpha\ell_t^{1-\alpha},
     \qquad 0<\alpha<1.
   \]
 
@@ -496,8 +503,8 @@
     \begin{column}{\tightcolumnwidth}
       \begin{block}{Technology}
         \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
-          $A_t$ measures productivity. Each input raises output, but its
-          marginal effect falls with use.
+          $A_t$ is total factor productivity. It shifts output without changing
+          the capital--labor ratio inside $f$.
         \end{minipage}
       \end{block}
     \end{column}
@@ -522,19 +529,19 @@
   \[
     \max_{k_t,\ell_t\geq0}
     \left\{
-      f(k_t,A_t\ell_t)-w_t\ell_t-r_t k_t
+      A_t f(k_t,\ell_t)-w_t\ell_t-r_t k_t
     \right\}.
   \]
 
   At a positive-input optimum,
   \[
     w_t=
-    \frac{\partial f(k_t,A_t\ell_t)}{\partial\ell_t}
-    =A_t f_2(k_t,A_t\ell_t),
+    A_t\frac{\partial f(k_t,\ell_t)}{\partial\ell_t}
+    =A_t f_2(k_t,\ell_t),
     \qquad
     r_t=
-    \frac{\partial f(k_t,A_t\ell_t)}{\partial k_t}
-    =f_1(k_t,A_t\ell_t).
+    A_t\frac{\partial f(k_t,\ell_t)}{\partial k_t}
+    =A_t f_1(k_t,\ell_t).
   \]
 
   \begin{block}{Why the Firm Problem Is Static}
@@ -547,11 +554,9 @@
 \begin{frame}{The Same Rental Rate Links Firm and Household}
   For Cobb--Douglas production,
   \[
-    w_t=(1-\alpha)A_t
-    \left(\frac{k_t}{A_t\ell_t}\right)^\alpha,
+    w_t=(1-\alpha)A_t k_t^\alpha\ell_t^{-\alpha},
     \qquad
-    r_t=\alpha
-    \left(\frac{k_t}{A_t\ell_t}\right)^{\alpha-1}.
+    r_t=\alpha A_t k_t^{\alpha-1}\ell_t^{1-\alpha}.
   \]
 
   The firm pays $r_t$ for one unit of capital. Since capital is returned intact,
@@ -559,36 +564,40 @@
 
   Constant returns and the first-order conditions imply
   \[
-    f(k_t,A_t\ell_t)=w_t\ell_t+r_t k_t,
+    A_t f(k_t,\ell_t)=w_t\ell_t+r_t k_t,
   \]
   so competitive profits are zero.
   \sources{AdvancedMacro Book, printed pp. 66--68, specialized to no depreciation.}
 \end{frame}
 
-\begin{frame}{Feasibility Is a Physical Restriction}
-  Output can be consumed or invested:
+\begin{frame}{DEFINITION: Allocation and Feasibility}
+  \begin{definitionbox}[Allocation]
+    A physical allocation is a sequence
+    \[
+      z=\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{\infty}.
+    \]
+  \end{definitionbox}
+
+  It is \textbf{feasible} if, for every $t=0,1,\ldots$,
   \[
-    c_t+i_t=y_t.
+    c_t\geq0,
+    \qquad
+    k_{t+1}\geq0,
+    \qquad
+    0\leq\ell_t\leq1,
   \]
-  With no depreciation, investment is the change in the capital stock:
-  \[
-    i_t=k_{t+1}-k_t.
-  \]
-  Combining these equations with production gives the aggregate resource
-  constraint:
+  and
   \[
     \boxed{
       c_t+k_{t+1}
-      =
-      f(k_t,A_t\ell_t)+k_t.
+      \leq
+      A_t k_t^\alpha\ell_t^{1-\alpha}+k_t.
     }
   \]
 
-  \begin{block}{Behavior Versus Feasibility}
-    Household and firm problems describe optimal behavior at given prices.
-    The resource constraint describes what the economy can physically deliver.
-  \end{block}
-  \sources{AdvancedMacro Book, printed pp. 68--69.}
+  Feasibility is physical and contains no prices. Monotonicity makes the
+  resource inequality bind at an optimum.
+  \sources{Lecture 3, slides 20--22; AdvancedMacro Book, printed pp. 68--69.}
 \end{frame}
 
 \begin{frame}{Equilibrium Combines Behavior and Consistency}
@@ -631,6 +640,39 @@
   \sources{AdvancedMacro Book, printed pp. 69--71; Macro1 GE Theory, slide 16.}
 \end{frame}
 
+\begin{frame}{Optimal Choice May Be Set-Valued}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Household Correspondence]
+        \begin{minipage}[t][2.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          At prices $(w,r)$, define
+          \[
+            H(w,r)=\{\text{household-optimal paths}\}.
+          \]
+          It may contain more than one path $(c,a)$.
+        \end{minipage}
+      \end{definitionbox}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Firm Correspondence]
+        \begin{minipage}[t][2.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          At prices $(w_t,r_t)$, define
+          \[
+            F_t(w_t,r_t)=\{\text{optimal input pairs at }t\}.
+          \]
+          It may contain more than one pair $(k,\ell)$.
+        \end{minipage}
+      \end{definitionbox}
+    \end{column}
+  \end{columns}
+
+  \vspace{.35em}
+  Under constant returns, $F_t$ may contain many input choices. Equilibrium
+  selects elements of both correspondences that are mutually compatible.
+  \sources{Lecture 3, slides 24 and 26--30; Macro1 GE Theory, slides 16--24.}
+\end{frame}
+
 \begin{frame}{Definition and Characterization Answer Different Questions}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
@@ -667,28 +709,25 @@
   \begin{definitionbox}[Competitive Equilibrium]
     Given $a_0$, a competitive equilibrium is a collection
     \[
-      \left(
-        (c_t,a_{t+1}),
-        (k_t,\ell_t),
-        (w_t,r_t)
-      \right)_{t=0}^{\infty}
+      \left((c_t,a_{t+1}),(k_t,\ell_t),(w_t,r_t)\right)_{t=0}^{\infty}
     \]
     such that:
     \begin{enumerate}
-      \item given $(w_t,r_t)_{t=0}^{\infty}$,
-      $(c_t,a_{t+1})_{t=0}^{\infty}$ solves the
-      household problem;
-      \item given $(w_t,r_t)_{t=0}^{\infty}$,
-      $(k_t,\ell_t)_{t=0}^{\infty}$ solves the
-      firm's problem;
-      \item all markets clear at every date $t=0,1,\ldots$.
+      \item $(c,a)\in H(w,r)$;
+      \item $(k_t,\ell_t)\in F_t(w_t,r_t)$ for every $t$;
+      \item markets clear at every date:
+      \[
+        a_t=k_t,
+        \qquad
+        \ell_t=1,
+        \qquad
+        c_t+k_{t+1}=A_t f(k_t,\ell_t)+k_t.
+      \]
     \end{enumerate}
   \end{definitionbox}
 
-  The definition refers to solutions of optimization problems, not merely to
-  their first-order conditions.
   \sources{AdvancedMacro Book, Definition 14, printed p. 70, specialized to no
-  depreciation; Macro1 GE Theory, slides 23--24.}
+  depreciation; Macro1 GE Theory, slides 23--24; Lecture 3, slides 24--30.}
 \end{frame}
 
 \begin{frame}{Market Clearing Links Individual and Aggregate Quantities}
@@ -708,7 +747,7 @@
         \[
           c_t+k_{t+1}
           =
-          f(k_t,A_t\ell_t)+k_t.
+          A_t f(k_t,\ell_t)+k_t.
         \]
       \end{block}
     \end{column}
@@ -780,11 +819,11 @@
   \]}
   \statementitem{3}{Since $\ell_t=1$ and constant returns imply zero profit,
   \[
-    w_t\ell_t+r_t k_t=f(k_t,A_t\ell_t).
+    w_t\ell_t+r_t k_t=A_t f(k_t,\ell_t).
   \]}
   \statementitem{4}{Therefore the goods market clears:
   \[
-    c_t+k_{t+1}=f(k_t,A_t\ell_t)+k_t.
+    c_t+k_{t+1}=A_t f(k_t,\ell_t)+k_t.
   \]}
   \sources{AdvancedMacro Book, Theorem 15, printed pp. 71--72.}
 \end{frame}
@@ -907,6 +946,20 @@
     allocation uniqueness, and the welfare interpretation.
   \end{block}
   \sources{AdvancedMacro Book, printed pp. 72--75 and 86.}
+\end{frame}
+
+\begin{frame}{DEFINITION: Efficiency Uses Only Feasible Allocations}
+  \begin{definitionbox}[Efficiency]
+    A feasible allocation
+    $z^*=\left(c_t^*,k_{t+1}^*,\ell_t^*\right)_{t=0}^{\infty}$ is efficient if
+    there is no feasible $\widetilde z$ such that
+    $U(\widetilde c)>U(c^*)$.
+  \end{definitionbox}
+
+  Efficiency uses only preferences and physical feasibility: no prices and no
+  ownership rule. With one household, the planner selects the efficient path by
+  maximizing the household's lifetime utility over feasible allocations.
+  \sources{Lecture 3, slides 21--22; Macro1 GE Theory, slides 34--40.}
 \end{frame}
 
 \begin{frame}{DEFINITION: The Social Planner Problem}
