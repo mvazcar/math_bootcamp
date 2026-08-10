@@ -54,12 +54,11 @@
   \centering
   \begin{tikzpicture}
     \node[object,text width=2.55cm] (prices) at (0,0)
-      {Candidate price paths\\$\{w_t,r_t,\mu_t\}_{t=0}^{T}$\\
-      {\footnotesize $r_t=\mu_t-\delta$}};
+      {Candidate price paths\\$\{w_t,r_t\}_{t=0}^{\infty}$};
     \node[object,text width=2.55cm] (household) at (3.25,.85)
-      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{T}$};
+      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{\infty}$};
     \node[object,text width=2.55cm] (firm) at (3.25,-.85)
-      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{T}$};
+      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{\infty}$};
     \node[object,fill=slideblue!8,text width=2.65cm] (clearing) at (6.75,0)
       {Compatibility test\\Do quantities match?};
     \node[object,fill=slidegreen!8,draw=slidegreen,text width=2.05cm] (eq) at (9.85,0)
@@ -79,21 +78,20 @@
   \sources{AdvancedMacro Book, printed pp. 69--71; Lecture 3, slides 23--30.}
 \end{frame}
 
-\begin{frame}{Day 4 Chose a Point; Day 5 Chooses a Path}
-  Day 4 studied a finite-dimensional choice
+\begin{frame}{Day 4 Chose a Point; Day 5 Chooses an Infinite Path}
+  Day 4 studied a point
   \[
     x\in\mathbb{R}^n.
   \]
-  With dates $t=0,\ldots,T$, collect every dated choice into one vector:
+  Today the choice is an infinite sequence:
   \[
-    z=(x_0,x_1,\ldots,x_T)
-    \in\mathbb{R}^{(T+1)n}.
+    z=(x_0,x_1,x_2,\ldots).
   \]
 
   \vspace{.2em}
   \centering
   \begin{tikzpicture}
-    \foreach \x/\lab in {0/$x_0$,2.25/$x_1$,4.5/$x_2$,7.05/$\cdots$,9.55/$x_T$}{
+    \foreach \x/\lab in {0/$x_0$,2.25/$x_1$,4.5/$x_2$,7.05/$\cdots$,9.55/$\infty$}{
       \node[object,minimum width=1.25cm] at (\x,0) {\lab};
     }
     \draw[mutedroute] (.72,0) -- (1.52,0);
@@ -103,31 +101,25 @@
   \end{tikzpicture}
 
   \vspace{.55em}
-  A finite-horizon dynamic problem is an ordinary finite-dimensional
-  optimization problem with a useful time structure.
-  \sources{AdvancedMacro Book, printed pp. 39--40 and 51--52; Sundaram,
-  finite-dimensional constrained optimization.}
+  An infinite-horizon problem has one local condition at every date and one
+  boundary condition at infinity.
+  \sources{AdvancedMacro Book, printed pp. 39--40 and 51--53.}
 \end{frame}
 
 \begin{frame}{Every Date Contributes a Constraint and a Multiplier}
-  Consider the generic finite-path problem
+  Consider an infinite-path problem and its formal Lagrangean:
   \[
-    \max_z f(z)
-    \qquad\text{subject to}\qquad
-    g_t(z)=0,
-    \quad t=0,\ldots,T.
-  \]
-  Its Lagrangean is
-  \[
-    L(z;\lambda)
-    =
-    f(z)+\sum_{t=0}^{T}\lambda_t g_t(z).
+    \max_{z=(z_t)_{t=0}^{\infty}} F(z)
+    \quad\text{s.t.}\quad
+    g_t(z)=0, t=0,1,\ldots,
+    \qquad
+    L(z;\lambda)=F(z)+\sum_{t=0}^{\infty}\lambda_t g_t(z).
   \]
 
   \centering
   \begin{tikzpicture}
     \foreach \x/\lab/\mul in {0/$g_0(z)=0$/$\lambda_0$,3.15/$g_1(z)=0$/$\lambda_1$,
-      6.30/$\cdots$/$\cdots$,9.45/$g_T(z)=0$/$\lambda_T$}{
+      6.30/$\cdots$/$\cdots$,9.45/$g_t(z)=0$/$\lambda_t$}{
       \node[object,text width=2.0cm] at (\x,0) {\lab};
       \node[text=slideblue] at (\x,-.80) {\mul};
     }
@@ -135,8 +127,9 @@
 
   \vspace{.10em}
   \begin{block}{Regularity and Interpretation}
-    At the optimum, differentiability and independent constraint gradients give
-    a unique multiplier vector. For $g_t(z)+b_t=0$ and differentiable $V$,
+    Assume an infinite-horizon multiplier theorem supplies $\lambda$.
+    Independent gradients make the multiplier sequence unique. For
+    $g_t(z)+b_t=0$ and differentiable $V$,
     $\lambda_t=\partial V(b)/\partial b_t$.
   \end{block}
   \sources{AdvancedMacro Book, printed pp. 51--53 and 77; Sundaram, Chapter 5.}
@@ -172,25 +165,25 @@
   \sources{AdvancedMacro Book, printed pp. 51--53, 72--73, and 77--78.}
 \end{frame}
 
-\begin{frame}{A Dynamic Characterization Needs Boundaries and Curvature}
+\begin{frame}{An Infinite Path Needs a Boundary at Infinity}
   A recurrence alone does not determine a path:
   \[
     \Phi(s_t,s_{t+1},s_{t+2})=0,
-    \qquad t=0,\ldots,T-1.
+    \qquad t=0,1,\ldots.
   \]
-  It must be anchored by boundary conditions:
+  It needs an initial condition and a boundary condition at infinity:
   \[
     s_0\ \text{given},
     \qquad
-    s_{T+1}\ \text{fixed}.
+    \lim_{t\to\infty}\lambda_t s_{t+1}=0.
   \]
 
-  \begin{theorembox}[Finite-Horizon Logic]
+  \begin{theorembox}[Infinite-Horizon Logic]
     \begin{itemize}
-      \item Continuity and a nonempty compact feasible set give existence.
-      \item Strict concavity on a convex feasible set gives uniqueness.
-      \item Differentiability and regularity justify first-order conditions.
-      \item Concavity makes valid first-order conditions sufficient.
+      \item Existence requires an argument about feasible sequences and tails.
+      \item Strict concavity gives at most one solution.
+      \item Regularity gives first-order conditions at every date.
+      \item Concavity and the boundary condition verify global optimality.
     \end{itemize}
   \end{theorembox}
   \sources{AdvancedMacro Book, Appendix A, printed p. 86; Math Bootcamp Day 4.}
@@ -221,7 +214,7 @@
   \vspace{.25em}
   \centering
   \begin{tikzpicture}
-    \foreach \x/\lab in {0/$c_0$,2.25/$c_1$,4.5/$c_2$,7.05/$\cdots$,9.55/$c_T$}{
+    \foreach \x/\lab in {0/$c_0$,2.25/$c_1$,4.5/$c_2$,7.05/$\cdots$,9.55/$\infty$}{
       \node[object,minimum width=1.25cm] at (\x,0) {\lab};
     }
     \draw[mutedroute] (.72,0) -- (1.52,0);
@@ -233,17 +226,19 @@
   \vspace{.45em}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
-      \begin{block}{Date-0 Price Language}
+      \begin{block}{Different Date, Different Good}
         \begin{minipage}[t][1.55cm][t]{\dimexpr\linewidth-.76em\relax}
-          $q_t$ is the present-value price of one unit delivered at date $t$.
-          All dated goods can be viewed as traded at date $0$.
+          \raggedright
+          Consumption at $t$ and $t+1$ are different goods. Saving exchanges
+          one for the other.
         \end{minipage}
       \end{block}
     \end{column}
     \hspace{\twocolumngutter}
     \begin{column}{\tightcolumnwidth}
-      \begin{block}{Sequential Price Language}
+      \begin{block}{The Interest Rate Is a Relative Price}
         \begin{minipage}[t][1.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          \raggedright
           One unit at date $t+1$ costs $1/(1+r_{t+1})$ units at date $t$.
           Trades occur date by date.
         \end{minipage}
@@ -252,9 +247,7 @@
   \end{columns}
 
   \[
-    q_0=1,
-    \qquad
-    \frac{q_{t+1}}{q_t}=\frac{1}{1+r_{t+1}}.
+    \boxed{\text{relative price of }c_{t+1}=\frac{1}{1+r_{t+1}}.}
   \]
   \sources{Lecture 3, slides 4--6; Macro1 GE Theory, slides 6 and 9--13.}
 \end{frame}
@@ -265,9 +258,9 @@
       \begin{block}{Primitives}
         \begin{minipage}[t][4.0cm][t]{\dimexpr\linewidth-.76em\relax}
           \begin{itemize}
-            \item Horizon $T$ and dates $t=0,\ldots,T$
+            \item Dates $t=0,1,\ldots$
             \item Preferences: $\beta$ and $u$
-            \item Technology: $f$, $A_t$, and $\delta$
+            \item Technology: $f$ and $A_t$
             \item Initial capital: $k_0=a_0$
           \end{itemize}
         \end{minipage}
@@ -281,7 +274,7 @@
             \item Consumption and assets: $c_t,a_{t+1}$
             \item Capital and labor: $k_t,\ell_t$
             \item Output: $y_t$
-            \item Prices: $w_t,\mu_t,r_t$
+            \item Prices: $w_t,r_t$
           \end{itemize}
         \end{minipage}
       \end{block}
@@ -294,32 +287,30 @@
   \sources{AdvancedMacro Book, printed pp. 39--41, 61--69.}
 \end{frame}
 
-\begin{frame}{A Finite Horizon Keeps the Logical Claims Complete}
-  The core slides use $T<\infty$ and impose:
+\begin{frame}{Infinite Horizon Adds a Boundary at Infinity}
+  The model uses dates $t=0,1,\ldots$ and assumes:
   \begin{itemize}
-    \item a deterministic, closed economy with no government;
-    \item one representative price-taking household and one representative
-    price-taking firm;
-    \item $u$ strictly increasing, strictly concave, and twice differentiable;
-    \item $f$ increasing, concave, and constant returns to scale;
-    \item positive initial capital $k_0=a_0$ and terminal values
-    $a_{T+1}=k_{T+1}=0$.
+    \item a deterministic closed economy with no government;
+    \item one representative price-taking household and firm;
+    \item $u$ is strictly increasing, strictly concave, and twice
+    differentiable; $f$ is increasing, concave, and constant returns to scale;
+    \item $k_0=a_0>0$ and $\delta=0$.
   \end{itemize}
 
-  \vspace{.45em}
-  \begin{block}{Why This Scope Matters}
-    For finite $T$, terminal conditions close the path. Concavity makes valid
-    FOCs sufficient. For infinite $T$, Euler equations also need a
-    transversality condition.
+  \begin{block}{Transversality Condition}
+    \[
+      \lim_{t\to\infty}\beta^t u'(c_t)a_{t+1}=0.
+    \]
+    The Euler equation is local; this condition controls the tail.
   \end{block}
   \sources{AdvancedMacro Book, printed pp. 49--53, 75--78, and 86.}
 \end{frame}
 
 \begin{frame}{The Household Ranks Entire Consumption Paths}
   \begin{definitionbox}[Lifetime Utility]
-    For $c=(c_0,c_1,\ldots,c_T)$,
+    For $c=(c_0,c_1,c_2,\ldots)$,
     \[
-      U(c)=\sum_{t=0}^{T}\beta^t u(c_t),
+      U(c)=\sum_{t=0}^{\infty}\beta^t u(c_t),
       \qquad 0<\beta<1.
     \]
     The discount factor $\beta$ gives the relative weight on later utility.
@@ -375,50 +366,49 @@
   \sources{AdvancedMacro Book, printed pp. 49--51.}
 \end{frame}
 
-\begin{frame}{The Household Chooses a Whole Path at Given Prices}
-  Given the price paths $\left(w_t,r_t\right)_{t=0}^{T}$ and initial assets
+\begin{frame}{The Household Chooses an Infinite Path at Given Prices}
+  Given the price paths $\left(w_t,r_t\right)_{t=0}^{\infty}$ and initial assets
   $a_0$, the household solves
   \[
-    \max_{\left(c_t,a_{t+1}\right)_{t=0}^{T}}
-    \sum_{t=0}^{T}\beta^t u(c_t)
+    \max_{\left(c_t,a_{t+1}\right)_{t=0}^{\infty}}
+    \sum_{t=0}^{\infty}\beta^t u(c_t)
   \]
   subject to
   \[
     c_t+a_{t+1}=w_t+(1+r_t)a_t,
     \qquad c_t\geq0,
-    \qquad t=0,\ldots,T,
+    \qquad a_{t+1}\geq0,
+    \qquad t=0,1,\ldots,
   \]
   \[
-    a_0\ \text{given},
-    \qquad
-    a_{T+1}=0.
+    a_0\ \text{given}.
   \]
 
-  \begin{block}{Price Taking}
-    The household chooses quantities while treating every wage and interest
-    rate as given. Equilibrium will later determine those prices.
+  \begin{block}{Admissibility and Price Taking}
+    Nonnegative assets rule out Ponzi finance. The household chooses quantities
+    while treating every wage and interest rate as given.
   \end{block}
   \sources{AdvancedMacro Book, printed pp. 51--52.}
 \end{frame}
 
 \begin{frame}{One Shadow Value Is Needed for Every Date}
-  The Inada condition makes the nonnegativity constraints slack. Define
+  At an interior path, write the formal Lagrangean
   \[
     L=
-    \sum_{t=0}^{T}\beta^t u(c_t)
+    \sum_{t=0}^{\infty}\beta^t u(c_t)
     +
-    \sum_{t=0}^{T}
+    \sum_{t=0}^{\infty}
     \lambda_t\left[w_t+(1+r_t)a_t-c_t-a_{t+1}\right].
   \]
 
   The first-order conditions imply
   \[
     \beta^t u'(c_t)=\lambda_t,
-    \qquad t=0,\ldots,T,
+    \qquad t=0,1,\ldots,
   \]
   \[
     \lambda_t=(1+r_{t+1})\lambda_{t+1},
-    \qquad t=0,\ldots,T-1.
+    \qquad t=0,1,\ldots.
   \]
 
   \begin{block}{Interpretation}
@@ -523,16 +513,16 @@
   \end{columns}
 
   \vspace{.35em}
-  A fraction $\delta$ of capital depreciates during production.
+  Throughout, $\delta=0$: capital is fully preserved between dates.
   \sources{AdvancedMacro Book, printed pp. 61--65.}
 \end{frame}
 
 \begin{frame}{The Firm Solves a Static Problem at Every Date}
-  Given the wage $w_t$ and rental price of capital $\mu_t$, the firm solves
+  Given the wage $w_t$ and rental rate $r_t$, the firm solves
   \[
     \max_{k_t,\ell_t\geq0}
     \left\{
-      f(k_t,A_t\ell_t)-w_t\ell_t-\mu_t k_t
+      f(k_t,A_t\ell_t)-w_t\ell_t-r_t k_t
     \right\}.
   \]
 
@@ -542,7 +532,9 @@
     \frac{\partial f(k_t,A_t\ell_t)}{\partial\ell_t}
     =A_t f_2(k_t,A_t\ell_t),
     \qquad
-    \mu_t=f_1(k_t,A_t\ell_t).
+    r_t=
+    \frac{\partial f(k_t,A_t\ell_t)}{\partial k_t}
+    =f_1(k_t,A_t\ell_t).
   \]
 
   \begin{block}{Why the Firm Problem Is Static}
@@ -552,32 +544,25 @@
   \sources{AdvancedMacro Book, printed pp. 65--67.}
 \end{frame}
 
-\begin{frame}{Factor Prices Equal Marginal Products}
+\begin{frame}{The Same Rental Rate Links Firm and Household}
   For Cobb--Douglas production,
   \[
     w_t=(1-\alpha)A_t
     \left(\frac{k_t}{A_t\ell_t}\right)^\alpha,
     \qquad
-    \mu_t=\alpha
+    r_t=\alpha
     \left(\frac{k_t}{A_t\ell_t}\right)^{\alpha-1}.
   \]
 
-  Depreciation separates the rental price from the household's net return:
-  \[
-    \boxed{
-      r_t=\mu_t-\delta,
-      \qquad
-      \mu_t=r_t+\delta.
-    }
-  \]
+  The firm pays $r_t$ for one unit of capital. Since capital is returned intact,
+  the household receives the gross payoff $1+r_t$.
 
   Constant returns and the first-order conditions imply
   \[
-    f(k_t,A_t\ell_t)=w_t\ell_t+\mu_t k_t,
+    f(k_t,A_t\ell_t)=w_t\ell_t+r_t k_t,
   \]
   so competitive profits are zero.
-  \sources{AdvancedMacro Book, printed pp. 66--68. The return relation corrects
-  the typo in Definition 14 on printed p. 70.}
+  \sources{AdvancedMacro Book, printed pp. 66--68, specialized to no depreciation.}
 \end{frame}
 
 \begin{frame}{Feasibility Is a Physical Restriction}
@@ -585,9 +570,9 @@
   \[
     c_t+i_t=y_t.
   \]
-  Investment replaces depreciated capital and changes the capital stock:
+  With no depreciation, investment is the change in the capital stock:
   \[
-    i_t=k_{t+1}-(1-\delta)k_t.
+    i_t=k_{t+1}-k_t.
   \]
   Combining these equations with production gives the aggregate resource
   constraint:
@@ -595,7 +580,7 @@
     \boxed{
       c_t+k_{t+1}
       =
-      f(k_t,A_t\ell_t)+(1-\delta)k_t.
+      f(k_t,A_t\ell_t)+k_t.
     }
   \]
 
@@ -685,23 +670,25 @@
       \left(
         (c_t,a_{t+1}),
         (k_t,\ell_t),
-        (w_t,\mu_t,r_t)
-      \right)_{t=0}^{T}
+        (w_t,r_t)
+      \right)_{t=0}^{\infty}
     \]
     such that:
     \begin{enumerate}
-      \item given $(w_t,r_t)_{t=0}^{T}$, $(c_t,a_{t+1})_{t=0}^{T}$ solves the
+      \item given $(w_t,r_t)_{t=0}^{\infty}$,
+      $(c_t,a_{t+1})_{t=0}^{\infty}$ solves the
       household problem;
-      \item given $(w_t,\mu_t)_{t=0}^{T}$, $(k_t,\ell_t)_{t=0}^{T}$ solves the
+      \item given $(w_t,r_t)_{t=0}^{\infty}$,
+      $(k_t,\ell_t)_{t=0}^{\infty}$ solves the
       firm's problem;
-      \item $r_t=\mu_t-\delta$ and all markets clear at every date.
+      \item all markets clear at every date $t=0,1,\ldots$.
     \end{enumerate}
   \end{definitionbox}
 
   The definition refers to solutions of optimization problems, not merely to
   their first-order conditions.
-  \sources{AdvancedMacro Book, Definition 14, printed p. 70, with the corrected
-  return relation.}
+  \sources{AdvancedMacro Book, Definition 14, printed p. 70, specialized to no
+  depreciation; Macro1 GE Theory, slides 23--24.}
 \end{frame}
 
 \begin{frame}{Market Clearing Links Individual and Aggregate Quantities}
@@ -721,7 +708,7 @@
         \[
           c_t+k_{t+1}
           =
-          f(k_t,A_t\ell_t)+(1-\delta)k_t.
+          f(k_t,A_t\ell_t)+k_t.
         \]
       \end{block}
     \end{column}
@@ -734,7 +721,7 @@
           {Firm\\demands $k_t$ and $\ell_t$};
         \node[object,fill=slideblue!8,text width=2.15cm] (market) at (3.25,.55)
           {Markets\\match quantities};
-        \node[object,text width=2.15cm] (resource) at (3.25,-1.25)
+        \node[object,text width=2.15cm] (resource) at (3.25,-1.65)
           {Goods market\\uses $=$ resources};
         \draw[route] (hh) -- (market);
         \draw[route] (firm) -- (market);
@@ -787,17 +774,17 @@
   \[
     c_t+k_{t+1}=w_t+(1+r_t)k_t.
   \]}
-  \statementitem{2}{Use $r_t=\mu_t-\delta$:
+  \statementitem{2}{Subtract the capital carried into date $t$:
   \[
-    c_t+k_{t+1}-(1-\delta)k_t=w_t+\mu_t k_t.
+    c_t+k_{t+1}-k_t=w_t+r_t k_t.
   \]}
   \statementitem{3}{Since $\ell_t=1$ and constant returns imply zero profit,
   \[
-    w_t\ell_t+\mu_t k_t=f(k_t,A_t\ell_t).
+    w_t\ell_t+r_t k_t=f(k_t,A_t\ell_t).
   \]}
   \statementitem{4}{Therefore the goods market clears:
   \[
-    c_t+k_{t+1}=f(k_t,A_t\ell_t)+(1-\delta)k_t.
+    c_t+k_{t+1}=f(k_t,A_t\ell_t)+k_t.
   \]}
   \sources{AdvancedMacro Book, Theorem 15, printed pp. 71--72.}
 \end{frame}
@@ -813,7 +800,7 @@
             w_t=f_\ell(k_t,1),
           \]
           \[
-            r_t=f_k(k_t,1)-\delta.
+            r_t=f_k(k_t,1).
           \]
         \end{minipage}
       \end{block}
@@ -826,7 +813,7 @@
             w_t=(1-\alpha)k_t^\alpha,
           \]
           \[
-            r_t=\alpha k_t^{\alpha-1}-\delta.
+            r_t=\alpha k_t^{\alpha-1}.
           \]
         \end{minipage}
       \end{block}
@@ -841,14 +828,14 @@
 \begin{frame}{CHARACTERIZATION: Feasibility Eliminates Consumption}
   With $\ell_t=1$ and $A_t=1$, the resource constraint is
   \[
-    c_t+k_{t+1}=k_t^\alpha+(1-\delta)k_t.
+    c_t+k_{t+1}=k_t^\alpha+k_t.
   \]
   Hence,
   \[
     \boxed{
       c_t
       =
-      k_t^\alpha+(1-\delta)k_t-k_{t+1}.
+      k_t^\alpha+k_t-k_{t+1}.
     }
   \]
 
@@ -861,7 +848,7 @@
       {Next capital\\$k_{t+1}$};
     \node[object,fill=slideblue!8,text width=3.2cm] (cons) at (8.0,0)
       {Consumption $c_t$\\
-      $k_t^\alpha+(1-\delta)k_t-k_{t+1}$};
+      $k_t^\alpha+k_t-k_{t+1}$};
     \draw[route] (current) -- (choice);
     \draw[route] (choice) -- (cons);
   \end{tikzpicture}
@@ -872,31 +859,31 @@
 \end{frame}
 
 \begin{frame}{CHARACTERIZATION: A Difference Equation for Capital}
-  For $t=0,\ldots,T-1$, substitute equilibrium prices and consumption into
+  For $t=0,1,\ldots$, substitute equilibrium prices and consumption into
   the household Euler equation:
   \[
     \begin{aligned}
       &u'\!\left(
-        k_t^\alpha+(1-\delta)k_t-k_{t+1}
+        k_t^\alpha+k_t-k_{t+1}
       \right)\\
       &\quad=
       \beta\left[
-        1+\alpha k_{t+1}^{\alpha-1}-\delta
+        1+\alpha k_{t+1}^{\alpha-1}
       \right]
       u'\!\left(
-        k_{t+1}^\alpha+(1-\delta)k_{t+1}-k_{t+2}
+        k_{t+1}^\alpha+k_{t+1}-k_{t+2}
       \right).
     \end{aligned}
   \]
 
   This is a second-order difference equation in
-  $(k_t,k_{t+1},k_{t+2})$. For finite $T$, combine it with
+  $(k_t,k_{t+1},k_{t+2})$. Combine it with
   \[
     k_0=a_0,
     \qquad
-    k_{T+1}=0,
+    c_t\geq0,\ k_t\geq0,
     \qquad
-    c_t\geq0,\ k_t\geq0.
+    \lim_{t\to\infty}\beta^t u'(c_t)k_{t+1}=0.
   \]
 
   \sources{AdvancedMacro Book, equation (4.40), printed pp. 72--73.}
@@ -925,14 +912,15 @@
 \begin{frame}{DEFINITION: The Social Planner Problem}
   With $A_t=1$, the planner solves
   \[
-    \max_{\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{T}}
-    \sum_{t=0}^{T}\beta^t u(c_t)
+    \max_{\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{\infty}}
+    \sum_{t=0}^{\infty}\beta^t u(c_t)
   \]
   subject to
   \[
     c_t+k_{t+1}
     =
-    k_t^\alpha\ell_t^{1-\alpha}+(1-\delta)k_t,
+    k_t^\alpha\ell_t^{1-\alpha}+k_t,
+    \qquad t=0,1,\ldots,
   \]
   \[
     c_t\geq0,
@@ -945,36 +933,40 @@
   \]
 
   Since leisure does not enter utility and production increases in labor,
-  $\ell_t=1$. For $T<\infty$, optimality also implies $k_{T+1}=0$.
-  \sources{AdvancedMacro Book, printed pp. 75--76.}
+  $\ell_t=1$. At an interior optimum,
+  \[
+    \lim_{t\to\infty}\beta^t u'(c_t)k_{t+1}=0.
+  \]
+  \sources{AdvancedMacro Book, printed pp. 75--78, specialized to no
+  depreciation; Macro1 GE Theory, slides 24--26.}
 \end{frame}
 
 \begin{frame}{CHARACTERIZATION: The Planner Euler Equation}
   For the reduced problem, define
   \[
     L=
-    \sum_{t=0}^{T}\beta^t u(c_t)
+    \sum_{t=0}^{\infty}\beta^t u(c_t)
     +
-    \sum_{t=0}^{T}
+    \sum_{t=0}^{\infty}
     \lambda_t
     \left[
-      k_t^\alpha+(1-\delta)k_t-c_t-k_{t+1}
+      k_t^\alpha+k_t-c_t-k_{t+1}
     \right].
   \]
 
   The first-order conditions give
   \[
     \lambda_t=\beta^t u'(c_t),
-    \qquad t=0,\ldots,T,
+    \qquad t=0,1,\ldots,
   \]
   \[
     \lambda_t
     =
     \lambda_{t+1}
     \left[
-      \alpha k_{t+1}^{\alpha-1}+1-\delta
+      \alpha k_{t+1}^{\alpha-1}+1
     \right],
-    \qquad t=0,\ldots,T-1.
+    \qquad t=0,1,\ldots.
   \]
   Therefore,
   \[
@@ -983,7 +975,7 @@
       =
       \beta
       \left[
-        \alpha k_{t+1}^{\alpha-1}+1-\delta
+        \alpha k_{t+1}^{\alpha-1}+1
       \right]
       u'(c_{t+1}).
     }
@@ -1004,7 +996,7 @@
           \[
             1+r_{t+1}
             =
-            1+\alpha k_{t+1}^{\alpha-1}-\delta.
+            1+\alpha k_{t+1}^{\alpha-1}.
           \]
         \end{minipage}
       \end{block}
@@ -1018,7 +1010,7 @@
         \begin{minipage}[t][3.15cm][t]{\dimexpr\linewidth-.76em\relax}
           Planner return:
           \[
-            1+\alpha k_{t+1}^{\alpha-1}-\delta.
+            1+\alpha k_{t+1}^{\alpha-1}.
           \]
           Planner Euler equation:
           \[
@@ -1026,7 +1018,7 @@
             =
             \beta
             \left[
-              1+\alpha k_{t+1}^{\alpha-1}-\delta
+              1+\alpha k_{t+1}^{\alpha-1}
             \right]
             u'(c_{t+1}).
           \]
@@ -1036,8 +1028,8 @@
   \end{columns}
 
   \vspace{.25em}
-  The equality is economically powerful only because concavity and the terminal
-  conditions make these equations sufficient.
+  The equality is economically powerful only because concavity and
+  transversality make these equations sufficient.
   \sources{AdvancedMacro Book, printed pp. 77--78.}
 \end{frame}
 
@@ -1073,20 +1065,17 @@
   \end{columns}
 
   \vspace{.35em}
-  The finite-horizon proof uses feasibility, identical Euler equations, and the
-  sufficiency supplied by concavity.
+  Under the maintained infinite-horizon assumptions, verification uses
+  feasibility, identical Euler equations, transversality, and concavity.
   \sources{AdvancedMacro Book, Theorems 18--19, printed pp. 78--79.}
 \end{frame}
 
 \begin{frame}{Supporting Prices Decentralize the Planner Allocation}
-  Start from a planner solution $(c_t^*,k_{t+1}^*)_{t=0}^{T}$ and define
+  Start from a planner solution $(c_t^*,k_{t+1}^*)_{t=0}^{\infty}$ and define
   \[
     w_t^*=(1-\alpha)(k_t^*)^\alpha,
     \qquad
-    \mu_t^*=\alpha(k_t^*)^{\alpha-1},
-  \]
-  \[
-    r_t^*=\mu_t^*-\delta.
+    r_t^*=\alpha(k_t^*)^{\alpha-1}.
   \]
 
   \statementitem{1}{Set $a_t^*=k_t^*$ and $\ell_t^*=1$, so the asset and labor
@@ -1094,37 +1083,35 @@
   \statementitem{2}{The supporting prices satisfy the firm's first-order
   conditions; concavity makes them sufficient.}
   \statementitem{3}{The planner Euler equation becomes the household Euler
-  equation; concavity and the terminal condition make it sufficient.}
+  equation; concavity and transversality make it sufficient.}
   \statementitem{4}{Planner feasibility is exactly goods-market clearing.}
 
   \sources{AdvancedMacro Book, proof of Theorem 19, printed pp. 78--79.}
 \end{frame}
 
-\begin{frame}{The Planner Gives an Indirect Existence Argument}
-  For finite $T$, write feasibility as
+\begin{frame}{Infinite Horizon Needs a Separate Existence Argument}
+  For every $t=0,1,\ldots$, feasibility can be written as
   \[
     c_t+k_{t+1}
     \leq
-    k_t^\alpha+(1-\delta)k_t.
+    k_t^\alpha+k_t.
   \]
-  Strictly increasing utility makes the inequality bind. Under the maintained
-  finite-horizon regularity and curvature assumptions, the planner problem has
-  a unique solution.
+  This is a problem over sequences, so finite-dimensional compactness is not
+  enough. Under bounded feasibility, continuity, discounting, and the maintained
+  tail conditions, a limit of truncated planner problems yields a solution.
 
-  \[
-    \text{unique planner solution}
-    \xrightarrow{\text{Second Welfare Theorem}}
-    \text{an equilibrium exists},
-  \]
-  \[
-    \text{any equilibrium}
-    \xrightarrow{\text{First Welfare Theorem}}
-    \text{the unique planner allocation}.
-  \]
-  \[
-    \boxed{\text{equilibrium existence}+\text{allocation uniqueness}.}
-  \]
-  \sources{AdvancedMacro Book, Appendix A, printed p. 86.}
+  \begin{block}{Two Separate Conclusions}
+    \[
+      \begin{aligned}
+        \text{planner existence}+\text{supporting prices}
+        &\Longrightarrow \text{equilibrium existence},\\[.35em]
+        \text{strict concavity}+\text{First Welfare Theorem}
+        &\Longrightarrow \text{allocation uniqueness}.
+      \end{aligned}
+    \]
+  \end{block}
+  \sources{AdvancedMacro Book, Appendix A, printed p. 86; Macro1 GE Theory,
+  slides 3 and 24--26.}
 \end{frame}
 
 \begin{frame}{The Representative Household Hides Distribution}
@@ -1153,7 +1140,7 @@
   \begin{enumerate}
     \item List the primitives and every endogenous sequence.
     \item Write household and firm optimization at given prices.
-    \item Define equilibrium by adding the return relation and market clearing.
+    \item Define equilibrium by adding market clearing at every date.
     \item Derive the characterization and keep all boundary conditions.
     \item Use the planner problem and welfare theorems to recover allocations
     and supporting prices.
