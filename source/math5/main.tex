@@ -1,0 +1,1179 @@
+\documentclass[11pt,aspectratio=169,t]{beamer}
+\input{slides_header.tex}
+
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\setbeameroption{hide notes}
+
+\tikzset{
+  object/.style={draw=slideblue!55,fill=slideblue!2,rounded corners=1.5pt,
+    minimum height=.82cm,align=center,inner sep=4pt},
+  route/.style={-{Latex[length=2.2mm]},draw=slideblue,line width=.85pt},
+  mutedroute/.style={-{Latex[length=2.2mm]},draw=slidegray,line width=.75pt},
+  equality/.style={<->,draw=slidegreen,line width=1.1pt}
+}
+
+\title{\textbf{Mathematics Bootcamp}}
+\subtitle{General Equilibrium and the Social Planner}
+\author{Miguel V\'azquez-Carrero}
+\date{\textbf{September 2025}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \sources{Fern\'andez-Villaverde and Krueger, Advanced Macroeconomics:
+  A Dynamic Approach, Chapters 4--5.}
+\end{frame}
+
+\begin{frame}{Today}
+  \begin{itemize}
+    \item The Basic Dynamic Economy
+    \item Optimization at Given Prices
+    \begin{itemize}
+      \item The Household and the Firm
+    \end{itemize}
+    \item Competitive Equilibrium
+    \begin{itemize}
+      \item Definition and Characterization
+    \end{itemize}
+    \item The Social Planner
+    \begin{itemize}
+      \item Welfare and Decentralization
+    \end{itemize}
+  \end{itemize}
+  \sources{AdvancedMacro Book, Chapters 4--5.}
+\end{frame}
+
+\begin{frame}{General Equilibrium Makes Separate Choices Compatible}
+  Day 4 studied one decision maker facing a feasible set. General equilibrium
+  asks whether several optimal decisions can hold at the same prices.
+
+  \vspace{.35em}
+  \centering
+  \begin{tikzpicture}
+    \node[object,text width=2.55cm] (prices) at (0,0)
+      {Candidate price paths\\$\{w_t,r_t,\mu_t\}_{t=0}^{T}$\\
+      {\footnotesize $r_t=\mu_t-\delta$}};
+    \node[object,text width=2.55cm] (household) at (3.25,.85)
+      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{T}$};
+    \node[object,text width=2.55cm] (firm) at (3.25,-.85)
+      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{T}$};
+    \node[object,fill=slideblue!8,text width=2.65cm] (clearing) at (6.75,0)
+      {Compatibility test\\Do quantities match?};
+    \node[object,fill=slidegreen!8,draw=slidegreen,text width=2.05cm] (eq) at (9.85,0)
+      {Competitive\\equilibrium};
+    \draw[route] (prices) -- (household);
+    \draw[route] (prices) -- (firm);
+    \draw[route] (household) -- (clearing);
+    \draw[route] (firm) -- (clearing);
+    \draw[route,draw=slidegreen] (clearing) -- (eq);
+  \end{tikzpicture}
+
+  \vspace{.55em}
+  \begin{block}{The Definition Is a Test, Not an Adjustment Story}
+    It says which price-allocation paths qualify as equilibria. It does not say
+    how an economy discovers those prices.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 69--71; Lecture 3, slides 23--30.}
+\end{frame}
+
+\begin{frame}{Day 4 Chose a Point; Day 5 Chooses a Path}
+  Day 4 studied a finite-dimensional choice
+  \[
+    x\in\mathbb{R}^n.
+  \]
+  With dates $t=0,\ldots,T$, collect every dated choice into one vector:
+  \[
+    z=(x_0,x_1,\ldots,x_T)
+    \in\mathbb{R}^{(T+1)n}.
+  \]
+
+  \vspace{.2em}
+  \centering
+  \begin{tikzpicture}
+    \foreach \x/\lab in {0/$x_0$,2.25/$x_1$,4.5/$x_2$,7.05/$\cdots$,9.55/$x_T$}{
+      \node[object,minimum width=1.25cm] at (\x,0) {\lab};
+    }
+    \draw[mutedroute] (.72,0) -- (1.52,0);
+    \draw[mutedroute] (2.97,0) -- (3.77,0);
+    \draw[mutedroute] (5.22,0) -- (6.25,0);
+    \draw[mutedroute] (7.82,0) -- (8.82,0);
+  \end{tikzpicture}
+
+  \vspace{.55em}
+  A finite-horizon dynamic problem is an ordinary finite-dimensional
+  optimization problem with a useful time structure.
+  \sources{AdvancedMacro Book, printed pp. 39--40 and 51--52; Sundaram,
+  finite-dimensional constrained optimization.}
+\end{frame}
+
+\begin{frame}{Every Date Contributes a Constraint and a Multiplier}
+  Consider the generic finite-path problem
+  \[
+    \max_z f(z)
+    \qquad\text{subject to}\qquad
+    g_t(z)=0,
+    \quad t=0,\ldots,T.
+  \]
+  Its Lagrangean is
+  \[
+    L(z;\lambda)
+    =
+    f(z)+\sum_{t=0}^{T}\lambda_t g_t(z).
+  \]
+
+  \centering
+  \begin{tikzpicture}
+    \foreach \x/\lab/\mul in {0/$g_0(z)=0$/$\lambda_0$,3.15/$g_1(z)=0$/$\lambda_1$,
+      6.30/$\cdots$/$\cdots$,9.45/$g_T(z)=0$/$\lambda_T$}{
+      \node[object,text width=2.0cm] at (\x,0) {\lab};
+      \node[text=slideblue] at (\x,-.80) {\mul};
+    }
+  \end{tikzpicture}
+
+  \vspace{.10em}
+  \begin{block}{Regularity and Interpretation}
+    At the optimum, differentiability and independent constraint gradients give
+    a unique multiplier vector. For $g_t(z)+b_t=0$ and differentiable $V$,
+    $\lambda_t=\partial V(b)/\partial b_t$.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 51--53 and 77; Sundaram, Chapter 5.}
+\end{frame}
+
+\begin{frame}{A Linking Choice Creates a Recurrence}
+  A variable carried from $t$ to $t+1$ appears in two neighboring constraints:
+  \[
+    g_t(\ldots,s_{t+1})=0,
+    \qquad
+    g_{t+1}(s_{t+1},\ldots)=0.
+  \]
+
+  \centering
+  \begin{tikzpicture}
+    \node[object,text width=2.35cm] (left) at (0,0)
+      {Date-$t$ constraint\\$g_t=0$};
+    \node[object,fill=slidegold!9,draw=slidegold,text width=2.2cm] (state) at (4.0,0)
+      {Linking choice\\$s_{t+1}$};
+    \node[object,text width=2.35cm] (right) at (8.0,0)
+      {Date-$(t+1)$ constraint\\$g_{t+1}=0$};
+    \draw[equality] (left) -- node[above,font=\small]{$\lambda_t$} (state);
+    \draw[equality] (state) -- node[above,font=\small]{$\lambda_{t+1}$} (right);
+  \end{tikzpicture}
+
+  \vspace{.5em}
+  Differentiating with respect to $s_{t+1}$ links adjacent multipliers.
+  Eliminating them typically produces
+  \[
+    \Phi(s_t,s_{t+1},s_{t+2})=0.
+  \]
+  This is a second-order difference equation.
+  \sources{AdvancedMacro Book, printed pp. 51--53, 72--73, and 77--78.}
+\end{frame}
+
+\begin{frame}{A Dynamic Characterization Needs Boundaries and Curvature}
+  A recurrence alone does not determine a path:
+  \[
+    \Phi(s_t,s_{t+1},s_{t+2})=0,
+    \qquad t=0,\ldots,T-1.
+  \]
+  It must be anchored by boundary conditions:
+  \[
+    s_0\ \text{given},
+    \qquad
+    s_{T+1}\ \text{fixed}.
+  \]
+
+  \begin{theorembox}[Finite-Horizon Logic]
+    \begin{itemize}
+      \item Continuity and a nonempty compact feasible set give existence.
+      \item Strict concavity on a convex feasible set gives uniqueness.
+      \item Differentiability and regularity justify first-order conditions.
+      \item Concavity makes valid first-order conditions sufficient.
+    \end{itemize}
+  \end{theorembox}
+  \sources{AdvancedMacro Book, Appendix A, printed p. 86; Math Bootcamp Day 4.}
+\end{frame}
+
+\begin{frame}{Time for Economics}
+  \begin{itemize}
+    \item The vector $z$ becomes a path of consumption, assets, and capital.
+    \item Each $g_t$ becomes a dated budget or resource constraint.
+    \item The linking choice $s_{t+1}$ becomes saving or next-period capital.
+    \item When the perturbed value is differentiable, $\lambda_t$ becomes the
+    shadow value of resources at date $t$.
+    \item The recurrence becomes an Euler equation.
+  \end{itemize}
+
+  \vspace{.65em}
+  \begin{block}{The Same Mathematical Structure}
+    Dynamic economics applies ordinary constrained optimization to choices that
+    are linked across dates.
+  \end{block}
+  \sources{AdvancedMacro Book, Chapters 4--5; Math Bootcamp Day 4.}
+\end{frame}
+
+\begin{frame}{Consumption at Different Dates Means Different Commodities}
+  A commodity is identified not only by its physical features, but also by its
+  date and state. In this deterministic model, date is the key label:
+
+  \vspace{.25em}
+  \centering
+  \begin{tikzpicture}
+    \foreach \x/\lab in {0/$c_0$,2.25/$c_1$,4.5/$c_2$,7.05/$\cdots$,9.55/$c_T$}{
+      \node[object,minimum width=1.25cm] at (\x,0) {\lab};
+    }
+    \draw[mutedroute] (.72,0) -- (1.52,0);
+    \draw[mutedroute] (2.97,0) -- (3.77,0);
+    \draw[mutedroute] (5.22,0) -- (6.25,0);
+    \draw[mutedroute] (7.82,0) -- (8.82,0);
+  \end{tikzpicture}
+
+  \vspace{.45em}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Date-0 Price Language}
+        \begin{minipage}[t][1.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          $q_t$ is the present-value price of one unit delivered at date $t$.
+          All dated goods can be viewed as traded at date $0$.
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Sequential Price Language}
+        \begin{minipage}[t][1.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          One unit at date $t+1$ costs $1/(1+r_{t+1})$ units at date $t$.
+          Trades occur date by date.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \[
+    q_0=1,
+    \qquad
+    \frac{q_{t+1}}{q_t}=\frac{1}{1+r_{t+1}}.
+  \]
+  \sources{Lecture 3, slides 4--6; Macro1 GE Theory, slides 6 and 9--13.}
+\end{frame}
+
+\begin{frame}{The Model Separates Primitives from Equilibrium Objects}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Primitives}
+        \begin{minipage}[t][4.0cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item Horizon $T$ and dates $t=0,\ldots,T$
+            \item Preferences: $\beta$ and $u$
+            \item Technology: $f$, $A_t$, and $\delta$
+            \item Initial capital: $k_0=a_0$
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Equilibrium Objects}
+        \begin{minipage}[t][4.0cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item Consumption and assets: $c_t,a_{t+1}$
+            \item Capital and labor: $k_t,\ell_t$
+            \item Output: $y_t$
+            \item Prices: $w_t,\mu_t,r_t$
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.4em}
+  A solution takes the primitives as given and determines all equilibrium
+  objects jointly.
+  \sources{AdvancedMacro Book, printed pp. 39--41, 61--69.}
+\end{frame}
+
+\begin{frame}{A Finite Horizon Keeps the Logical Claims Complete}
+  The core slides use $T<\infty$ and impose:
+  \begin{itemize}
+    \item a deterministic, closed economy with no government;
+    \item one representative price-taking household and one representative
+    price-taking firm;
+    \item $u$ strictly increasing, strictly concave, and twice differentiable;
+    \item $f$ increasing, concave, and constant returns to scale;
+    \item positive initial capital $k_0=a_0$ and terminal values
+    $a_{T+1}=k_{T+1}=0$.
+  \end{itemize}
+
+  \vspace{.45em}
+  \begin{block}{Why This Scope Matters}
+    For finite $T$, terminal conditions close the path. Concavity makes valid
+    FOCs sufficient. For infinite $T$, Euler equations also need a
+    transversality condition.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 49--53, 75--78, and 86.}
+\end{frame}
+
+\begin{frame}{The Household Ranks Entire Consumption Paths}
+  \begin{definitionbox}[Lifetime Utility]
+    For $c=(c_0,c_1,\ldots,c_T)$,
+    \[
+      U(c)=\sum_{t=0}^{T}\beta^t u(c_t),
+      \qquad 0<\beta<1.
+    \]
+    The discount factor $\beta$ gives the relative weight on later utility.
+  \end{definitionbox}
+
+  \vspace{.2em}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \textbf{Monotonicity}
+      \[
+        u'(c_t)>0
+      \]
+      More consumption is preferred.
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \textbf{Strict concavity}
+      \[
+        u''(c_t)<0
+      \]
+      Marginal utility falls with consumption.
+    \end{column}
+  \end{columns}
+  \sources{AdvancedMacro Book, printed pp. 41--49.}
+\end{frame}
+
+\begin{frame}{The Household Transfers Resources Across Dates}
+  At date $t$, the household owns assets $a_t$, supplies one unit of labor, and
+  receives wage and capital income.
+
+  \begin{definitionbox}[Period Budget Constraint]
+    \[
+      c_t+a_{t+1}=w_t+(1+r_t)a_t.
+    \]
+  \end{definitionbox}
+
+  \vspace{.25em}
+  \centering
+  \begin{tikzpicture}
+    \node[object,text width=2.15cm] (in) at (0,0)
+      {Resources at $t$\\$w_t+(1+r_t)a_t$};
+    \node[object,text width=2.2cm,minimum height=1.35cm] (use) at (3.65,.85)
+      {Consume now\\$c_t$};
+    \node[object,text width=2.2cm,minimum height=1.35cm] (save) at (3.65,-.85)
+      {Carry forward\\$a_{t+1}$};
+    \node[object,text width=2.25cm] (next) at (7.45,-.85)
+      {Asset payoff at $t+1$\\$(1+r_{t+1})a_{t+1}$};
+    \draw[route] (in) -- (use);
+    \draw[route] (in) -- (save);
+    \draw[route] (save) -- (next);
+  \end{tikzpicture}
+
+  \sources{AdvancedMacro Book, printed pp. 49--51.}
+\end{frame}
+
+\begin{frame}{The Household Chooses a Whole Path at Given Prices}
+  Given the price paths $\left(w_t,r_t\right)_{t=0}^{T}$ and initial assets
+  $a_0$, the household solves
+  \[
+    \max_{\left(c_t,a_{t+1}\right)_{t=0}^{T}}
+    \sum_{t=0}^{T}\beta^t u(c_t)
+  \]
+  subject to
+  \[
+    c_t+a_{t+1}=w_t+(1+r_t)a_t,
+    \qquad c_t\geq0,
+    \qquad t=0,\ldots,T,
+  \]
+  \[
+    a_0\ \text{given},
+    \qquad
+    a_{T+1}=0.
+  \]
+
+  \begin{block}{Price Taking}
+    The household chooses quantities while treating every wage and interest
+    rate as given. Equilibrium will later determine those prices.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 51--52.}
+\end{frame}
+
+\begin{frame}{One Shadow Value Is Needed for Every Date}
+  The Inada condition makes the nonnegativity constraints slack. Define
+  \[
+    L=
+    \sum_{t=0}^{T}\beta^t u(c_t)
+    +
+    \sum_{t=0}^{T}
+    \lambda_t\left[w_t+(1+r_t)a_t-c_t-a_{t+1}\right].
+  \]
+
+  The first-order conditions imply
+  \[
+    \beta^t u'(c_t)=\lambda_t,
+    \qquad t=0,\ldots,T,
+  \]
+  \[
+    \lambda_t=(1+r_{t+1})\lambda_{t+1},
+    \qquad t=0,\ldots,T-1.
+  \]
+
+  \begin{block}{Interpretation}
+    $\lambda_t$ is the increase in lifetime utility from one additional unit of
+    the consumption good available at date $t$.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 51--53.}
+\end{frame}
+
+\begin{frame}{The Euler Equation Balances Sacrifice and Return}
+  Combine the two first-order conditions:
+  \[
+    \boxed{
+      u'(c_t)
+      =
+      \beta(1+r_{t+1})u'(c_{t+1}).
+    }
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Cost of Saving One More Unit}
+        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          One unit is forgone today, reducing lifetime utility by
+          \[
+            \beta^t u'(c_t).
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Benefit One Date Later}
+        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          Tomorrow it yields $1+r_{t+1}$ units. Lifetime utility rises by
+          \[
+            \beta^{t+1}(1+r_{t+1})u'(c_{t+1}).
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.25em}
+  At an interior optimum, these two marginal effects are equal.
+  \sources{AdvancedMacro Book, printed p. 53.}
+\end{frame}
+
+\begin{frame}{The Euler Equation Is Ordinary Tangency Across Dates}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.45\textwidth}
+      The household treats consumption at $t$ and $t+1$ as two different goods.
+      At an interior optimum,
+      \[
+        \frac{\beta u'(c_{t+1})}{u'(c_t)}
+        =
+        \frac{1}{1+r_{t+1}}.
+      \]
+
+      \vspace{.45em}
+      \begin{block}{Same Mathematics as Day 4}
+        The MRS equals the relative price. The only new feature is that the
+        goods carry date labels.
+      \end{block}
+    \end{column}
+    \begin{column}{.53\textwidth}
+      \centering
+      \includegraphics[width=.98\linewidth]{intertemporal-choice.pdf}
+    \end{column}
+  \end{columns}
+  \sources{AdvancedMacro Book, printed pp. 53 and 57--60; Lecture 3, slides 4--6.}
+\end{frame}
+
+\begin{frame}{The Firm Transforms Capital and Labor into Output}
+  In every date $t$, the firm rents capital $k_t$, hires labor $\ell_t$, and
+  produces the single final good:
+  \[
+    y_t=f(k_t,A_t\ell_t)
+    =
+    k_t^\alpha(A_t\ell_t)^{1-\alpha},
+    \qquad 0<\alpha<1.
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Technology}
+        \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
+          $A_t$ measures productivity. Each input raises output, but its
+          marginal effect falls with use.
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Constant Returns}
+        \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
+          Scaling both inputs by one factor scales output by that factor. Price
+          taking then implies zero profits.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.35em}
+  A fraction $\delta$ of capital depreciates during production.
+  \sources{AdvancedMacro Book, printed pp. 61--65.}
+\end{frame}
+
+\begin{frame}{The Firm Solves a Static Problem at Every Date}
+  Given the wage $w_t$ and rental price of capital $\mu_t$, the firm solves
+  \[
+    \max_{k_t,\ell_t\geq0}
+    \left\{
+      f(k_t,A_t\ell_t)-w_t\ell_t-\mu_t k_t
+    \right\}.
+  \]
+
+  At a positive-input optimum,
+  \[
+    w_t=
+    \frac{\partial f(k_t,A_t\ell_t)}{\partial\ell_t}
+    =A_t f_2(k_t,A_t\ell_t),
+    \qquad
+    \mu_t=f_1(k_t,A_t\ell_t).
+  \]
+
+  \begin{block}{Why the Firm Problem Is Static}
+    The firm rents inputs, produces, and sells output within date $t$. The
+    household owns the capital and chooses how much to carry into the next date.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 65--67.}
+\end{frame}
+
+\begin{frame}{Factor Prices Equal Marginal Products}
+  For Cobb--Douglas production,
+  \[
+    w_t=(1-\alpha)A_t
+    \left(\frac{k_t}{A_t\ell_t}\right)^\alpha,
+    \qquad
+    \mu_t=\alpha
+    \left(\frac{k_t}{A_t\ell_t}\right)^{\alpha-1}.
+  \]
+
+  Depreciation separates the rental price from the household's net return:
+  \[
+    \boxed{
+      r_t=\mu_t-\delta,
+      \qquad
+      \mu_t=r_t+\delta.
+    }
+  \]
+
+  Constant returns and the first-order conditions imply
+  \[
+    f(k_t,A_t\ell_t)=w_t\ell_t+\mu_t k_t,
+  \]
+  so competitive profits are zero.
+  \sources{AdvancedMacro Book, printed pp. 66--68. The return relation corrects
+  the typo in Definition 14 on printed p. 70.}
+\end{frame}
+
+\begin{frame}{Feasibility Is a Physical Restriction}
+  Output can be consumed or invested:
+  \[
+    c_t+i_t=y_t.
+  \]
+  Investment replaces depreciated capital and changes the capital stock:
+  \[
+    i_t=k_{t+1}-(1-\delta)k_t.
+  \]
+  Combining these equations with production gives the aggregate resource
+  constraint:
+  \[
+    \boxed{
+      c_t+k_{t+1}
+      =
+      f(k_t,A_t\ell_t)+(1-\delta)k_t.
+    }
+  \]
+
+  \begin{block}{Behavior Versus Feasibility}
+    Household and firm problems describe optimal behavior at given prices.
+    The resource constraint describes what the economy can physically deliver.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 68--69.}
+\end{frame}
+
+\begin{frame}{Equilibrium Combines Behavior and Consistency}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Behavior}
+        \begin{minipage}[t][3.05cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item The household maximizes lifetime utility.
+            \item The firm maximizes date-$t$ profit.
+            \item Both take prices as given.
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Consistency}
+        \begin{minipage}[t][3.05cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item Asset supply equals capital demand.
+            \item Labor supply equals labor demand.
+            \item Goods demanded equal goods available.
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.30em}
+  \[
+    \boxed{
+      \text{individual optimization}
+      +
+      \text{market clearing}
+      =
+      \text{competitive equilibrium}.
+    }
+  \]
+  \sources{AdvancedMacro Book, printed pp. 69--71; Macro1 GE Theory, slide 16.}
+\end{frame}
+
+\begin{frame}{Definition and Characterization Answer Different Questions}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[DEFINITION]
+        \begin{minipage}[t][4.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item Names the objects that constitute an equilibrium.
+            \item States optimization and market clearing.
+            \item Tests whether a proposed price-allocation path qualifies.
+            \item Does not require derivatives or first-order conditions.
+          \end{itemize}
+        \end{minipage}
+      \end{definitionbox}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{propositionbox}[CHARACTERIZATION]
+        \begin{minipage}[t][4.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          \begin{itemize}
+            \item Derives equations every equilibrium must satisfy.
+            \item Uses first-order conditions or KKT under their hypotheses.
+            \item Reduces the objects that must be solved for.
+            \item Needs extra conditions for sufficiency, existence, or uniqueness.
+          \end{itemize}
+        \end{minipage}
+      \end{propositionbox}
+    \end{column}
+  \end{columns}
+  \sources{AdvancedMacro Book, printed pp. 70--74; Macro1 GE Theory,
+  slides 16--17 and 24--25.}
+\end{frame}
+
+\begin{frame}{DEFINITION: Competitive Equilibrium}
+  \begin{definitionbox}[Competitive Equilibrium]
+    Given $a_0$, a competitive equilibrium is a collection
+    \[
+      \left(
+        (c_t,a_{t+1}),
+        (k_t,\ell_t),
+        (w_t,\mu_t,r_t)
+      \right)_{t=0}^{T}
+    \]
+    such that:
+    \begin{enumerate}
+      \item given $(w_t,r_t)_{t=0}^{T}$, $(c_t,a_{t+1})_{t=0}^{T}$ solves the
+      household problem;
+      \item given $(w_t,\mu_t)_{t=0}^{T}$, $(k_t,\ell_t)_{t=0}^{T}$ solves the
+      firm's problem;
+      \item $r_t=\mu_t-\delta$ and all markets clear at every date.
+    \end{enumerate}
+  \end{definitionbox}
+
+  The definition refers to solutions of optimization problems, not merely to
+  their first-order conditions.
+  \sources{AdvancedMacro Book, Definition 14, printed p. 70, with the corrected
+  return relation.}
+\end{frame}
+
+\begin{frame}{Market Clearing Links Individual and Aggregate Quantities}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.42\textwidth}
+      \begin{block}{Asset Market}
+        \[
+          a_t=k_t.
+        \]
+      \end{block}
+      \begin{block}{Labor Market}
+        \[
+          \ell_t=1.
+        \]
+      \end{block}
+      \begin{block}{Goods Market}
+        \[
+          c_t+k_{t+1}
+          =
+          f(k_t,A_t\ell_t)+(1-\delta)k_t.
+        \]
+      \end{block}
+    \end{column}
+    \begin{column}{.56\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \node[object,text width=2.05cm] (hh) at (0,1.05)
+          {Household\\supplies $a_t$ and $1$};
+        \node[object,text width=2.05cm] (firm) at (0,-1.05)
+          {Firm\\demands $k_t$ and $\ell_t$};
+        \node[object,fill=slideblue!8,text width=2.15cm] (market) at (3.25,.55)
+          {Markets\\match quantities};
+        \node[object,text width=2.15cm] (resource) at (3.25,-1.25)
+          {Goods market\\uses $=$ resources};
+        \draw[route] (hh) -- (market);
+        \draw[route] (firm) -- (market);
+        \draw[route] (market) -- (resource);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \sources{AdvancedMacro Book, printed pp. 69--70.}
+\end{frame}
+
+\begin{frame}{Equilibrium Does Not Mean a Rest Point}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Equilibrium Path]
+        \begin{minipage}[t][2.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          All agents optimize and all markets clear at every date. Quantities
+          and prices may rise, fall, or fluctuate over time.
+        \end{minipage}
+      \end{definitionbox}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{definitionbox}[Steady State]
+        \begin{minipage}[t][2.55cm][t]{\dimexpr\linewidth-.76em\relax}
+          A special equilibrium path in which the relevant quantities and
+          prices do not vary over time.
+        \end{minipage}
+      \end{definitionbox}
+    \end{column}
+  \end{columns}
+
+  \vspace{.55em}
+  \[
+    \text{steady state}
+    \quad\Longrightarrow\quad
+    \text{equilibrium},
+    \qquad
+    \text{equilibrium}
+    \quad\not\Longrightarrow\quad
+    \text{steady state}.
+  \]
+  \sources{AdvancedMacro Book, printed pp. 60--61 and 70--71.}
+\end{frame}
+
+\begin{frame}{Walras' Law Makes One Clearing Condition Redundant}
+  Suppose the household and firm optimize and the asset and labor markets clear.
+
+  \statementitem{1}{Substitute $a_t=k_t$ and $a_{t+1}=k_{t+1}$ into the
+  household budget:
+  \[
+    c_t+k_{t+1}=w_t+(1+r_t)k_t.
+  \]}
+  \statementitem{2}{Use $r_t=\mu_t-\delta$:
+  \[
+    c_t+k_{t+1}-(1-\delta)k_t=w_t+\mu_t k_t.
+  \]}
+  \statementitem{3}{Since $\ell_t=1$ and constant returns imply zero profit,
+  \[
+    w_t\ell_t+\mu_t k_t=f(k_t,A_t\ell_t).
+  \]}
+  \statementitem{4}{Therefore the goods market clears:
+  \[
+    c_t+k_{t+1}=f(k_t,A_t\ell_t)+(1-\delta)k_t.
+  \]}
+  \sources{AdvancedMacro Book, Theorem 15, printed pp. 71--72.}
+\end{frame}
+
+\begin{frame}{CHARACTERIZATION: Prices Become Functions of Capital}
+  To characterize equilibrium, set $A_t=1$ and use $\ell_t=1$.
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{General Technology}
+        \begin{minipage}[t][2.05cm][t]{\dimexpr\linewidth-.76em\relax}
+          \[
+            w_t=f_\ell(k_t,1),
+          \]
+          \[
+            r_t=f_k(k_t,1)-\delta.
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Cobb--Douglas Technology}
+        \begin{minipage}[t][2.05cm][t]{\dimexpr\linewidth-.76em\relax}
+          \[
+            w_t=(1-\alpha)k_t^\alpha,
+          \]
+          \[
+            r_t=\alpha k_t^{\alpha-1}-\delta.
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.45em}
+  Firm optimality and market clearing remove prices as independent unknowns.
+  \sources{AdvancedMacro Book, printed pp. 72--73.}
+\end{frame}
+
+\begin{frame}{CHARACTERIZATION: Feasibility Eliminates Consumption}
+  With $\ell_t=1$ and $A_t=1$, the resource constraint is
+  \[
+    c_t+k_{t+1}=k_t^\alpha+(1-\delta)k_t.
+  \]
+  Hence,
+  \[
+    \boxed{
+      c_t
+      =
+      k_t^\alpha+(1-\delta)k_t-k_{t+1}.
+    }
+  \]
+
+  \vspace{.3em}
+  \centering
+  \begin{tikzpicture}
+    \node[object,text width=2.5cm] (current) at (0,0)
+      {Current state\\$k_t$};
+    \node[object,text width=2.8cm] (choice) at (3.75,0)
+      {Next capital\\$k_{t+1}$};
+    \node[object,fill=slideblue!8,text width=3.2cm] (cons) at (8.0,0)
+      {Consumption $c_t$\\
+      $k_t^\alpha+(1-\delta)k_t-k_{t+1}$};
+    \draw[route] (current) -- (choice);
+    \draw[route] (choice) -- (cons);
+  \end{tikzpicture}
+
+  \vspace{.55em}
+  Once the capital path is known, the allocation and prices can be recovered.
+  \sources{AdvancedMacro Book, printed pp. 72--73.}
+\end{frame}
+
+\begin{frame}{CHARACTERIZATION: A Difference Equation for Capital}
+  For $t=0,\ldots,T-1$, substitute equilibrium prices and consumption into
+  the household Euler equation:
+  \[
+    \begin{aligned}
+      &u'\!\left(
+        k_t^\alpha+(1-\delta)k_t-k_{t+1}
+      \right)\\
+      &\quad=
+      \beta\left[
+        1+\alpha k_{t+1}^{\alpha-1}-\delta
+      \right]
+      u'\!\left(
+        k_{t+1}^\alpha+(1-\delta)k_{t+1}-k_{t+2}
+      \right).
+    \end{aligned}
+  \]
+
+  This is a second-order difference equation in
+  $(k_t,k_{t+1},k_{t+2})$. For finite $T$, combine it with
+  \[
+    k_0=a_0,
+    \qquad
+    k_{T+1}=0,
+    \qquad
+    c_t\geq0,\ k_t\geq0.
+  \]
+
+  \sources{AdvancedMacro Book, equation (4.40), printed pp. 72--73.}
+\end{frame}
+
+\begin{frame}{A Characterization Is Not an Existence Theorem}
+  The capital equation is useful because it removes prices and consumption from the
+  search. But the logical claims remain separate:
+
+  \begin{itemize}
+    \item Every interior competitive equilibrium satisfies the equation.
+    \item The converse also requires all feasibility and boundary conditions,
+    together with conditions making the first-order conditions sufficient.
+    \item Writing the equation does not prove that a solution exists.
+    \item It also does not prove that the solution is unique.
+  \end{itemize}
+
+  \vspace{.45em}
+  \begin{block}{The Next Step}
+    The social planner problem supplies a simpler route to existence,
+    allocation uniqueness, and the welfare interpretation.
+  \end{block}
+  \sources{AdvancedMacro Book, printed pp. 72--75 and 86.}
+\end{frame}
+
+\begin{frame}{DEFINITION: The Social Planner Problem}
+  With $A_t=1$, the planner solves
+  \[
+    \max_{\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{T}}
+    \sum_{t=0}^{T}\beta^t u(c_t)
+  \]
+  subject to
+  \[
+    c_t+k_{t+1}
+    =
+    k_t^\alpha\ell_t^{1-\alpha}+(1-\delta)k_t,
+  \]
+  \[
+    c_t\geq0,
+    \qquad
+    k_{t+1}\geq0,
+    \qquad
+    0\leq\ell_t\leq1,
+    \qquad
+    k_0>0\ \text{given}.
+  \]
+
+  Since leisure does not enter utility and production increases in labor,
+  $\ell_t=1$. For $T<\infty$, optimality also implies $k_{T+1}=0$.
+  \sources{AdvancedMacro Book, printed pp. 75--76.}
+\end{frame}
+
+\begin{frame}{CHARACTERIZATION: The Planner Euler Equation}
+  For the reduced problem, define
+  \[
+    L=
+    \sum_{t=0}^{T}\beta^t u(c_t)
+    +
+    \sum_{t=0}^{T}
+    \lambda_t
+    \left[
+      k_t^\alpha+(1-\delta)k_t-c_t-k_{t+1}
+    \right].
+  \]
+
+  The first-order conditions give
+  \[
+    \lambda_t=\beta^t u'(c_t),
+    \qquad t=0,\ldots,T,
+  \]
+  \[
+    \lambda_t
+    =
+    \lambda_{t+1}
+    \left[
+      \alpha k_{t+1}^{\alpha-1}+1-\delta
+    \right],
+    \qquad t=0,\ldots,T-1.
+  \]
+  Therefore,
+  \[
+    \boxed{
+      u'(c_t)
+      =
+      \beta
+      \left[
+        \alpha k_{t+1}^{\alpha-1}+1-\delta
+      \right]
+      u'(c_{t+1}).
+    }
+  \]
+  \sources{AdvancedMacro Book, printed pp. 77--78.}
+\end{frame}
+
+\begin{frame}{The Market and Planner Euler Equations Coincide}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.455\textwidth}
+      \begin{block}{Competitive Equilibrium}
+        \begin{minipage}[t][3.15cm][t]{\dimexpr\linewidth-.76em\relax}
+          Household Euler equation:
+          \[
+            u'(c_t)=\beta(1+r_{t+1})u'(c_{t+1}).
+          \]
+          Firm return and clearing:
+          \[
+            1+r_{t+1}
+            =
+            1+\alpha k_{t+1}^{\alpha-1}-\delta.
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \begin{column}{.07\textwidth}
+      \centering
+      \Large\textcolor{slidegreen}{$=$}
+    \end{column}
+    \begin{column}{.455\textwidth}
+      \begin{block}{Social Planner}
+        \begin{minipage}[t][3.15cm][t]{\dimexpr\linewidth-.76em\relax}
+          Planner return:
+          \[
+            1+\alpha k_{t+1}^{\alpha-1}-\delta.
+          \]
+          Planner Euler equation:
+          \[
+            u'(c_t)
+            =
+            \beta
+            \left[
+              1+\alpha k_{t+1}^{\alpha-1}-\delta
+            \right]
+            u'(c_{t+1}).
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.25em}
+  The equality is economically powerful only because concavity and the terminal
+  conditions make these equations sufficient.
+  \sources{AdvancedMacro Book, printed pp. 77--78.}
+\end{frame}
+
+\begin{frame}{The Welfare Theorems Connect Two Definitions}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{theorembox}[First Welfare Theorem]
+        \begin{minipage}[t][3.25cm][t]{\dimexpr\linewidth-.76em\relax}
+          Every equilibrium allocation is a planner optimum:
+          \[
+            \text{equilibrium}
+            \Longrightarrow
+            \text{planner optimum}.
+          \]
+          Markets attain an efficient allocation.
+        \end{minipage}
+      \end{theorembox}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{theorembox}[Second Welfare Theorem]
+        \begin{minipage}[t][3.25cm][t]{\dimexpr\linewidth-.76em\relax}
+          In this model, every planner optimum can be supported by prices:
+          \[
+            \text{planner optimum}
+            \Longrightarrow
+            \text{equilibrium}.
+          \]
+          Marginal products construct the prices.
+        \end{minipage}
+      \end{theorembox}
+    \end{column}
+  \end{columns}
+
+  \vspace{.35em}
+  The finite-horizon proof uses feasibility, identical Euler equations, and the
+  sufficiency supplied by concavity.
+  \sources{AdvancedMacro Book, Theorems 18--19, printed pp. 78--79.}
+\end{frame}
+
+\begin{frame}{Supporting Prices Decentralize the Planner Allocation}
+  Start from a planner solution $(c_t^*,k_{t+1}^*)_{t=0}^{T}$ and define
+  \[
+    w_t^*=(1-\alpha)(k_t^*)^\alpha,
+    \qquad
+    \mu_t^*=\alpha(k_t^*)^{\alpha-1},
+  \]
+  \[
+    r_t^*=\mu_t^*-\delta.
+  \]
+
+  \statementitem{1}{Set $a_t^*=k_t^*$ and $\ell_t^*=1$, so the asset and labor
+  markets clear.}
+  \statementitem{2}{The supporting prices satisfy the firm's first-order
+  conditions; concavity makes them sufficient.}
+  \statementitem{3}{The planner Euler equation becomes the household Euler
+  equation; concavity and the terminal condition make it sufficient.}
+  \statementitem{4}{Planner feasibility is exactly goods-market clearing.}
+
+  \sources{AdvancedMacro Book, proof of Theorem 19, printed pp. 78--79.}
+\end{frame}
+
+\begin{frame}{The Planner Gives an Indirect Existence Argument}
+  For finite $T$, write feasibility as
+  \[
+    c_t+k_{t+1}
+    \leq
+    k_t^\alpha+(1-\delta)k_t.
+  \]
+  Strictly increasing utility makes the inequality bind. Under the maintained
+  finite-horizon regularity and curvature assumptions, the planner problem has
+  a unique solution.
+
+  \[
+    \text{unique planner solution}
+    \xrightarrow{\text{Second Welfare Theorem}}
+    \text{an equilibrium exists},
+  \]
+  \[
+    \text{any equilibrium}
+    \xrightarrow{\text{First Welfare Theorem}}
+    \text{the unique planner allocation}.
+  \]
+  \[
+    \boxed{\text{equilibrium existence}+\text{allocation uniqueness}.}
+  \]
+  \sources{AdvancedMacro Book, Appendix A, printed p. 86.}
+\end{frame}
+
+\begin{frame}{The Representative Household Hides Distribution}
+  In this model, one household owns the capital and constant-returns firms earn
+  zero profits. In an economy with many households:
+
+  \begin{itemize}
+    \item endowments and firm-ownership shares determine individual wealth;
+    \item under convexity, positive planner weights select different
+    Pareto-efficient allocations;
+    \item the Second Welfare Theorem generally requires transfers that make the
+    selected bundles affordable;
+    \item externalities, market power, taxes, or missing markets can separate
+    equilibrium from the planner allocation.
+  \end{itemize}
+
+  \vspace{.25em}
+  \begin{block}{What the Welfare Theorems Do Not Say}
+    They do not say that every market economy is efficient. They identify the
+    assumptions under which decentralization and planning select the same allocation.
+  \end{block}
+  \sources{Lecture 3, slides 17--25; Macro1 GE Theory, slides 34--46.}
+\end{frame}
+
+\begin{frame}{Definition Comes First; Characterization Makes It Usable}
+  \begin{enumerate}
+    \item List the primitives and every endogenous sequence.
+    \item Write household and firm optimization at given prices.
+    \item Define equilibrium by adding the return relation and market clearing.
+    \item Derive the characterization and keep all boundary conditions.
+    \item Use the planner problem and welfare theorems to recover allocations
+    and supporting prices.
+  \end{enumerate}
+
+  \vspace{.45em}
+  \begin{block}{The Full Logic}
+    \centering
+    \textbf{Definition} identifies the object.
+    \qquad
+    \textbf{Characterization} reduces the search.
+    \qquad
+    \textbf{Theorems} justify the connection.
+  \end{block}
+
+  \vspace{.25em}
+  \centering
+  \textcolor{slideblue}{\bfseries General equilibrium is optimization made
+  mutually consistent.}
+  \sources{AdvancedMacro Book, Chapters 4--5; Lecture 3; Macro1 GE Theory.}
+\end{frame}
+
+\end{document}
