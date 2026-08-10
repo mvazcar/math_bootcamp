@@ -19,15 +19,11 @@
 \begin{frame}{Today}
 
 \begin{itemize}
-    \item Indifference as an Equivalence Relation
-    \item Utility Representation
-    \item Adding Structure to Preferences
-    \begin{itemize}
-        \item Monotonicity
-        \item Local Nonsatiation
-        \item Convexity
-        \item Continuity
-    \end{itemize}
+    \item Preference Relations, Indifference, and Utility
+    \item Monotonicity and Local Nonsatiation
+    \item Convexity and Quasiconcavity
+    \item Continuity Through Contour Sets
+    \item Continuous Utility Representation
 \end{itemize}
     
 \end{frame}
@@ -140,22 +136,24 @@
   
 \end{frame}
 
-\begin{frame}{Useful Properties of Preferences}
+\begin{frame}{A Representation Carries the Structure of Preferences}
+\renewcommand{\arraystretch}{1.35}
+\centering
+\begin{tabular}{@{}p{.42\textwidth}p{.50\textwidth}@{}}
+\toprule
+\textbf{Property of $\succeq$} & \textbf{Property of a representation $u$}\\
+\midrule
+Weak monotonicity & $u$ is non-decreasing.\\
+Strict monotonicity & $u$ is strictly increasing.\\
+Convexity & $u$ is quasiconcave.\\
+Strict convexity & $u$ is strictly quasiconcave.\\
+\bottomrule
+\end{tabular}
 
-\begin{itemize}
-    \item In addition to rationality, we need more structure in preference relations. That is, we need to assume more properties. \\[0.5em]
-    \item These properties have implications for:
-    \begin{itemize}
-        \item Their utility function representation.
-        \item Their indifference curves.
-    \end{itemize} 
-    \vspace{0.5em}
-    \item The best way to understand and learn them is by practicing proofs, many times.
-    \begin{itemize}
-        \item You will have plenty of Weekly Problem Sets where you will do exactly that.
-    \end{itemize}
-\end{itemize}
-
+\vspace{.85em}
+Continuity is different: a continuous representation gives continuous
+preferences, while Debreu's theorem gives conditions under which continuous
+preferences admit at least one continuous representation.
 \end{frame}
 
 
@@ -239,15 +237,18 @@ Local nonsatiation rules out ``thick'' indifference sets.
 On $X=\mathbb{R}_+^L$, strict monotonicity implies local nonsatiation.
 \end{propositionbox}
 
-\textbf{Proof.}\quad
-Suppose $\succeq$ is strictly monotone, i.e. $x \ge y$ and $x \ne y$ imply $x \succ y$.\\
-For each $x \in \mathbb{R}_+^L$ and every $\varepsilon > 0$, let
-$y = x + \frac{\varepsilon}{L}\mathbf{1}$. Then $y\in\mathbb{R}_+^L$ and
+\textbf{Proof.}\quad Let $x\in\mathbb{R}_+^L$ and $\varepsilon>0$ be arbitrary.\par
+\vspace{.15em}
+\hspace*{1.8em}Define $y=x+\frac{\varepsilon}{L}\mathbf{1}$.\par
+\hspace*{3.6em}Then $y\in\mathbb{R}_+^L$, $y\geq x$, and $y\ne x$.\par
+\hspace*{3.6em}Strict monotonicity therefore implies $y\succ x$.\par
+\hspace*{3.6em}Moreover,
 \[
 \lVert x - y\rVert=\sqrt{\sum_{i=1}^L \left(\frac{\varepsilon}{L}\right)^2}
 =\sqrt{L\left(\frac{\varepsilon}{L}\right)^2}=\frac{\varepsilon}{\sqrt{L}}\le \varepsilon
 \]
-Strict monotonicity implies that $y \succ x$.\\[0.5em]
+\hspace*{1.8em}Thus every $\varepsilon$-neighborhood of $x$ contains a strictly
+better bundle.\par\vspace{.3em}
 However, local nonsatiation does not imply monotonicity.
 \end{frame}
 
@@ -464,6 +465,27 @@ x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
     \item Rationality is necessary. On $\mathbb{R}_+^L$, continuity supplies enough additional structure for a continuous representation.
 \end{itemize}
     
+\end{frame}
+
+\begin{frame}{These Assumptions Solve Different Problems}
+\renewcommand{\arraystretch}{1.42}
+\centering
+\begin{tabular}{@{}p{.48\textwidth}p{.44\textwidth}@{}}
+\toprule
+\textbf{Assumptions} & \textbf{Conclusion}\\
+\midrule
+Nonempty compact $D$; continuous $u$
+& $\operatorname*{arg\,max}_{x\in D}u(x)$ is nonempty.\\
+Convex $D$; strictly quasiconcave $u$
+& There is at most one maximizer.\\
+Local nonsatiation; $D=B(p,I)$ with $p\gg0$
+& Every optimum satisfies $p\cdot x=I$.\\
+\bottomrule
+\end{tabular}
+
+\vspace{.9em}
+Existence, uniqueness, and a binding constraint are distinct conclusions.
+Day 4 studies the mathematics that produces each one.
 \end{frame}
 
 \end{document}

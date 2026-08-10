@@ -15,6 +15,18 @@
 \titlepage
 \end{frame}
 
+\begin{frame}{Today}
+\begin{itemize}
+    \item Formal Language and Proof Structure
+    \item Logical Connectives and Quantifiers
+    \item Sets and Binary Relations
+    \item Preference-Based and Choice-Based Decision Models
+    \begin{itemize}
+        \item Rationality, WARP, and Rationalization
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Logic and Precision}
 
@@ -384,15 +396,6 @@ For a relation $R$ on $A$:
 \end{definitionbox}
 \end{frame}
 
-\begin{frame}{Time for Economics}
-
-\begin{itemize}
-    \item We have seen some mathematical objects and their properties.
-    \item More importantly, these are the words in the formal language that we use in Economics.
-    \item Let's try to read some Economics.
-\end{itemize}
-\end{frame}
-
 \begin{frame}{MWG: Microeconomic Theory}
 \begin{columns}[c,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
@@ -523,9 +526,9 @@ Start with preferences, impose rationality, and derive choice behavior.
 
 \begin{frame}{Choice Behavior Is the Primitive Object}
 \begin{definitionbox}[A Choice Rule Is the Starting Point]
-For each observed menu $B$, the rule records a nonempty choice set:
+Let $\mathbb B$ be the domain of observed menus. A choice rule satisfies
 \[
-C:\mathcal B\to 2^X\setminus\{\varnothing\},
+C:\mathbb B\to 2^X\setminus\{\varnothing\},
 \qquad \varnothing\neq C(B)\subseteq B.
 \]
 \end{definitionbox}
@@ -555,7 +558,7 @@ first record choices, then ask whether one rational relation explains them.
 \begin{frame}{What Is a Rich Domain of Menus?}
 \begin{definitionbox}[Every Small Menu Is Observable]
 The domain is \emph{rich} if every nonempty $B\subseteq X$ with $|B|\leq 3$
-belongs to $\mathcal B$. Thus, for distinct $x,y,z\in X$, it contains
+belongs to $\mathbb B$. Thus, for distinct $x,y,z\in X$, it contains
 \[
 \{x\},\{y\},\{z\};\quad
 \{x,y\},\{x,z\},\{y,z\};\quad
@@ -576,7 +579,7 @@ Pairs build comparisons; triples test them. Larger menus are allowed.
 
 \begin{frame}{Why the Proof Starts with Pairs}
 \begin{propositionbox}[Pairs Recover Revealed Preference]
-Suppose every pair belongs to $\mathcal B$ and choice is nonempty. Under WARP,
+Suppose every pair belongs to $\mathbb B$ and choice is nonempty. Under WARP,
 \[
 x\succeq^* y
 \quad\Longleftrightarrow\quad
@@ -627,7 +630,7 @@ would force $C(T)=\varnothing$, contradicting nonempty choice.
 \begin{frame}{Rationalizing Choice}
 \begin{definitionbox}[Rationalization]
 A preference relation $\succeq$ \emph{rationalizes} a choice rule $C$ on
-$\mathcal B$ if, for every $B\in\mathcal B$,
+$\mathbb B$ if, for every $B\in\mathbb B$,
 \[
 C(B)=\{x\in B:x\succeq y\text{ for every }y\in B\}.
 \]
@@ -641,8 +644,8 @@ to one complete and transitive relation.
 
 \begin{frame}{How the Rationalization Proof Works}
 \begin{propositionbox}[WARP and Rationalizability]
-Suppose $\mathcal{B}$ contains every nonempty subset of $X$ with at most three
-alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathcal B$. Then $C$ is
+Suppose $\mathbb B$ contains every nonempty subset of $X$ with at most three
+alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathbb B$. Then $C$ is
 rationalizable if and only if it satisfies WARP.
 \end{propositionbox}
 
@@ -659,6 +662,29 @@ C(B)=\{x\in B:x\succeq^* y\text{ for every }y\in B\}.
 If $y\in C(B)$ and $x\succeq^*y$, the pair menu chooses $x$; WARP therefore
 forces $x\in C(B)$ too.
 \end{block}
+\end{frame}
+
+\begin{frame}{Demand Is Choice on Walrasian Menus}
+\begin{definitionbox}[Restrict the Menu Domain]
+Consumer demand evaluates the same choice rule on Walrasian menus:
+\[
+B(p,I)=\{x\in\mathbb{R}_+^L:p\cdot x\leq I\},
+\qquad
+x(p,I):=C\bigl(B(p,I)\bigr).
+\]
+When $C$ is rationalized by $\succeq$ and represented by $u$,
+\[
+x(p,I)
+=C_{\succeq}\bigl(B(p,I)\bigr)
+=\operatorname*{arg\,max}_{x\in B(p,I)}u(x).
+\]
+\end{definitionbox}
+
+\vspace{.25em}
+\textbf{Important.}\quad
+Day 1's converse used a rich domain. Walrasian budgets are restricted, so WARP
+is necessary for rationalizable demand but does not by itself reproduce that
+converse.
 \end{frame}
 
 \end{document}

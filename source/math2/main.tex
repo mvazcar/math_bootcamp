@@ -18,6 +18,16 @@
 \titlepage
 \end{frame}
 
+\begin{frame}{Today}
+\begin{itemize}
+    \item Cartesian Products and Functions
+    \item Finite and Infinite Sets
+    \item The Real Numbers and Euclidean Distance
+    \item Sequences, Continuity, and Compactness
+    \item Bounds, Completeness, and Ordinal Utility
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Bartle-Sherbert - Real Analysis}
 \begin{columns}[c,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
@@ -403,6 +413,27 @@ preference relation through closed upper and lower contour sets.
 \end{block}
 \end{frame}
 
+\begin{frame}{Closed and Bounded Sets Are Compact in $\mathbb{R}^L$}
+\begin{theorembox}[Heine--Borel and Extreme Values]
+Let $D\subseteq\mathbb{R}^L$. Then
+\[
+D\text{ is compact}
+\quad\Longleftrightarrow\quad
+D\text{ is closed and bounded}.
+\]
+If $D$ is nonempty and compact and $f:D\to\mathbb{R}$ is continuous, then
+there exist $x_{\min},x_{\max}\in D$ such that
+\[
+f(x_{\min})\leq f(x)\leq f(x_{\max})
+\qquad\text{for every }x\in D.
+\]
+\end{theorembox}
+
+\vspace{.45em}
+Compactness controls the feasible set; continuity controls the objective.
+Together they turn a supremum or infimum into an attained maximum or minimum.
+\end{frame}
+
 \begin{frame}{Bounds}
 \begin{definitionbox}[2.3.1 Bounds]
 Let $\varnothing\ne S\subseteq\mathbb{R}$.
@@ -544,8 +575,8 @@ represents the same preferences. Utility levels and differences have no intrinsi
 \begin{block}{Existence}
 Every utility representation induces rational preferences. On finite or
 countable $X$, rationality is also sufficient. On the standard Euclidean
-choice set $X=\mathbb{R}_+^L$, continuity is sufficient for a continuous
-representation; Day 3 states the theorem.
+choice set $X=\mathbb{R}_+^L$, a rational and continuous preference relation
+admits a continuous representation; Day 3 states the theorem.
 \end{block}
 \end{frame}
 
@@ -564,12 +595,25 @@ representation; Day 3 states the theorem.
     \includegraphics[width=0.96\linewidth,trim=0 0 0 .5pt,clip]{mwg-p024-proposition.pdf}
 \par}
 \end{frame}
-\begin{frame}[t]{MWG Exercises: Utility Representation}
-\par
-\vspace{.1em}
-{\centering
-        \includegraphics[width=1\linewidth,trim=0 0 0 3pt,clip]{mwg-p030-exercises.pdf}
-\par}    
+\begin{frame}{Utility Generates the Same Choice from Every Menu}
+\begin{definitionbox}[Representation Preserves Maximizers]
+Suppose $u:X\to\mathbb{R}$ represents $\succeq$. For every nonempty menu
+$B\subseteq X$ on which a best alternative exists,
+\[
+C_{\succeq}(B)
+=\{x\in B:x\succeq y\text{ for every }y\in B\}
+=\operatorname*{arg\,max}_{x\in B}u(x).
+\]
+If $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then
+\[
+\operatorname*{arg\,max}_{x\in B}u(x)
+=\operatorname*{arg\,max}_{x\in B}(\phi\circ u)(x).
+\]
+\end{definitionbox}
+
+\vspace{.45em}
+Only the ranking matters. A strictly increasing transformation can simplify
+the objective without changing the chosen alternatives.
 \end{frame}
 
 \end{document}
