@@ -39,9 +39,10 @@
     \begin{itemize}
       \item Lagrange multipliers; complementary slackness and Kuhn--Tucker
     \end{itemize}
-    \item Consumer Demand
+    \item Economic Applications
     \begin{itemize}
-      \item Cobb--Douglas in full; corners and kinks as contrasts
+      \item Consumer demand: Cobb--Douglas, corners, and kinks
+      \item Static firm choice: concave and linear production
     \end{itemize}
   \end{itemize}
   \sources{Osborne, Optimization: introduction and contents.}
@@ -838,6 +839,80 @@
   \end{columns}
   \sources{Sundaram, Sections 5.1, 6.1, and 6.3.1; Graduate Microeconomics I,
   Lecture 5, slides 14--20.}
+\end{frame}
+
+\begin{frame}{The Static Firm Compares Marginal Product with the Wage}
+  \setlength{\abovedisplayskip}{.35em}
+  \setlength{\belowdisplayskip}{.35em}
+  Normalize the output price to one. A one-period firm chooses labor
+  $\ell\geq0$:
+  \[
+    \max_{\ell\geq0}\pi(\ell)
+    =\max_{\ell\geq0}\{f(\ell)-w\ell\}.
+  \]
+
+  For differentiable, concave $f$, profit is concave and
+  $\pi'(\ell)=f'(\ell)-w$.
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Marginal Test}
+        \begin{minipage}[t][1.30cm][t]{\dimexpr\linewidth-.76em\relax}
+          If $f'(\ell)>w$, hire more labor. If $f'(\ell)<w$, hire less labor.
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Optimality Rule}
+        \begin{minipage}[t][1.30cm][t]{\dimexpr\linewidth-.76em\relax}
+          At a positive finite optimum,
+          \[
+            f'(\ell^*)=w.
+          \]
+          At $\ell^*=0$, $f'(0)\leq w$ supports no hiring.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.20em}
+  \begin{block}{Why the Problem Is Static}
+    The firm hires, produces, and pays within one period; no state is carried
+    into the next period.
+  \end{block}
+  \sources{Dixit, \textit{Optimization in Economic Theory}, profit maximization;
+  Osborne, optimization with boundary solutions.}
+\end{frame}
+
+\begin{frame}{Linear Production Reduces the Problem to $A$ versus $w$}
+  \setlength{\abovedisplayskip}{.35em}
+  \setlength{\belowdisplayskip}{.35em}
+  Let one unit of labor produce $A>0$ units of output:
+  \[
+    f(\ell)=A\ell,
+    \qquad
+    \pi(\ell)=(A-w)\ell.
+  \]
+  \vspace{.15em}
+  Marginal product is constant, so there is no interior tangency to find.
+
+  \begin{definitionbox}[Profit Maximizers with No Capacity Constraint]
+    \[
+      \operatorname*{arg\,max}_{\ell\geq0}(A-w)\ell
+      =
+      \begin{cases}
+        \{0\}, & A<w,\\[.25em]
+        \mathbb{R}_+, & A=w,\\[.25em]
+        \varnothing, & A>w.
+      \end{cases}
+    \]
+  \end{definitionbox}
+
+  Thus $A<w$ gives no hiring, $A=w$ makes every scale optimal with zero profit,
+  and $A>w$ makes profit unbounded. With a capacity
+  $0\leq\ell\leq\overline{\ell}$, the last case chooses $\overline{\ell}$.
+  \sources{Dixit, \textit{Optimization in Economic Theory}, linear activities;
+  Osborne, optimization with boundary and nonexistence cases.}
 \end{frame}
 
 \begin{frame}{Every Case Asks the Same Question}
