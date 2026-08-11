@@ -27,7 +27,7 @@ plt.rcParams.update(
     {
         "font.family": "sans-serif",
         "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-        "font.size": 17,
+        "font.size": 19,
         "mathtext.fontset": "cm",
         "axes.labelsize": 19,
         "xtick.labelsize": 13,
@@ -92,12 +92,14 @@ def make_intertemporal_choice() -> None:
 
     ax.scatter([c_now_star], [c_next_star], s=54, color=CHAD_GREEN, zorder=6)
     ax.text(
-        c_now_star + 0.12,
-        c_next_star - 0.15,
+        c_now_star + 0.15,
+        c_next_star - 0.42,
         r"$(c_t^*,c_{t+1}^*)$",
         color=CHAD_GREEN,
         ha="left",
         va="top",
+        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.15},
+        zorder=7,
     )
 
     # A short red segment makes the local price tradeoff visible without
@@ -117,14 +119,34 @@ def make_intertemporal_choice() -> None:
         },
     )
     ax.text(
-        0.48,
-        4.55,
+        0.20,
+        4.85,
         r"save one more unit today",
         color=SIGNAL_RED,
         ha="left",
+        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.12},
+        zorder=8,
     )
-    ax.text(3.36, 1.03, "intertemporal budget", color=NEUTRAL_GRAY, rotation=-39, ha="center")
-    ax.text(3.18, 4.18, "higher lifetime utility", color=CHAD_BLUE, ha="center")
+    ax.text(
+        3.15,
+        1.16,
+        "intertemporal budget",
+        color=NEUTRAL_GRAY,
+        rotation=-39,
+        ha="center",
+        va="bottom",
+        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.10},
+        zorder=8,
+    )
+    ax.text(
+        4.05,
+        4.15,
+        "higher lifetime utility",
+        color=CHAD_BLUE,
+        ha="right",
+        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.12},
+        zorder=8,
+    )
 
     ax.set_xlim(0, 4.25)
     ax.set_ylim(0, 5.25)
