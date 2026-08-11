@@ -373,6 +373,43 @@
   \sources{Sundaram, Sections 5.1--5.2.}
 \end{frame}
 
+\begin{frame}{The Constraint Selects a Feasible Curve}
+  \setlength{\abovedisplayskip}{.25em}
+  \setlength{\belowdisplayskip}{.25em}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.40\textwidth}
+      Consider
+      \[
+        f(x_1,x_2)=4-(x_1-1)^2-(x_2-1)^2
+      \]
+      subject to
+      \[
+        x_1+x_2=1.6.
+      \]
+
+      The constraint cuts the blue feasible curve from the green objective
+      surface. Along that curve,
+      \[
+        \phi(x_1)=f(x_1,1.6-x_1).
+      \]
+
+      Its highest point is
+      \[
+        \begin{aligned}
+          (x_1^*,x_2^*)&=(0.8,0.8),\\
+          \phi'(0.8)&=0.
+        \end{aligned}
+      \]
+    \end{column}
+    \begin{column}{.58\textwidth}
+      \centering
+      \includegraphics[height=.76\textheight]{lagrange-surface.pdf}
+    \end{column}
+  \end{columns}
+  \sources{Visualization follows the Day 3 utility-surface code; Osborne,
+  Equality constraints: motivation and necessary conditions.}
+\end{frame}
+
 \begin{frame}{The Lagrangean Packages the Same Calculation}
   Define the Lagrangean
   \[
