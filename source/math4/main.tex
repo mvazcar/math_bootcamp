@@ -125,26 +125,30 @@
   \sources{Sundaram, Section 2.1.}
 \end{frame}
 
-\begin{frame}{Weierstrass Gives a Sufficient Route to Existence}
-  \begin{theorembox}[Extreme Value Theorem on an Interval]
-    If $a<b$ and $f:[a,b]\to\mathbb{R}$ is continuous, then there are points
-    $x^{\max},x^{\min}\in[a,b]$ such that
+\begin{frame}{Continuity and Compactness Guarantee Extrema}
+  \begin{theorembox}[Extreme Value Theorem: Practical Form]
+    If the choice set $D\subseteq\mathbb{R}$ is nonempty and compact and the
+    objective $f:D\to\mathbb{R}$ is continuous, then there are points
+    $x^{\max},x^{\min}\in D$ such that
     \[
       f(x^{\max})\geq f(x)\geq f(x^{\min})
-      \qquad\text{for every }x\in[a,b].
+      \qquad\text{for every }x\in D.
     \]
   \end{theorembox}
 
-  \vspace{.45em}
-  The theorem separates the three ingredients:
-  \begin{enumerate}
-    \item the feasible interval is nonempty;
-    \item it includes its endpoints and is bounded;
-    \item the objective is continuous.
-  \end{enumerate}
+  \vspace{.25em}
+  \begin{block}{In One Dimension}
+    Compact means closed and bounded. Thus a closed bounded interval $[a,b]$
+    is the canonical compact choice set.
+  \end{block}
 
+  \vspace{.20em}
   \centering
-  \textcolor{slideblue}{\bfseries These conditions guarantee existence, not uniqueness.}
+  \textcolor{slideblue}{\bfseries Continuous objective $+$ compact choice set
+  $\Longrightarrow$ maximum and minimum are attained.}
+
+  \vspace{.10em}
+  These conditions guarantee existence, not uniqueness.
   \sources{Sundaram, Theorem 3.1 and the discussion preceding it.}
 \end{frame}
 
