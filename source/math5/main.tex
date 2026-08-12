@@ -65,8 +65,9 @@
   \sources{AdvancedMacro Book, printed pp. 39--40 and 51--53.}
 \end{frame}
 
-\begin{frame}{The Infinite Lagrangean Generates Candidate Conditions}
-  Formally attach one multiplier to every dated constraint:
+\begin{frame}{Every Dated Constraint Has Its Own Multiplier}
+  An infinite problem has one constraint at each date, so its formal
+  Lagrangean has one multiplier at each date:
   \[
     \max_{z=(z_t)_{t=0}^{\infty}} F(z)
     \quad\text{s.t.}\quad
@@ -93,12 +94,13 @@
   \sources{AdvancedMacro Book, printed pp. 51--53 and 77; Sundaram, Chapter 5.}
 \end{frame}
 
-\begin{frame}{A Linking Choice Creates a Recurrence}
-  A variable carried from $t$ to $t+1$ appears in two neighboring constraints:
+\begin{frame}{Next Period's State Appears in Two Neighboring Constraints}
+  To keep the notation concrete, call the linking choice $a_{t+1}$: saving
+  chosen at $t$ and carried into $t+1$. It appears twice:
   \[
-    g_t(\ldots,s_{t+1})=0,
+    g_t(\ldots,a_{t+1})=0,
     \qquad
-    g_{t+1}(s_{t+1},\ldots)=0.
+    g_{t+1}(a_{t+1},\ldots)=0.
   \]
 
   \centering
@@ -106,7 +108,7 @@
     \node[object,text width=2.35cm] (left) at (0,0)
       {Date-$t$ constraint\\$g_t=0$};
     \node[object,fill=slidegold!9,draw=slidegold,text width=2.2cm] (state) at (4.0,0)
-      {Linking choice\\$s_{t+1}$};
+      {Saving today\\$a_{t+1}$};
     \node[object,text width=2.35cm] (right) at (8.0,0)
       {Date-$(t+1)$ constraint\\$g_{t+1}=0$};
     \draw[equality] (left) -- node[above,font=\small]{$\lambda_t$} (state);
@@ -114,41 +116,50 @@
   \end{tikzpicture}
 
   \vspace{.5em}
-  Differentiating with respect to $s_{t+1}$ links adjacent multipliers.
+  Differentiating with respect to $a_{t+1}$ links adjacent multipliers.
   Eliminating them typically produces
   \[
-    \Phi(s_t,s_{t+1},s_{t+2})=0.
+    \Phi(a_t,a_{t+1},a_{t+2})=0.
   \]
-  This is a second-order difference equation.
+  In the household problem, this recurrence will be the Euler equation.
   \sources{AdvancedMacro Book, printed pp. 51--53, 72--73, and 77--78.}
 \end{frame}
 
-\begin{frame}{A Recurrence Needs Conditions at Both Ends}
+\begin{frame}{The Euler Equation Alone Does Not Determine a Path}
   A recurrence alone does not determine a path:
   \[
-    \Phi(s_t,s_{t+1},s_{t+2})=0,
+    \Phi(a_t,a_{t+1},a_{t+2})=0,
     \qquad t=0,1,\ldots.
   \]
-  In the model below, a candidate path also needs an initial condition and a
-  model-specific transversality condition:
-  \[
-    s_0\ \text{given},
-    \qquad
-    \lim_{t\to\infty}\lambda_t s_{t+1}=0.
-  \]
 
-  \begin{theorembox}[Infinite-Horizon Logic]
-    \raggedright
-    \statementitem{1}{Existence requires an argument about feasible sequences and tails.}
-    \statementitem{2}{A strictly concave objective on a convex feasible set has
-    at most one maximizer.}
-    \statementitem{3}{First-order conditions generate candidates. Feasibility,
-    concavity, and the TVC perform verification.}
-  \end{theorembox}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Beginning of the Path}
+        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          The initial state is fixed:
+          \[
+            a_0\ \text{is given}.
+          \]
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{End of the Path}
+        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
+          A model-specific condition controls the tail as $t\to\infty$.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.45em}
+  The Euler equation is local. The initial state and the tail restriction select
+  among candidate paths; neither proves that a path exists.
   \sources{AdvancedMacro Book, Appendix A, printed p. 86; Math Bootcamp Day 4.}
 \end{frame}
 
-\begin{frame}{The Abstract Recurrence Becomes an Euler Equation}
+\begin{frame}{In This Economy, the Recurrence Is the Euler Equation}
   \renewcommand{\arraystretch}{1.35}
   \centering
   \begin{tabular}{@{}p{.31\textwidth}p{.59\textwidth}@{}}
@@ -163,9 +174,6 @@
     \bottomrule
   \end{tabular}
 
-  \vspace{.65em}
-  \textcolor{slideblue}{\bfseries Dynamic economics applies constrained
-  optimization to choices linked across dates.}
   \sources{AdvancedMacro Book, Chapters 4--5; Math Bootcamp Day 4.}
 \end{frame}
 
@@ -194,7 +202,7 @@
   \sources{Lecture 3, slides 4--6; Macro1 GE Theory, slides 6 and 9--13.}
 \end{frame}
 
-\begin{frame}{The Environment Is a List of Primitives}
+\begin{frame}{Start with the Primitives, Not the Equilibrium}
   \begin{definitionbox}[Dynamic Production Economy]
     The environment is
     \[
@@ -234,26 +242,6 @@
 
   \sources{Macro1 GE Theory, slides 3--5; Lecture 3, slides 3--19;
   AdvancedMacro Book, printed pp. 39--41 and 61--69.}
-\end{frame}
-
-\begin{frame}{The Transversality Condition Controls the Tail}
-  The model uses dates $t=0,1,\ldots$ and assumes:
-  \begin{itemize}
-    \item a deterministic closed economy with one representative price-taking
-    household and firm;
-    \item $u$ is twice differentiable, $u'>0$, $u''<0$, and
-    $\lim_{c\downarrow0}u'(c)=+\infty$;
-    \item $f$ is increasing, concave, and constant returns to scale; moreover,
-    $k_0=a_0>0$ and $\delta=0$.
-  \end{itemize}
-
-  \begin{block}{Transversality Condition}
-    \[
-      \lim_{t\to\infty}\beta^t u'(c_t)a_{t+1}=0.
-    \]
-    The Euler equation is local; this condition controls the tail.
-  \end{block}
-  \sources{AdvancedMacro Book, printed pp. 49--53, 75--78, and 86.}
 \end{frame}
 
 \begin{frame}{The Household Ranks Entire Consumption Paths}
@@ -317,7 +305,7 @@
   \sources{AdvancedMacro Book, printed pp. 49--51.}
 \end{frame}
 
-\begin{frame}{The Household Chooses an Infinite Path at Given Prices}
+\begin{frame}{The Household Chooses a Consumption--Saving Path}
   Given the price paths $\left(w_t,r_t\right)_{t=0}^{\infty}$ and initial assets
   $a_0$, the household solves
   \[
@@ -336,14 +324,14 @@
   \]
 
   \begin{block}{Admissibility and Price Taking}
-    The restriction $a_{t+1}\geq0$ is a no-borrowing constraint. It is sufficient
-    to rule out Ponzi finance, but stronger than a no-Ponzi condition. The
-    household treats every wage and interest rate as given.
+    \textbf{Admissibility:} $a_{t+1}\geq0$ forbids borrowing; it is stronger than
+    a no-Ponzi condition.\par\smallskip
+    \textbf{Price taking:} the household treats $(w_t,r_t)$ as given.
   \end{block}
   \sources{AdvancedMacro Book, printed pp. 51--52.}
 \end{frame}
 
-\begin{frame}{One Shadow Value Is Needed for Every Date}
+\begin{frame}{Each Dated Budget Constraint Has Its Own Shadow Value}
   At an interior path, write the formal Lagrangean
   \[
     L=
@@ -395,7 +383,7 @@
   \sources{AdvancedMacro Book, printed pp. 53 and 57--60; Lecture 3, slides 4--6.}
 \end{frame}
 
-\begin{frame}{The Euler Equation Balances Sacrifice and Return}
+\begin{frame}{Saving One More Unit: Marginal Cost Equals Marginal Benefit}
   Combine the two first-order conditions:
   \[
     \boxed{
@@ -434,6 +422,40 @@
   \sources{AdvancedMacro Book, printed p. 53.}
 \end{frame}
 
+\begin{frame}{The Euler Equation Is Local; the TVC Disciplines the Tail}
+  For the interior candidate path in this model, impose the model-specific
+  transversality condition
+  \[
+    \boxed{
+      \lim_{t\to\infty}\beta^t u'(c_t)a_{t+1}=0.
+    }
+  \]
+
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Euler Equation}
+        \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
+          Compares the marginal cost and benefit of moving one unit between two
+          adjacent dates.
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Transversality Condition}
+        \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
+          Rules out tails that retain resources with positive shadow value.
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.35em}
+  Neither condition proves existence. Feasibility, concavity, and a separate
+  existence argument remain necessary.
+  \sources{AdvancedMacro Book, printed pp. 49--53, 75--78, and 86.}
+\end{frame}
+
 \begin{frame}{The Firm Transforms Capital and Labor into Output}
   In every date $t$, the firm rents capital $k_t$, hires labor $\ell_t$, and
   produces the single final good:
@@ -459,8 +481,8 @@
       \begin{block}{Constant Returns}
         \begin{minipage}[t][1.65cm][t]{\dimexpr\linewidth-.76em\relax}
           \raggedright
-          Scaling both inputs by one factor scales output by that factor. Price
-          taking then implies zero profits.
+          Under constant returns, any finite profit-maximizing plan earns zero
+          profit. Positive profit would scale without bound.
         \end{minipage}
       \end{block}
     \end{column}
@@ -518,7 +540,7 @@
   \sources{AdvancedMacro Book, printed pp. 66--68, specialized to no depreciation.}
 \end{frame}
 
-\begin{frame}{Feasibility Restricts Every Date's Allocation}
+\begin{frame}{Physical Feasibility Contains No Prices}
   \begin{definitionbox}[Allocation and Feasibility]
     A physical allocation is a sequence
     \[
@@ -548,7 +570,7 @@
   \sources{Lecture 3, slides 20--22; AdvancedMacro Book, printed pp. 68--69.}
 \end{frame}
 
-\begin{frame}{General Equilibrium Makes Separate Choices Compatible}
+\begin{frame}{Can Household and Firm Choices Coexist?}
   The household and firm have now solved separate optimization problems.
   General equilibrium asks whether their choices can hold at the same prices.
 
@@ -608,14 +630,17 @@
   \end{columns}
 
   \vspace{.35em}
-  Under constant returns, $F_t$ can be empty or set-valued. If one plan earns
-  positive profit, scaling makes profit unbounded. At supporting zero-profit
-  prices, many scales may be optimal. Equilibrium selects mutually compatible
-  elements of both correspondences.
+  Under constant returns,
+  \[
+    \text{positive profit}\Longrightarrow F_t(w_t,r_t)=\varnothing,
+    \qquad
+    \text{zero profit}\Longrightarrow F_t(w_t,r_t)\text{ may be set-valued}.
+  \]
+  Equilibrium selects mutually compatible elements of $H$ and $F_t$.
   \sources{Lecture 3, slides 24 and 26--30; Macro1 GE Theory, slides 16--24.}
 \end{frame}
 
-\begin{frame}{Definition and Characterization Answer Different Questions}
+\begin{frame}{Define Equilibrium Before Deriving Its Equations}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{definitionbox}[DEFINITION]
@@ -645,7 +670,7 @@
   slides 16--17 and 24--25.}
 \end{frame}
 
-\begin{frame}{Equilibrium Adds Clearing to Optimal Choice}
+\begin{frame}{Equilibrium Requires Optimality and Market Clearing}
   \begin{definitionbox}[Competitive Equilibrium]
     Given $a_0$, a competitive equilibrium is a collection
     \[
@@ -711,7 +736,7 @@
   \sources{AdvancedMacro Book, printed pp. 69--70.}
 \end{frame}
 
-\begin{frame}{Walras' Law Makes One Clearing Condition Redundant}
+\begin{frame}{Why Goods-Market Clearing Follows}
   Suppose the household and firm optimize and the asset and labor markets clear.
 
   \statementitem{1}{Substitute $a_t=k_t$ and $a_{t+1}=k_{t+1}$ into the
@@ -803,38 +828,36 @@
   \sources{AdvancedMacro Book, printed pp. 72--73.}
 \end{frame}
 
-\begin{frame}{The Euler Equation Becomes a Recurrence in Capital}
-  For $t=0,1,\ldots$, substitute equilibrium prices and consumption into
-  the household Euler equation:
+\begin{frame}{Three Substitutions Produce the Capital Recurrence}
+  \setlength{\abovedisplayskip}{.28em}
+  \setlength{\belowdisplayskip}{.28em}
+  \statementitem{1}{Firm optimality replaces the return:
   \[
-    \begin{aligned}
-      &u'\!\left(
-        k_t^\alpha+k_t-k_{t+1}
-      \right)\\
-      &\quad=
-      \beta\left[
-        1+\alpha k_{t+1}^{\alpha-1}
-      \right]
-      u'\!\left(
-        k_{t+1}^\alpha+k_{t+1}-k_{t+2}
-      \right).
-    \end{aligned}
-  \]
+    r_{t+1}=\alpha k_{t+1}^{\alpha-1}.
+  \]}
+  \statementitem{2}{Feasibility replaces consumption at both dates:
+  \[
+    c_j=k_j^\alpha+k_j-k_{j+1},
+    \qquad j=t,t+1.
+  \]}
+  \statementitem{3}{Insert both expressions into the household Euler equation:
+  \[
+    \boxed{
+      \begin{aligned}
+        u'\!\left(k_t^\alpha+k_t-k_{t+1}\right)
+        ={}&\beta\left[1+\alpha k_{t+1}^{\alpha-1}\right]\\
+        &\times u'\!\left(k_{t+1}^\alpha+k_{t+1}-k_{t+2}\right).
+      \end{aligned}
+    }
+  \]}
 
-  This is a second-order difference equation in
-  $(k_t,k_{t+1},k_{t+2})$. Combine it with
-  \[
-    k_0=a_0,
-    \qquad
-    c_t\geq0,\ k_t\geq0,
-    \qquad
-    \lim_{t\to\infty}\beta^t u'(c_t)k_{t+1}=0.
-  \]
+  The result is a second-order difference equation in
+  $(k_t,k_{t+1},k_{t+2})$.
 
   \sources{AdvancedMacro Book, equation (4.40), printed pp. 72--73.}
 \end{frame}
 
-\begin{frame}{A Characterization Is Not an Existence Theorem}
+\begin{frame}{Solving the Euler System Does Not Prove Existence}
   \begin{block}{Necessary Direction}
     \[
       \text{interior equilibrium}
@@ -860,7 +883,7 @@
   \sources{AdvancedMacro Book, printed pp. 72--75 and 86.}
 \end{frame}
 
-\begin{frame}{Efficiency Compares Only Feasible Allocations}
+\begin{frame}{Efficiency Asks Whether Any Feasible Path Is Better}
   \begin{definitionbox}[Efficiency]
     A feasible allocation
     $z^*=\left(c_t^*,k_{t+1}^*,\ell_t^*\right)_{t=0}^{\infty}$ is efficient if
@@ -998,13 +1021,13 @@
   \sources{AdvancedMacro Book, printed pp. 77--78.}
 \end{frame}
 
-\begin{frame}{Welfare Theorems Link Market and Planner}
+\begin{frame}{The Market and Planner Choose the Same Allocation}
   Assume lifetime utility is well-defined, the relevant optima are interior,
   the problems are concave, and both transversality conditions hold.
 
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
-      \begin{theorembox}[First Welfare Theorem]
+      \begin{theorembox}[Equilibrium $\Longrightarrow$ Planner]
         \begin{minipage}[t][2.85cm][t]{\dimexpr\linewidth-.76em\relax}
           Every equilibrium allocation is a planner optimum:
           \[
@@ -1018,7 +1041,7 @@
     \end{column}
     \hspace{\twocolumngutter}
     \begin{column}{\tightcolumnwidth}
-      \begin{theorembox}[Second Welfare Theorem]
+      \begin{theorembox}[Planner $\Longrightarrow$ Equilibrium]
         \begin{minipage}[t][2.85cm][t]{\dimexpr\linewidth-.76em\relax}
           Every interior planner optimum can be supported by prices:
           \[
@@ -1087,8 +1110,15 @@
       \begin{aligned}
         \text{planner solution exists}+\text{supporting-price theorem}
         &\Longrightarrow \text{equilibrium exists},\\[.35em]
-        \text{planner solution is unique}+\text{First Welfare Theorem}
-        &\Longrightarrow \text{equilibrium allocation is unique}.
+        \begin{gathered}
+          \text{planner solution is unique},\\[-.1em]
+          \text{equilibrium}\Longrightarrow\text{planner solution}
+        \end{gathered}
+        &\Longrightarrow
+        \begin{gathered}
+          \text{at most one}\\[-.1em]
+          \text{equilibrium allocation}.
+        \end{gathered}
       \end{aligned}
     \]
   \end{block}

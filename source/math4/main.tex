@@ -38,7 +38,7 @@
   \sources{Sundaram, Chapters 2--7; economic applications in Sections 5.5 and 6.3.}
 \end{frame}
 
-\begin{frame}{Optimization Has Two Separate Questions}
+\begin{frame}{Before Differentiating, Ask Two Questions}
   Consider the scalar problem
   \[
     \max\{f(x):x\in D\},
@@ -74,7 +74,7 @@
   \sources{Sundaram, Sections 2.1, 3.1, and 4.1.}
 \end{frame}
 
-\begin{frame}{The Maximum and the Maximizers Are Different Objects}
+\begin{frame}{Maximum Value or Maximizing Choice?}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{definitionbox}[Maximum Value]
@@ -105,7 +105,7 @@
   \sources{Sundaram, Section 2.1.}
 \end{frame}
 
-\begin{frame}{The Argmax Can Be Empty, a Singleton, or Many Points}
+\begin{frame}{An Argmax May Be Empty, Unique, or Set-Valued}
   \renewcommand{\arraystretch}{1.38}
   \centering
   \begin{tabular}{@{}lll@{}}
@@ -120,12 +120,12 @@
 
   \vspace{.75em}
   \begin{block}{Existence and Uniqueness Are Separate}
-    An empty argmax means no maximizer exists. A nonempty argmax may contain one point or many points.
+    A maximizer may fail to exist. When one exists, it may be unique or there may be several.
   \end{block}
   \sources{Sundaram, Section 2.1.}
 \end{frame}
 
-\begin{frame}{Continuity and Compactness Guarantee Extrema}
+\begin{frame}{When Is a Maximum Actually Attained?}
   \begin{theorembox}[Extreme Value Theorem: Practical Form]
     If the choice set $D\subseteq\mathbb{R}$ is nonempty and compact and the
     objective $f:D\to\mathbb{R}$ is continuous, then there are points
@@ -152,7 +152,7 @@
   \sources{Sundaram, Theorem 3.1 and the discussion preceding it.}
 \end{frame}
 
-\begin{frame}{Unconstrained Means Interior to the Feasible Set}
+\begin{frame}{The Usual First-Order Condition Requires an Interior Point}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{definitionbox}[Local Maximum]
@@ -185,7 +185,7 @@
   \sources{Sundaram, Sections 4.1 and 4.2.}
 \end{frame}
 
-\begin{frame}{A Nonzero Slope Leaves an Improving Direction}
+\begin{frame}{A Nonzero Slope Points Toward Improvement}
   \centering
   \includegraphics[width=.88\textwidth]{foc-slope.pdf}
 
@@ -215,7 +215,7 @@
   \sources{Sundaram, Theorem 4.1 and Section 4.5.}
 \end{frame}
 
-\begin{frame}{A Critical Point Is Only a Candidate}
+\begin{frame}{Why $f'(x)=0$ Is Not Enough}
   A point satisfying $f'(x)=0$ is a \emph{critical point}. The condition alone does not identify its role.
 
   \vspace{.5em}
@@ -278,7 +278,7 @@
   \sources{Sundaram, Theorem 4.3 and Examples 4.4--4.5.}
 \end{frame}
 
-\begin{frame}{Concavity Turns a Local Condition into a Global Conclusion}
+\begin{frame}{Concavity Makes the First-Order Condition Global}
   \begin{definitionbox}[Concavity on an Interval]
     For every $x,y$ in the interval and every $t\in[0,1]$,
     \[
@@ -300,7 +300,7 @@
   \sources{Sundaram, Sections 7.2--7.4, especially Theorems 7.14--7.15.}
 \end{frame}
 
-\begin{frame}{Existence, Candidates, and Comparison Do Different Jobs}
+\begin{frame}{A Reliable Workflow on a Closed Interval}
   For a continuous function on a closed bounded interval $[a,b]$:
 
   \begin{enumerate}
@@ -410,7 +410,7 @@
   Equality constraints: motivation and necessary conditions.}
 \end{frame}
 
-\begin{frame}{The Lagrangean Packages the Same Calculation}
+\begin{frame}{The Lagrangean Collects Tangency and Feasibility}
   Define the Lagrangean
   \[
     L(x,y;\lambda)=f(x,y)+\lambda g(x,y).
@@ -437,7 +437,7 @@
           \[
             \frac{\partial L}{\partial\lambda}=g(x,y)=0.
           \]
-          The candidate must remain on the constraint.
+          The candidate must remain feasible.
         \end{minipage}
       \end{block}
     \end{column}
@@ -448,7 +448,7 @@
   \sources{Sundaram, Sections 5.1--5.3.}
 \end{frame}
 
-\begin{frame}{Regularity Makes the Multiplier Exist and Be Unique}
+\begin{frame}{Regularity Gives a Unique Multiplier at a Fixed Optimum}
   \setlength{\abovedisplayskip}{.25em}
   \setlength{\belowdisplayskip}{.25em}
   \begin{theorembox}[Theorem of Lagrange: One Equality]
@@ -470,7 +470,7 @@
   \sources{Sundaram, Theorem 5.1 and Section 5.2.2.}
 \end{frame}
 
-\begin{frame}{The Lagrange Procedure Starts Before the Lagrangean}
+\begin{frame}{What to Check Before Solving the Lagrange Equations}
   \begin{enumerate}
     \item \textbf{Establish existence.} Show that the original constrained problem has a global optimum.
     \item \textbf{Check regularity.} Verify that $g_x$ and $g_y$ are not both zero at feasible candidates.
@@ -485,7 +485,7 @@
   \sources{Sundaram, Sections 5.2--5.4.}
 \end{frame}
 
-\begin{frame}{A Multiplier Can Measure the Value of a Constraint Change}
+\begin{frame}{Under Smoothness, the Multiplier Is a Marginal Value}
   Let the constraint depend on a scalar parameter $c$:
   \[
     g(x,y)+c=0.
@@ -508,7 +508,7 @@
   \sources{Sundaram, Section 5.2.3.}
 \end{frame}
 
-\begin{frame}{Kuhn--Tucker Adds a Boundary Condition}
+\begin{frame}{Kuhn--Tucker Adds Complementary Slackness}
   Consider the one-dimensional inequality problem
   \[
     \max_{x\geq0}f(x),
@@ -589,7 +589,7 @@
   \sources{Sundaram, Sections 2.2--2.3 and 5.5.1.}
 \end{frame}
 
-\begin{frame}{The Assumptions from Day 3 Now Do Separate Jobs}
+\begin{frame}{Each Assumption Answers a Different Question}
   \renewcommand{\arraystretch}{1.34}
   \centering
   \begin{tabular}{@{}p{.37\textwidth}p{.56\textwidth}@{}}
@@ -603,8 +603,6 @@
     \bottomrule
   \end{tabular}
 
-  \vspace{.75em}
-  Existence, uniqueness, and budget exhaustion are three different conclusions.
   \sources{Sundaram, Examples 3.6 and 5.5.1; Math Bootcamp Day 3.}
 \end{frame}
 
@@ -672,7 +670,7 @@
   \sources{Sundaram, Section 5.5.1.}
 \end{frame}
 
-\begin{frame}{Cobb--Douglas Has an Interior Solution}
+\begin{frame}{Cobb--Douglas Is Interior Before We Take Logs}
   Let
   \[
     u(x_1,x_2)=x_1^\alpha x_2^{1-\alpha},
@@ -685,7 +683,8 @@
     \item Therefore no optimal bundle lies on an axis: $x_1^*,x_2^*>0$.
   \end{enumerate}
 
-  Thus we may first restrict attention to $x_1,x_2>0$. Only then may we use the strictly increasing transformation
+  Thus $x_1^*,x_2^*>0$. On the positive domain, the logarithm is strictly
+  increasing, so the original problem has the same maximizer as
   \[
     \log u(x_1,x_2)=\alpha\log x_1+(1-\alpha)\log x_2.
   \]
@@ -828,7 +827,7 @@
   \sources{Sundaram, Sections 2.1, 3.1, and 4.1; linear production application.}
 \end{frame}
 
-\begin{frame}{First-Order Conditions Narrow the Search}
+\begin{frame}{Optimization Ends with Verification}
   \begin{enumerate}
     \item Write the objective and the feasible set.
     \item Establish that a maximizer exists; ask separately whether it is unique.
