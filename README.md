@@ -4,6 +4,13 @@ A five-day introduction to the mathematics used in graduate microeconomics,
 plus a companion handout of proofs. Slides are Beamer; figures are generated
 from Python.
 
+> **Why this exists.** The aim is narrow and practical: to carry you through
+> the first fifty days of the graduate program -- far enough that the opening
+> weeks of your courses read as something you can follow, rather than as a wall.
+>
+> Look after yourself while you do it. Your wellbeing, and your mental health,
+> matter more than anything a graduate program can ever give you.
+
 | day | topic | slides | source |
 | --- | --- | --- | --- |
 | 1 | Introduction to Proofs and Choice Theory | [math1.pdf](output/pdf/math1.pdf) (33) | [`source/math1`](source/math1) |
@@ -80,6 +87,8 @@ These lectures draw on slides generously shared by:
 - Andrés Erosa, *Macroeconomics I*, General Equilibrium (Day 5)
 - Boris Ginzburg, *Microeconomics I*, Choice Theory (Day 3)
 - Belén Jerez, *Microeconomics I*, General Equilibrium (Day 5)
+
+Claude Fable 5 and GPT Sol 5.6 helped draft, check and revise these decks.
 
 ## Notes
 
