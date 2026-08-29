@@ -18,7 +18,6 @@ from Python.
 | 3 | Properties of Preferences and Utility Functions | [math3.pdf](output/pdf/math3.pdf) (28) | [`source/math3`](source/math3) |
 | 4 | Optimization | [math4.pdf](output/pdf/math4.pdf) (39) | [`source/math4`](source/math4) |
 | 5 | General Equilibrium and the Social Planner | [math5.pdf](output/pdf/math5.pdf) (36) | [`source/math5`](source/math5) |
-| -- | Proofs (blackboard companion) | [proofs.pdf](output/pdf/proofs.pdf) (3) | [`source/proofs`](source/proofs) |
 
 Slide counts in parentheses.
 
