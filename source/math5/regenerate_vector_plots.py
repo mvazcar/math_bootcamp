@@ -4,6 +4,7 @@ The figure uses the exact palette and typography established in the earlier
 utility and optimization notebooks.  It is exported as vector PDF and SVG.
 """
 
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -13,14 +14,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from palette import SLIDE_BLUE, SLIDE_GREEN, SLIDE_RED, SLIDE_GRAY  # noqa: E402
+
 
 OUTPUT_DIR = Path(__file__).resolve().parent
 
-# Canonical notebook palette.
-CHAD_BLUE = (0.1, 0.1, 0.5)
-CHAD_GREEN = (0.0, 0.4, 0.0)
-SIGNAL_RED = (1.0, 0.0, 0.0)
-NEUTRAL_GRAY = (0.40, 0.40, 0.40)
+# Palette: see source/palette.py.
 
 
 plt.rcParams.update(
@@ -32,7 +32,7 @@ plt.rcParams.update(
         "axes.labelsize": 19,
         "xtick.labelsize": 13,
         "ytick.labelsize": 13,
-        "axes.edgecolor": NEUTRAL_GRAY,
+        "axes.edgecolor": SLIDE_GRAY,
         "axes.linewidth": 0.8,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
@@ -46,7 +46,7 @@ def blend_with_white(rgb: tuple[float, float, float], amount: float) -> tuple[fl
     return tuple(((1 - amount) * white + amount * np.array(rgb)).tolist())
 
 
-CONTOUR_COLORS = [blend_with_white(CHAD_BLUE, value) for value in (0.48, 0.70, 1.00)]
+CONTOUR_COLORS = [blend_with_white(SLIDE_BLUE, value) for value in (0.48, 0.70, 1.00)]
 
 
 def save_vector_pair(fig: plt.Figure, stem: str) -> None:
@@ -81,7 +81,7 @@ def make_intertemporal_choice() -> None:
     fig, ax = plt.subplots(figsize=(5.25, 4.15))
     c_now = np.linspace(0.04, present_value_wealth, 500)
     budget = gross_return * (present_value_wealth - c_now)
-    ax.plot(c_now, budget, color=NEUTRAL_GRAY, lw=2.7, zorder=3)
+    ax.plot(c_now, budget, color=SLIDE_GRAY, lw=2.7, zorder=3)
 
     grid = np.linspace(0.20, 4.95, 600)
     for offset, color in zip((-0.55, 0.0, 0.48), CONTOUR_COLORS):
@@ -90,12 +90,12 @@ def make_intertemporal_choice() -> None:
         visible = (contour >= 0) & (contour <= 5.15)
         ax.plot(grid[visible], contour[visible], color=color, lw=2.2)
 
-    ax.scatter([c_now_star], [c_next_star], s=54, color=CHAD_GREEN, zorder=6)
+    ax.scatter([c_now_star], [c_next_star], s=54, color=SLIDE_GREEN, zorder=6)
     ax.text(
         c_now_star + 0.15,
         c_next_star - 0.42,
         r"$(c_t^*,c_{t+1}^*)$",
-        color=CHAD_GREEN,
+        color=SLIDE_GREEN,
         ha="left",
         va="top",
         bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.15},
@@ -113,7 +113,7 @@ def make_intertemporal_choice() -> None:
         xytext=start,
         arrowprops={
             "arrowstyle": "-|>",
-            "color": SIGNAL_RED,
+            "color": SLIDE_RED,
             "lw": 2.4,
             "mutation_scale": 13,
         },
@@ -122,7 +122,7 @@ def make_intertemporal_choice() -> None:
         0.20,
         4.85,
         r"save one more unit today",
-        color=SIGNAL_RED,
+        color=SLIDE_RED,
         ha="left",
         bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.12},
         zorder=8,
@@ -131,7 +131,7 @@ def make_intertemporal_choice() -> None:
         3.15,
         1.16,
         "intertemporal budget",
-        color=NEUTRAL_GRAY,
+        color=SLIDE_GRAY,
         rotation=-39,
         ha="center",
         va="bottom",
@@ -142,7 +142,7 @@ def make_intertemporal_choice() -> None:
         4.05,
         4.15,
         "higher lifetime utility",
-        color=CHAD_BLUE,
+        color=SLIDE_BLUE,
         ha="right",
         bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.12},
         zorder=8,
@@ -156,8 +156,8 @@ def make_intertemporal_choice() -> None:
     ax.set_ylabel(r"future consumption $c_{t+1}$", rotation=90, labelpad=8)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_color(NEUTRAL_GRAY)
-    ax.spines["bottom"].set_color(NEUTRAL_GRAY)
+    ax.spines["left"].set_color(SLIDE_GRAY)
+    ax.spines["bottom"].set_color(SLIDE_GRAY)
     fig.tight_layout(pad=0.25)
     save_vector_pair(fig, "intertemporal-choice")
 

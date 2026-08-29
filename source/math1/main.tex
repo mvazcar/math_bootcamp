@@ -1,5 +1,5 @@
 \pdfminorversion=7
-\documentclass[11pt,aspectratio=169,t]{beamer}
+\documentclass[11pt,aspectratio=169,c]{beamer}
 \input{slides_header.tex}
 \usepackage{tikz}
 
@@ -7,12 +7,14 @@
 \title{\textbf{Mathematics Bootcamp}}
 \subtitle{Introduction to Proofs and Choice Theory}
 \author{Miguel Vázquez-Carrero} 
-\date{\textbf{September 2025}}
+\date{\textbf{Compilation Date: \today}}
 
 \begin{document}
 
 \begin{frame}
+\vfill
 \titlepage
+\vfill
 \end{frame}
 
 \begin{frame}{Today}
@@ -42,6 +44,7 @@
 \begin{itemize}
     \item In general, I will use the slides to save time and keep notation for the theorems: straight book screenshots.
     \item But most of the work will be in the board. \par \textbf{We learn a language by practice}: trial and error.
+    \item Proofs are done on the board; they are collected in a separate handout.
     \item Some believe that studying measure theory is a great way to start. This is like syntactic analysis for a baby in his first words.
 \end{itemize}
 
@@ -50,7 +53,7 @@
 \begin{frame}{Just Prove It.}
 \begin{columns}[c,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
-        \hfill\includegraphics[height=0.77\textheight,keepaspectratio]{velleman-cover.jpg}
+        \hfill\includegraphics[height=0.70\textheight,keepaspectratio]{velleman-cover.jpg}
     \hspace{\twocolumngutter}
     \column{\tightcolumnwidth}
     \vspace{-2em}
@@ -96,7 +99,6 @@ Thus, for all $x$, if $P(x)$ then $Q(x)$.
 \end{minipage}
 \end{center}
 \end{frame}
-
 
 
 \begin{frame}{Logical Connectives}
@@ -188,12 +190,9 @@ F & F & T \\
 \bottomrule
 \end{array}
 \end{truthtable}
-\begin{center}
-$P\rightarrow Q$ is false only when $P$ is true and $Q$ is false.
-\end{center}
 \end{frame}
 
-\begin{frame}{The Contrapositive Is Equivalent}
+\begin{frame}{The Contrapositive}
 \begin{truthtable}
 \begin{array}{cccccc}
 \toprule
@@ -206,10 +205,6 @@ F & F & T & T & T & T \\
 \bottomrule
 \end{array}
 \end{truthtable}
-\begin{center}
-$P\rightarrow Q$ and $\neg Q\rightarrow\neg P$ have identical truth values.
-Thus either statement may be proved by proving the other.
-\end{center}
 \end{frame}
 
 \begin{frame}{Proof by Contradiction}
@@ -233,7 +228,7 @@ $P\land\neg Q$ is impossible. Therefore $P\rightarrow Q$.
 \end{frame}
 
 \begin{frame}{Mathematical Induction}
-\begin{theorembox}[Principle of Mathematical Induction]
+\begin{theorembox}[Bartle 1.2.3 Principle of Mathematical Induction]
 Let $\mathbb N=\{1,2,3,\ldots\}$ and fix $n_0\in\mathbb N$.  For each natural
 number $n\geq n_0$, let $P(n)$ be a statement. Suppose that:
 \begin{enumerate}
@@ -323,7 +318,10 @@ A\setminus B=\{x\mid x\in A\text{ and }x\notin B\}.
 \begin{frame}{Set Theory}
 \small
 \begin{definitionbox}[Definition 1.4.5]
-Suppose $A$ and $B$ are sets. We will say that $A$ is a \emph{subset} of $B$ if every element of $A$ is also an element of $B$. We write $A\subseteq B$ to mean that $A$ is a subset of $B$. $A$ and $B$ are said to be \emph{disjoint} if they have no elements in common. Note that this is the same as saying that the set of elements they have in common is the empty set, or in other words $A\cap B=\varnothing$.
+Suppose $A$ and $B$ are sets. $A$ is a \emph{subset} of $B$, written
+$A\subseteq B$, if every element of $A$ is also an element of $B$. $A$ and $B$
+are \emph{disjoint} if they have no elements in common, that is, if
+$A\cap B=\varnothing$.
 \end{definitionbox}
 
 \begin{itemize}
@@ -369,9 +367,9 @@ Suppose $A$ and $B$ are sets. We will say that $A$ is a \emph{subset} of $B$ if 
 \end{frame}
 
 \begin{frame}{Set Theory}
-\vspace{0.55cm}
 \begin{definitionbox}[Definition 4.1.1]
-Suppose $A$ and $B$ are sets. Then the \emph{Cartesian product} of $A$ and $B$, denoted $A\times B$, is the set of all ordered pairs in which the first coordinate is an element of $A$ and the second is an element of $B$. In other words,
+For sets $A$ and $B$, the \emph{Cartesian product} $A\times B$ is the set of
+ordered pairs whose first coordinate lies in $A$ and second in $B$:
 \[
 A\times B=\{(a,b)\mid a\in A\text{ and }b\in B\}.
 \]
@@ -399,7 +397,7 @@ For a relation $R$ on $A$:
 \begin{frame}{MWG: Microeconomic Theory}
 \begin{columns}[c,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
-        \hfill\includegraphics[height=0.77\textheight,keepaspectratio]{mwg-cover.jpg}
+        \hfill\includegraphics[height=0.70\textheight,keepaspectratio]{mwg-cover.jpg}
     \hspace{\twocolumngutter}
     \column{\tightcolumnwidth}
     \vspace{-2em}
@@ -418,7 +416,7 @@ For a relation $R$ on $A$:
 \end{frame}
 
 
-\begin{frame}[t]{Individual Decision Making}
+\begin{frame}{Individual Decision Making}
     \par
     \mwgscanstart
     {\centering
@@ -427,12 +425,8 @@ For a relation $R$ on $A$:
     \par}
 \end{frame}
 
-\begin{frame}{The Two Approaches Meet at Rationalization}
+\begin{frame}{The Two Approaches}
 \centering
-Each approach begins with a different primitive and imposes its own
-consistency restriction.
-
-\vspace{0.25cm}
 \begin{tikzpicture}[
     object/.style={draw=slideblue!55,fill=slideblue!2,rounded corners=1.5pt,
         minimum width=5.15cm,minimum height=0.82cm,align=center,inner sep=4pt},
@@ -469,7 +463,7 @@ consistency restriction.
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Preference Is the Primitive Object}
+\begin{frame}{Preference as the Primitive}
 \begin{definitionbox}[A Preference Relation Is the Starting Point]
 A preference relation $\succeq$ on $X$ records the decision maker's ranking:
 \[
@@ -480,26 +474,20 @@ x\text{ is at least as good as }y.
 \end{definitionbox}
 
 \begin{itemize}
-    \item The ranking is taken as given rather than inferred from observed menus.
-    \item \textbf{Rationality} restricts the primitive relation: it must be complete
-    and transitive.
-    \item A \textbf{utility function} is a numerical representation of that same
-    ranking, when such a representation exists.
+    \item \textbf{Rationality} restricts it: complete and transitive.
+    \item A \textbf{utility function} represents it: $x\succeq y\iff u(x)\geq u(y)$.
 \end{itemize}
 
-\begin{block}{Preference-Based Logic}
-Start with preferences, impose rationality, and derive choice behavior.
-\end{block}
 \end{frame}
 
-\begin{frame}[t]{Preference-Based Approach}
+\begin{frame}{Preference-Based Approach}
 \mwgscanstart
 {\centering
     \includegraphics[height=0.74\textheight,keepaspectratio,trim=0 0 0 3pt,clip]{mwg-p021-preference.pdf}
 \par}    
 \end{frame}
 
-\begin{frame}[t]{Preference-Based Approach}
+\begin{frame}{Preference-Based Approach}
 \mwgscanstart
 {\centering
     \includegraphics[width=1\linewidth,trim=0 0 0 1.5pt,clip]{mwg-p021-rationality.pdf}
@@ -512,7 +500,7 @@ Start with preferences, impose rationality, and derive choice behavior.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Preference-Based Approach}
+\begin{frame}{Preference-Based Approach}
 \mwgscanstart
 {\centering
     \includegraphics[width=1\linewidth,trim=0 0 0 4pt,clip]{mwg-p022-proposition.pdf}
@@ -524,7 +512,7 @@ Start with preferences, impose rationality, and derive choice behavior.
 
 \end{frame}
 
-\begin{frame}{Choice Behavior Is the Primitive Object}
+\begin{frame}{Choice as the Primitive}
 \begin{definitionbox}[A Choice Rule Is the Starting Point]
 Let $\mathbb B$ be the domain of observed menus. A choice rule satisfies
 \[
@@ -532,20 +520,9 @@ C:\mathbb B\to 2^X\setminus\{\varnothing\},
 \qquad \varnothing\neq C(B)\subseteq B.
 \]
 \end{definitionbox}
-
-\begin{itemize}
-    \item Choices are taken as given rather than derived from an unobserved ranking.
-    \item \textbf{WARP} restricts the primitive rule by ruling out revealed reversals.
-    \item Revealed preference is constructed from the observed choice behavior.
-\end{itemize}
-
-\begin{block}{Choice-Based Logic}
-\textit{Do not waste any attention} speculating about rationality (yet!):
-first record choices, then ask whether one rational relation explains them.
-\end{block}
 \end{frame}
 
-\begin{frame}[t]{Choice-Based Approach}
+\begin{frame}{Choice-Based Approach}
 \mwgscanstart
 
 {\centering
@@ -555,7 +532,29 @@ first record choices, then ask whether one rational relation explains them.
 
 \end{frame}
 
-\begin{frame}{What Is a Rich Domain of Menus?}
+\begin{frame}{WARP and Revealed Preference}
+\begin{definitionbox}[Definition 1.C.1: Weak Axiom of Revealed Preference]
+If $x,y\in B$ and $x\in C(B)$, then for every $B'\in\mathbb B$ with $x,y\in B'$,
+\[
+y\in C(B')
+\quad\Longrightarrow\quad
+x\in C(B').
+\]
+\end{definitionbox}
+
+\begin{definitionbox}[Definition 1.C.2: Revealed Preference]
+\[
+x\succeq^* y
+\quad\Longleftrightarrow\quad
+x,y\in B\ \text{and}\ x\in C(B)\ \text{for some }B\in\mathbb B.
+\]
+Read: $x$ is \emph{revealed at least as good as} $y$. Informally, $x$ is
+\emph{revealed preferred} to $y$ if in addition $y\notin C(B)$.
+\end{definitionbox}
+
+\end{frame}
+
+\begin{frame}{A Rich Domain of Menus}
 \begin{definitionbox}[Every Small Menu Is Observable]
 The domain is \emph{rich} if every nonempty $B\subseteq X$ with $|B|\leq 3$
 belongs to $\mathbb B$. Thus, for distinct $x,y,z\in X$, it contains
@@ -567,64 +566,9 @@ belongs to $\mathbb B$. Thus, for distinct $x,y,z\in X$, it contains
 \end{definitionbox}
 
 \begin{itemize}
-    \item \textbf{Singletons} anchor choice: $C(\{x\})=\{x\}$.
-    \item \textbf{Pairs} recover complete pairwise comparisons.
-    \item \textbf{Triples} bring three comparisons together and test transitivity.
+    \item \textbf{Pairs} recover pairwise comparisons.
+    \item \textbf{Triples} test them for transitivity.
 \end{itemize}
-
-\begin{block}{Why ``At Most Three''?}
-Pairs build comparisons; triples test them. Larger menus are allowed.
-\end{block}
-\end{frame}
-
-\begin{frame}{Why the Proof Starts with Pairs}
-\begin{propositionbox}[Pairs Recover Revealed Preference]
-Suppose every pair belongs to $\mathbb B$ and choice is nonempty. Under WARP,
-\[
-x\succeq^* y
-\quad\Longleftrightarrow\quad
-x\in C(\{x,y\}).
-\]
-\end{propositionbox}
-
-\begin{itemize}
-    \item $\Leftarrow$ is immediate: the pair itself is an observed menu.
-    \item For $\Rightarrow$, $x$ was chosen somewhere while $y$ was available.
-    If the pair chooses $y$, WARP forces it to choose $x$ as well.
-    \item Since every pair has a choice, either $x\succeq^*y$ or
-    $y\succeq^*x$. Hence $\succeq^*$ is complete.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[t]{Choice-Based Approach}
-\mwgscanstart
-{\centering
-    \includegraphics[width=1\linewidth,trim=0 0 0 2pt,clip]{mwg-p025-p026-rationalization.pdf}
-\par} 
-
-\end{frame}
-
-\begin{frame}{Why the Proof Needs Triples}
-\begin{definitionbox}[A Cycle Hidden in Pair Menus]
-\[
-C(\{x,y\})=\{x\},\qquad
-C(\{y,z\})=\{y\},\qquad
-C(\{x,z\})=\{z\}.
-\]
-\end{definitionbox}
-
-With pairs alone, WARP does not connect these observations: no two distinct
-pair menus contain the same two alternatives. Yet the choices form the cycle
-\[
-x\text{ over }y,\qquad y\text{ over }z,\qquad z\text{ over }x.
-\]
-
-\begin{block}{Add the Triple $T=\{x,y,z\}$}
-If $T$ chooses $x$, $y$, or $z$, that alternative loses in one of the pair
-menus. WARP would require it to be chosen from that pair too. Thus a cycle
-would force $C(T)=\varnothing$, contradicting nonempty choice.
-\end{block}
 \end{frame}
 
 \begin{frame}{Rationalizing Choice}
@@ -638,33 +582,22 @@ The choice rule is \emph{rationalizable} if some rational preference relation
 rationalizes it.
 \end{definitionbox}
 
-Thus, observed choice contains exactly the best available alternatives according
-to one complete and transitive relation.
 \end{frame}
 
-\begin{frame}{How the Rationalization Proof Works}
-\begin{propositionbox}[WARP and Rationalizability]
+\begin{frame}{WARP and Rationalizability}
+\begin{theorembox}
 Suppose $\mathbb B$ contains every nonempty subset of $X$ with at most three
 alternatives, and $C(B)\neq\varnothing$ for every $B\in\mathbb B$. Then $C$ is
 rationalizable if and only if it satisfies WARP.
-\end{propositionbox}
+\end{theorembox}
 
-\begin{enumerate}
-    \item Pair menus recover $\succeq^*$ and make it complete.
-    \item Triple menus and WARP rule out cycles, making $\succeq^*$ transitive.
-    \item WARP then links pairwise comparisons back to every observed menu:
-\end{enumerate}
-\[
-C(B)=\{x\in B:x\succeq^* y\text{ for every }y\in B\}.
-\]
-
-\begin{block}{The Key Step}
-If $y\in C(B)$ and $x\succeq^*y$, the pair menu chooses $x$; WARP therefore
-forces $x\in C(B)$ too.
-\end{block}
+\begin{itemize}
+    \item \textbf{Pairs} make $\succeq^*$ complete.
+    \item \textbf{Triples} make $\succeq^*$ transitive.
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Demand Is Choice on Walrasian Menus}
+\begin{frame}{Demand on Walrasian Menus}
 \begin{definitionbox}[Restrict the Menu Domain]
 Consumer demand evaluates the same choice rule on Walrasian menus:
 \[
@@ -682,9 +615,12 @@ x(p,I)
 
 \vspace{.25em}
 \textbf{Important.}\quad
-Day 1's converse used a rich domain. Walrasian budgets are restricted, so WARP
-is necessary for rationalizable demand but does not by itself reproduce that
-converse.
+The converse above used a rich domain. Walrasian budgets are restricted, so
+WARP alone does not reproduce it.
+
+\vspace{.35em}
+\centering
+Day 2 supplies the analysis that makes $\arg\max$ well defined.
 \end{frame}
 
 \end{document}

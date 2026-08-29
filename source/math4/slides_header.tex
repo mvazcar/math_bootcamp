@@ -1,4 +1,4 @@
-% Shared slide template for the mathematics bootcamp.
+% New shared slide template; deck-specific content remains in main.tex.
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage{helvet}
@@ -8,18 +8,13 @@
 
 \usefonttheme[onlymath]{serif}
 
-\definecolor{slideblue}{HTML}{191998}
-\definecolor{slidegreen}{HTML}{178A55}
-\definecolor{slidered}{HTML}{B93333}
-\definecolor{slidegold}{HTML}{C27A16}
-\definecolor{slidegray}{HTML}{686868}
+\input{../palette.tex}
 
 \setbeamercolor{structure}{fg=slideblue}
 \setbeamercolor{block title}{fg=slideblue,bg=slideblue!8}
 \setbeamercolor{block body}{fg=black,bg=slideblue!2}
 \setbeamerfont{block title}{family=\sffamily,series=\bfseries,size=\normalsize}
 \setbeamerfont{block body}{family=\sffamily}
-
 % Compact square blocks: a restrained title strip and a lightly tinted body.
 \setbeamertemplate{block begin}{%
   \par\vskip.22em%
@@ -35,19 +30,16 @@
   \end{beamercolorbox}%
   \vskip.22em%
 }
-
 \setbeamerfont{title}{series=\bfseries}
 \setbeamerfont{frametitle}{series=\bfseries}
 \setbeamersize{text margin left=.55cm,text margin right=.55cm}
-
 % Narrow, fixed gutter for every two-column frame.
 \newlength{\twocolumngutter}
 \setlength{\twocolumngutter}{.18cm}
 \newcommand{\tightcolumnwidth}{.49\textwidth}
-
+\newcommand{\mwgscanstart}{}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{items}[circle]
-
 % Ordered lists use plain text numerals, without circles or projected icons.
 \setbeamertemplate{enumerate item}{\insertenumlabel.}
 \setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel.}
@@ -64,21 +56,16 @@
 \makeatletter
 \apptocmd{\itemize}{\ifnum\@itemdepth=1\itemsep8.5pt\else\itemsep9.3pt\vspace{3.4pt}\fi}{}{}
 \makeatother
-
 \pdfstringdefDisableCommands{\def\textsuperscript#1{#1}\def\hspace#1{}\def\\{, }}
 
 % Minimal, consistent statement boxes for authored material.
 \newenvironment{definitionbox}[1][Definition]{\begin{block}{#1}}{\end{block}}
 \newenvironment{theorembox}[1][Theorem]{\begin{block}{#1}}{\end{block}}
 \newenvironment{propositionbox}[1][Proposition]{\begin{block}{#1}}{\end{block}}
+\newenvironment{exercisebox}[1][Exercise]{\begin{block}{#1}}{\end{block}}
 
-% Structured proof indentation.
+% Deck-specific extras.
 \newcommand{\statementitem}[2]{%
   \par\noindent\hangindent=2.2em\hangafter=1%
   \textcolor{slideblue}{\bfseries(#1)}\enspace #2\par}
-\newcommand{\statementsubitem}[2]{%
-  \par\noindent\hangindent=3.6em\hangafter=1\hspace*{1.35em}%
-  \textcolor{slideblue}{(#1)}\enspace #2\par}
-
-% Sources are retained in hidden Beamer notes.
 \newcommand{\sources}[1]{\note{[Sources] #1}}

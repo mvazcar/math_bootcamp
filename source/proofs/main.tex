@@ -1,0 +1,226 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\renewcommand{\familydefault}{\sfdefault}
+
+\input{../palette.tex}
+\titleformat{\section}{\color{slideblue}\large\bfseries}{\thesection.}{.6em}{}
+\titleformat{\subsection}{\color{slideblue}\normalsize\bfseries}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.5em}{.5em}
+\newcommand{\slideref}[1]{\par\vspace{-.3em}{\small\itshape Supports: #1.}\par\vspace{.55em}}
+\newcommand{\done}{\hfill$\blacksquare$}
+
+\title{\color{slideblue}\bfseries Mathematics Bootcamp --- Proofs}
+\author{Miguel V\'azquez-Carrero}
+\date{Blackboard companion to the bootcamp\\[.3em]\normalsize Compilation Date: \today}
+
+\begin{document}
+\maketitle
+
+\noindent
+The slides carry the statements; these are the arguments behind them.
+Everything here is meant for the board.
+\vspace{1em}
+
+\section{Day 1 --- Choice and Rationalization}
+
+\subsection{Pairs recover revealed preference}
+\slideref{``WARP and Rationalizability''}
+Suppose every pair belongs to $\mathbb B$ and choice is nonempty. Under WARP,
+\[
+x\succeq^* y \quad\Longleftrightarrow\quad x\in C(\{x,y\}).
+\]
+
+\noindent\textbf{Proof.}
+($\Leftarrow$) The pair $\{x,y\}$ is itself an observed menu containing both
+alternatives, and $x$ is chosen from it. Hence $x\succeq^* y$.
+
+\noindent
+($\Rightarrow$) Let $x\succeq^* y$, so $x\in C(B)$ for some $B$ with $x,y\in B$.
+Since $C(\{x,y\})\neq\varnothing$, either $x\in C(\{x,y\})$ --- and we are done
+--- or $y\in C(\{x,y\})$. In the latter case WARP, applied to $B$ and
+$\{x,y\}$, forces $x\in C(\{x,y\})$ as well.
+
+\noindent
+\emph{Completeness.} Every pair menu chooses something, so for any $x,y$ at
+least one of $x\in C(\{x,y\})$, $y\in C(\{x,y\})$ holds; hence $x\succeq^* y$
+or $y\succeq^* x$. \done
+
+\subsection{Triples rule out cycles}
+\slideref{``WARP and Rationalizability''}
+Suppose the pair menus give
+\[
+C(\{x,y\})=\{x\},\qquad C(\{y,z\})=\{y\},\qquad C(\{x,z\})=\{z\}.
+\]
+No two of these menus contain the same pair, so WARP never applies across them:
+with pairs alone the cycle $x$ over $y$, $y$ over $z$, $z$ over $x$ is
+perfectly consistent with the axiom.
+
+\noindent\textbf{Proof.}
+Add the triple $T=\{x,y,z\}$, which a rich domain supplies. Since
+$C(T)\neq\varnothing$, $T$ chooses at least one alternative.
+\begin{itemize}[nosep,leftmargin=1.6em]
+  \item If $x\in C(T)$: both $x$ and $z$ lie in $T$ and in $\{x,z\}$, and
+  $z\in C(\{x,z\})$. WARP forces $x\in C(\{x,z\})$, contradicting
+  $C(\{x,z\})=\{z\}$.
+  \item If $y\in C(T)$: the same argument against $C(\{x,y\})=\{x\}$.
+  \item If $z\in C(T)$: the same argument against $C(\{y,z\})=\{y\}$.
+\end{itemize}
+Every case fails, so $C(T)=\varnothing$ --- a contradiction. The cycle is
+therefore impossible, and $\succeq^*$ is transitive. \done
+
+\subsection{WARP is equivalent to rationalizability}
+\slideref{``WARP and Rationalizability''}
+\textbf{Theorem.} Suppose $\mathbb B$ contains every nonempty $B\subseteq X$
+with $|B|\leq 3$, and $C(B)\neq\varnothing$ for every $B\in\mathbb B$. Then $C$
+is rationalizable if and only if it satisfies WARP.
+
+\noindent\textbf{Proof.}
+\emph{Necessity.} Let a rational $\succeq$ rationalize $C$. Take $x,y\in B$
+with $x\in C(B)$, and $B'$ with $x,y\in B'$ and $y\in C(B')$. From $B$ we get
+$x\succeq y$; from $B'$, $y\succeq z$ for every $z\in B'$. Transitivity gives
+$x\succeq z$ for every $z\in B'$, so $x\in C(B')$. That is WARP.
+
+\noindent
+\emph{Sufficiency.} Let $\succeq^*$ be the revealed preference relation. By the
+first lemma it is complete and satisfies $x\succeq^*y\iff x\in C(\{x,y\})$; by
+the second it is transitive. So $\succeq^*$ is rational. It remains to check
+$C(B)=\{x\in B:x\succeq^* y\ \text{for every}\ y\in B\}$.
+\begin{itemize}[nosep,leftmargin=2.2em]
+  \item[$\subseteq$] If $x\in C(B)$ then $x\succeq^* y$ for every $y\in B$,
+  directly from the definition of $\succeq^*$.
+  \item[$\supseteq$] Let $x\succeq^* y$ for every $y\in B$, and pick any
+  $y\in C(B)$, which is nonempty. Then $x\succeq^* y$ means the pair menu
+  $\{x,y\}$ chooses $x$. WARP, applied to $\{x,y\}$ and $B$ with $y\in C(B)$,
+  forces $x\in C(B)$.
+\end{itemize}
+\done
+
+\noindent
+\emph{The key step is the last one:} if $y\in C(B)$ and $x\succeq^* y$, the
+pair menu chooses $x$, and WARP carries that back into $B$.
+
+\section{Day 3 --- Properties of Preferences}
+
+\subsection{Monotonicity implies local nonsatiation}
+\slideref{``Monotonicity and Local Nonsatiation''}
+\textbf{Proposition.} On $X=\mathbb{R}_+^L$, monotonicity implies local
+nonsatiation.
+
+\noindent\textbf{Proof.}
+Let $x\in\mathbb{R}_+^L$ and $\varepsilon>0$ be arbitrary. Put
+$y=x+\frac{\varepsilon}{L}\mathbf 1$. Then $y\in\mathbb{R}_+^L$ and $y\gg x$,
+so monotonicity gives $y\succ x$. Moreover
+\[
+\lVert x-y\rVert
+=\sqrt{\sum_{i=1}^{L}\Bigl(\tfrac{\varepsilon}{L}\Bigr)^{2}}
+=\sqrt{L\Bigl(\tfrac{\varepsilon}{L}\Bigr)^{2}}
+=\frac{\varepsilon}{\sqrt L}\leq\varepsilon .
+\]
+So every $\varepsilon$-neighborhood of $x$ contains a strictly better bundle.
+\done
+
+\noindent
+\emph{The converse fails:} local nonsatiation does not imply monotonicity.
+
+\subsection{Convex preferences and quasiconcave utility}
+\slideref{``Convex Preferences and Quasiconcave Utility'' (Kreps 2.8b)}
+Let $X$ be convex and let $u$ represent $\succeq$.
+
+\noindent\textbf{Proof.}
+For each $x\in X$,
+\[
+U(x)=\{y\in X:y\succeq x\}=\{y\in X:u(y)\geq u(x)\},
+\]
+because $u$ represents $\succeq$. So the upper contour set of $\succeq$ at $x$
+\emph{is} the upper level set of $u$ at height $u(x)$. Now $\succeq$ is convex
+exactly when every $U(x)$ is convex, and $u$ is quasiconcave exactly when every
+upper level set is convex --- and these are the same family of sets. Replacing
+the weak inequalities by strict ones throughout gives the strict version.
+\done
+
+\subsection{Lexicographic preferences have no representation}
+\slideref{``Lexicographic Preferences Have No Representation'' (MWG 3.C.1)}
+Let $X=\mathbb{R}_+^2$ and $x\succeq y$ iff $x_1>y_1$, or $x_1=y_1$ and
+$x_2\geq y_2$.
+
+\noindent\textbf{Proof.}
+Suppose some $u$ represents $\succeq$. For each $x_1$ we have
+$(x_1,2)\succ(x_1,1)$, hence $u(x_1,2)>u(x_1,1)$. By the Density Theorem
+(Bartle 2.4.8) choose a rational $r(x_1)$ with
+\[
+u(x_1,2)>r(x_1)>u(x_1,1).
+\]
+The map $r$ is injective: if $x_1>x_1'$ then $(x_1,1)\succ(x_1',2)$, so
+\[
+r(x_1)>u(x_1,1)>u(x_1',2)>r(x_1').
+\]
+So $r$ is a one-to-one map from $\mathbb{R}$ into $\mathbb{Q}$. But $\mathbb{R}$
+is uncountable and $\mathbb{Q}$ is countable (Bartle 1.3.6) --- impossible.
+\done
+
+\noindent
+This is why continuity is needed: lexicographic preferences are complete,
+transitive, strongly monotone and strictly convex, and still admit no
+representation at all.
+
+\subsection{A continuous representation gives continuous preferences}
+\slideref{``A Continuous Representation Gives Closed Contours''}
+\textbf{Proof.}
+If $f:X\to\mathbb{R}$ is continuous then $f^{-1}([c,\infty))$ and
+$f^{-1}((-\infty,c])$ are closed relative to $X$ for every $c\in\mathbb{R}$.
+Apply this to a continuous representation $u$ of $\succeq$:
+\[
+U(x)=u^{-1}\bigl([u(x),\infty)\bigr),
+\qquad
+L(x)=u^{-1}\bigl((-\infty,u(x)]\bigr)
+\]
+are then closed for every $x$. By the contour-set characterization
+(Kreps 1.14), $\succeq$ is continuous. \done
+
+\section{Day 5 --- General Equilibrium}
+
+\subsection{Walras' law}
+\slideref{``Market Clearing''}
+\textbf{Theorem.} Suppose that at prices $\{w_t,r_t\}$ the allocations
+$\{c_t,a_{t+1}\}$ and $\{k_t,n_t\}$ solve the household and the firm problem,
+and that in every period the labor and asset markets clear, $n_t=1$ and
+$a_t=k_t$. Then the goods market clears as well, in every period.
+
+\noindent\textbf{Proof.}
+Because the allocation solves the household problem it satisfies the budget
+constraint,
+\[
+c_t+a_{t+1}=w_t+(1+r_t)a_t .
+\]
+Asset-market clearing gives $a_t=k_t$ and $a_{t+1}=k_{t+1}$, so
+\[
+c_t+k_{t+1}=w_t+(1+r_t)k_t,
+\qquad\text{that is}\qquad
+c_t+k_{t+1}-(1-\delta)k_t=w_t+(r_t+\delta)k_t .
+\]
+The firm's first-order conditions set each factor price equal to its marginal
+product. With constant returns to scale, Euler's theorem for homogeneous
+functions gives
+\[
+w_tn_t+(r_t+\delta)k_t=A_tf(k_t,n_t),
+\]
+so competitive profits are zero. Using $n_t=1$,
+\[
+c_t+k_{t+1}-(1-\delta)k_t=w_tn_t+(r_t+\delta)k_t=A_tf(k_t,n_t),
+\]
+which is exactly goods-market clearing,
+$c_t+k_{t+1}=A_tf(k_t,n_t)+(1-\delta)k_t$. \done
+
+\noindent
+Counting: with $T+1$ periods there are $3(T+1)$ clearing conditions but only
+$2(T+1)$ prices. Walras' law resolves the apparent mismatch --- one condition
+per period is redundant.
+
+\end{document}

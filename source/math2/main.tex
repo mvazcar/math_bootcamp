@@ -1,4 +1,4 @@
-\documentclass[11pt,aspectratio=169,t]{beamer}
+\documentclass[11pt,aspectratio=169,c]{beamer}
 \input{slides_header.tex}
 
 \usepackage{hyperref}
@@ -10,28 +10,30 @@
 \title{\textbf{Mathematics Bootcamp}}
 \subtitle{Functions, Counting, The Real Numbers}
 \author{Miguel Vázquez-Carrero} 
-\date{\textbf{September 2025}}
+\date{\textbf{Compilation Date: \today}}
 
 \begin{document}
 
 \begin{frame}
+\vfill
 \titlepage
+\vfill
 \end{frame}
 
 \begin{frame}{Today}
 \begin{itemize}
     \item Cartesian Products and Functions
     \item Finite and Infinite Sets
-    \item The Real Numbers and Euclidean Distance
-    \item Sequences, Continuity, and Compactness
-    \item Bounds, Completeness, and Ordinal Utility
+    \item The Real Numbers: Order and Completeness
+    \item Distance, Sequences, and Compactness
+    \item Ordinal Utility
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Bartle-Sherbert - Real Analysis}
 \begin{columns}[c,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
-        \hfill\includegraphics[height=0.77\textheight,keepaspectratio]{bartle-cover.jpg}
+        \hfill\includegraphics[height=0.70\textheight,keepaspectratio]{bartle-cover.jpg}
     \hspace{\twocolumngutter}
     \column{\tightcolumnwidth}
     \vspace{-2em}
@@ -49,16 +51,14 @@
 \end{frame}
 \begin{frame}{Cartesian Product}
 \begin{definitionbox}[1.1.5 Definition]
-If $A$ and $B$ are nonempty sets, then the \textbf{Cartesian product} $A\times B$ of $A$
-and $B$ is the set of all ordered pairs $(a,b)$ with $a\in A$ and $b\in B$. That is,
+For nonempty sets $A$ and $B$, the \textbf{Cartesian product} is
 \[
   A\times B:=\{(a,b):a\in A,\ b\in B\}.
 \]
 \end{definitionbox}
 
-For example, if $A:=\{x\in\mathbb{R}:1\leq x\leq2\}$ and
-$B:=\{y\in\mathbb{R}:0\leq y\leq1\text{ or }2\leq y\leq3\}$,
-then instead of a rectangle, we should have a drawing such as Figure 1.1.3.
+If $A:=\{x:1\leq x\leq2\}$ and
+$B:=\{y:0\leq y\leq1\text{ or }2\leq y\leq3\}$, the product is not a rectangle.
 
 \vspace{.08em}
 {\centering
@@ -102,18 +102,13 @@ then instead of a rectangle, we should have a drawing such as Figure 1.1.3.
 \begin{definitionbox}[1.1.6 Definition]
 Let $A$ and $B$ be sets. Then a \textbf{function} from $A$ to $B$ is a set $f$ of ordered
 pairs in $A\times B$ such that for each $a\in A$ there exists a unique $b\in B$ with
-$(a,b)\in f$. (In other words, if $(a,b)\in f$ and $(a,b')\in f$, then $b=b'$.)
+$(a,b)\in f$.
+
+\vspace{.4em}
+$D(f):=A$ is the \textbf{domain}; $R(f)$, the set of second elements, is the
+\textbf{range}, with $R(f)\subseteq B$.
 \end{definitionbox}
 
-\vspace{.65em}
-The set $A$ of first elements of a function $f$ is called the \textbf{domain} of $f$ and is often denoted
-by $D(f)$. The set of all second elements in $f$ is called the \textbf{range} of $f$ and is often denoted by
-$R(f)$. Note that, although $D(f)=A$, we only have $R(f)\subseteq B$. (See Figure 1.1.4.)
-
-\vspace{.65em}
-When $A,B\subseteq\mathbb{R}$, uniqueness is the \emph{vertical line test}:
-the graph meets each line $x=a$ at most once. Since $D(f)=A$, it meets that
-line exactly once for every $a\in A$.
 \end{frame}
 
 \begin{frame}{Functions as Graphs}
@@ -152,43 +147,19 @@ line exactly once for every $a\in A$.
 \end{center}
 \end{frame}
 
-\begin{frame}{Composition and Inverse Images}
-\begin{definitionbox}[Composition]
-Let $f:X\to Y$ and $g:Y\to Z$. Their composition is the function
-\[
-g\circ f:X\to Z,
-\qquad
-(g\circ f)(x):=g\bigl(f(x)\bigr).
-\]
-The order matters: apply $f$ first and then apply $g$.
-\end{definitionbox}
-
-\begin{definitionbox}[Inverse Image]
-For a set $D\subseteq Y$, the inverse image of $D$ under $f$ is
-\[
-f^{-1}(D):=\{x\in X:f(x)\in D\}.
-\]
-\end{definitionbox}
-
-The notation $f^{-1}(D)$ is defined for every function; $f$ need not be bijective.
-\end{frame}
-
 \begin{frame}{Injective, Surjective, and Bijective}
 \begin{definitionbox}[1.1.9 Definition]
-Let $f:A\to B$ be a function from $A$ to $B$.
-\begin{description}
-  \item[\textbf{(a)}] The function $f$ is said to be \textbf{injective} (or \textbf{one-to-one})
-  if whenever $x_1\neq x_2$, then $f(x_1)\neq f(x_2)$. If $f$ is an injective function,
-  we also say that $f$ is an \textbf{injection}.
-
-  \item[\textbf{(b)}] The function $f$ is said to be \textbf{surjective} (or to map $A$ \textbf{onto} $B$)
-  if $f(A)=B$; that is, if the range $R(f)=B$. If $f$ is a surjective function, we also say that
-  $f$ is a \textbf{surjection}.
-
-  \item[\textbf{(c)}] If $f$ is both injective and surjective, then $f$ is said to be \textbf{bijective}.
-  If $f$ is bijective, we also say that $f$ is a \textbf{bijection}.
-\end{description}
+Let $f:A\to B$ be a function.
+\statementitem{a}{$f$ is \textbf{injective} (\textbf{one-to-one}) if
+$x_1\neq x_2$ implies $f(x_1)\neq f(x_2)$.}
+\statementitem{b}{$f$ is \textbf{surjective} (maps $A$ \textbf{onto} $B$) if
+$f(A)=B$; that is, if $R(f)=B$.}
+\statementitem{c}{$f$ is \textbf{bijective} if it is both.}
 \end{definitionbox}
+
+\vspace{.4em}
+Such an $f$ is called an \emph{injection}, a \emph{surjection}, or a
+\emph{bijection}.
 \end{frame}
 
 \begin{frame}{Proofs - Injective and Surjective}
@@ -205,26 +176,43 @@ Let $f:A\to B$ be a function from $A$ to $B$.
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Composition and Inverse Images}
+\begin{definitionbox}[1.1.12 Definition]
+If $f:A\to B$ and $g:B\to C$, the \textbf{composite function}
+$g\circ f:A\to C$ is defined by
+\[
+(g\circ f)(x):=g\bigl(f(x)\bigr)\qquad\text{for all }x\in A.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}[1.1.7 Definition]
+For $H\subseteq B$, the \textbf{inverse image} of $H$ under $f$ is
+\[
+f^{-1}(H):=\{x\in A:f(x)\in H\}.
+\]
+\end{definitionbox}
+
+\end{frame}
+
 \begin{frame}{Cardinality - Finite and Infinite Sets}
 \begin{definitionbox}[1.3.1 Definition]
-\statementitem{a}{The empty set $\varnothing$ is said to have $0$ \textbf{elements}.}
-\statementitem{b}{If $n\in\mathbb{N}$, a set $S$ is said to have $n$ \textbf{elements} if there exists
-a bijection from the set $\mathbb{N}_n:=\{1,2,\ldots,n\}$ onto $S$.}
-\statementitem{c}{A set $S$ is said to be \textbf{finite} if it is either empty or it has $n$ elements
-for some $n\in\mathbb{N}$.}
-\statementitem{d}{A set $S$ is said to be \textbf{infinite} if it is not finite.}
+\statementitem{a}{$\varnothing$ has $0$ \textbf{elements}.}
+\statementitem{b}{$S$ has $n$ \textbf{elements} if there is a bijection
+$\mathbb{N}_n:=\{1,2,\ldots,n\}\to S$.}
+\statementitem{c}{$S$ is \textbf{finite} if it is empty or has $n$ elements for
+some $n\in\mathbb{N}$; \textbf{infinite} otherwise.}
 \end{definitionbox}
 
 \begin{definitionbox}[1.3.6 Definition]
-\statementitem{a}{A set $S$ is said to be \textbf{denumerable} (or \textbf{countably infinite})
-if there exists a bijection of $\mathbb{N}$ onto $S$.}
-\statementitem{b}{A set $S$ is said to be \textbf{countable} if it is either finite or denumerable.}
-\statementitem{c}{A set $S$ is said to be \textbf{uncountable} if it is not countable.}
+\statementitem{a}{$S$ is \textbf{denumerable} (\textbf{countably infinite}) if
+there is a bijection $\mathbb{N}\to S$.}
+\statementitem{b}{$S$ is \textbf{countable} if it is finite or denumerable;
+\textbf{uncountable} otherwise.}
 \end{definitionbox}
 \end{frame}
 
 
-\begin{frame}{Infinite Sets Can Have Different Cardinalities}
+\begin{frame}{Cardinalities of Infinite Sets}
 \begin{definitionbox}[Comparing Sizes]
 Two sets have the same cardinality when there is a bijection between them.
 This definition applies to both finite and infinite sets.
@@ -243,10 +231,7 @@ Cantor's diagonal argument proves the second claim:
 \end{frame}
 
 
-
-
-
-\begin{frame}{Why the Real Numbers Matter}
+\begin{frame}{The Role of the Real Numbers}
 \begin{itemize}
     \item Economic alternatives often lie in $\mathbb{R}^L$, while utility is
     real-valued.
@@ -262,29 +247,25 @@ Cantor's diagonal argument proves the second claim:
 
 \begin{frame}{$\mathbb{R}$ Is a Complete Ordered Field}
 \begin{definitionbox}[Ordered Field]
-A \textbf{field} supports addition and multiplication satisfying the field
-axioms. A \textbf{total order} compares every pair of elements and is
-compatible with the field operations.
+A \textbf{field} supports addition and multiplication. A \textbf{total order}
+compares every pair and is compatible with those operations.
 \[
 \begin{gathered}
 a<b \;\Longrightarrow\; a+c<b+c,\\
 0<a\text{ and }0<b \;\Longrightarrow\; 0<ab.
 \end{gathered}
 \]
-Totality gives \textbf{trichotomy}: for any $a,b$, exactly one of
-$a<b$, $a=b$, or $a>b$ holds.
+Totality gives \textbf{trichotomy}: exactly one of
+$a<b$, $a=b$, $a>b$ holds.
 \end{definitionbox}
 
-\begin{theorembox}[The Structural Difference]
-Both $\mathbb{Q}$ and $\mathbb{R}$ are ordered fields. Of these two, only $\mathbb{R}$ is
-\textbf{complete}: every nonempty set of real numbers bounded above has a
-least upper bound in $\mathbb{R}$.
-\end{theorembox}
+\vspace{.5em}
+Both $\mathbb{Q}$ and $\mathbb{R}$ are ordered fields. Only $\mathbb{R}$ is
+\textbf{complete}: it has no gaps.
 \end{frame}
 
 
 \begin{frame}{Absolute Value and the Real Line}
-\small
 \begin{definitionbox}[2.2.1 Definition]
 \begin{minipage}[c]{.46\linewidth}
 For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
@@ -301,13 +282,8 @@ For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
 \end{minipage}
 \end{definitionbox}
 
-\noindent\textbf{The Real Line}\hspace{.55em}\rule{.73\linewidth}{.4pt}
-
-\vspace{.35em}
-A convenient and familiar geometric interpretation of the real number system is the real line.
-In this interpretation, the absolute value $|a|$ of an element $a$ in $\mathbb{R}$ is regarded as the
-distance from $a$ to the origin $0$. More generally, the \textbf{distance} between elements $a$ and $b$
-in $\mathbb{R}$ is $|a-b|$. (See Figure 2.2.3.)
+\vspace{.5em}
+\textbf{Distance} on the real line: $|a-b|$.
 
 \vspace{.2em}
 \begin{center}
@@ -359,81 +335,6 @@ B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
 
 \end{frame}
 
-\begin{frame}{The Triangle Inequality Controls Distances}
-\begin{theorembox}[Triangle Inequality]
-For every $x,y,z\in\mathbb{R}^L$,
-\[
-\lVert x-z\rVert
-\leq
-\lVert x-y\rVert+\lVert y-z\rVert.
-\]
-\end{theorembox}
-
-\begin{block}{Geometric Meaning}
-The direct distance from $x$ to $z$ cannot exceed the distance obtained by
-travelling from $x$ to $z$ through an intermediate point $y$.
-\end{block}
-\end{frame}
-
-\begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
-\begin{definitionbox}[Convergence]
-A sequence $(x_n)$ in $\mathbb{R}^L$ \textbf{converges} to $x\in\mathbb{R}^L$ if
-\[
-\forall\varepsilon>0\;\exists N\in\mathbb{N}\;\forall n\geq N,
-\qquad \lVert x_n-x\rVert<\varepsilon.
-\]
-We write $x_n\to x$. Equivalently, every neighborhood of $x$ contains all
-terms of the sequence from some point onward.
-\end{definitionbox}
-
-\begin{theorembox}[Coordinatewise Convergence]
-For $x_n=(x_{n1},\ldots,x_{nL})$ and $x=(x_1,\ldots,x_L)$,
-\[
-x_n\to x
-\quad\Longleftrightarrow\quad
-x_{n\ell}\to x_\ell\quad\text{for every }\ell=1,\ldots,L.
-\]
-\end{theorembox}
-\end{frame}
-
-\begin{frame}{Continuity of a Function}
-\begin{definitionbox}[Sequential Definition]
-Let $X\subseteq\mathbb{R}^L$, $Y\subseteq\mathbb{R}^K$, and $f:X\to Y$.
-The function $f$ is \emph{continuous at $x\in X$} if, for every sequence
-$(x_n)$ in $X$,
-\[
-x_n\to x \quad\Longrightarrow\quad f(x_n)\to f(x).
-\]
-It is continuous on $X$ if it is continuous at every $x\in X$.
-\end{definitionbox}
-
-\begin{block}{Keep the Objects Separate}
-This is continuity of the function $f$. Day 3 defines continuity of a
-preference relation through closed upper and lower contour sets.
-\end{block}
-\end{frame}
-
-\begin{frame}{Closed and Bounded Sets Are Compact in $\mathbb{R}^L$}
-\begin{theorembox}[Heine--Borel and Extreme Values]
-Let $D\subseteq\mathbb{R}^L$. Then
-\[
-D\text{ is compact}
-\quad\Longleftrightarrow\quad
-D\text{ is closed and bounded}.
-\]
-If $D$ is nonempty and compact and $f:D\to\mathbb{R}$ is continuous, then
-there exist $x_{\min},x_{\max}\in D$ such that
-\[
-f(x_{\min})\leq f(x)\leq f(x_{\max})
-\qquad\text{for every }x\in D.
-\]
-\end{theorembox}
-
-\vspace{.45em}
-Compactness controls the feasible set; continuity controls the objective.
-Together they turn a supremum or infimum into an attained maximum or minimum.
-\end{frame}
-
 \begin{frame}{Bounds}
 \begin{definitionbox}[2.3.1 Bounds]
 Let $\varnothing\ne S\subseteq\mathbb{R}$.
@@ -448,14 +349,9 @@ w\text{ is a lower bound}
 $S$ is \textbf{bounded} if it has both an upper and a lower bound.
 \end{definitionbox}
 
-\begin{block}{Example}
-For $S=(0,1)$,
-\[
-\text{upper bounds}=[1,\infty),
-\qquad
-\text{lower bounds}=(-\infty,0].
-\]
-\end{block}
+\vspace{.5em}
+\textbf{Example.}\quad For $S=(0,1)$: upper bounds $=[1,\infty)$, lower bounds
+$=(-\infty,0]$.
 \end{frame}
 
 \begin{frame}{Suprema and Infima}
@@ -480,7 +376,7 @@ For $S=(0,1)$,
     node[midway,below=4pt] {upper bounds of $S$};
 \end{tikzpicture}
 \end{center}
-\vspace{-0.8em}
+\vspace{-1.3em}
 
 \begin{columns}[t,onlytextwidth]
 \begin{column}{\tightcolumnwidth}
@@ -527,16 +423,11 @@ S\text{ bounded above}
 Consequently, if $S$ is bounded below, then $\inf S\in\mathbb{R}$.
 \end{theorembox}
 
-\begin{block}{Why $\mathbb{Q}$ Is Not Complete}
-\[
-A=\{q\in\mathbb{Q}:q^2<2\}
-\]
-is bounded above, but its supremum in $\mathbb{R}$ is
-$\sqrt{2}\notin\mathbb{Q}$. Thus $A$ has no supremum in $\mathbb{Q}$.
-\end{block}
+\vspace{.5em}
+\textbf{Why $\mathbb{Q}$ is not complete.}\quad
+$A=\{q\in\mathbb{Q}:q^2<2\}$ is bounded above, but its supremum in
+$\mathbb{R}$ is $\sqrt{2}\notin\mathbb{Q}$.
 
-\vfill
-\centering\textbf{Completeness means that $\mathbb{R}$ has no gaps.}
 \end{frame}
 
 \begin{frame}{Key Implications for Proofs}
@@ -562,25 +453,88 @@ $z$ such that $x<z<y$.}
 \end{theorembox}
 \end{frame}
 
-\begin{frame}{Utility Is Ordinal}
+\begin{frame}{The Triangle Inequality Controls Distances}
+\begin{theorembox}[Triangle Inequality]
+For every $x,y,z\in\mathbb{R}^L$,
+\[
+\lVert x-z\rVert
+\leq
+\lVert x-y\rVert+\lVert y-z\rVert.
+\]
+\end{theorembox}
+
+\end{frame}
+
+\begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
+\begin{definitionbox}[Convergence]
+A sequence $(x_n)$ in $\mathbb{R}^L$ \textbf{converges} to $x\in\mathbb{R}^L$ if
+\[
+\forall\varepsilon>0\;\exists N\in\mathbb{N}\;\forall n\geq N,
+\qquad \lVert x_n-x\rVert<\varepsilon.
+\]
+We write $x_n\to x$.
+\end{definitionbox}
+
+\begin{theorembox}[Coordinatewise Convergence]
+For $x_n=(x_{n1},\ldots,x_{nL})$ and $x=(x_1,\ldots,x_L)$,
+\[
+x_n\to x
+\quad\Longleftrightarrow\quad
+x_{n\ell}\to x_\ell\quad\text{for every }\ell=1,\ldots,L.
+\]
+\end{theorembox}
+\end{frame}
+
+\begin{frame}{Continuity of a Function}
+\begin{definitionbox}[Sequential Definition]
+Let $X\subseteq\mathbb{R}^L$, $Y\subseteq\mathbb{R}^K$, and $f:X\to Y$.
+The function $f$ is \emph{continuous at $x\in X$} if, for every sequence
+$(x_n)$ in $X$,
+\[
+x_n\to x \quad\Longrightarrow\quad f(x_n)\to f(x).
+\]
+It is continuous on $X$ if it is continuous at every $x\in X$.
+\end{definitionbox}
+
+\vspace{.5em}
+\textbf{Keep the objects separate.}\quad This is continuity of a
+\emph{function}. Day 3 defines continuity of a \emph{preference relation}.
+\end{frame}
+
+\begin{frame}{Compactness in $\mathbb{R}^L$}
+\begin{theorembox}[Heine--Borel and Extreme Values]
+Let $D\subseteq\mathbb{R}^L$. Then
+\[
+D\text{ is compact}
+\quad\Longleftrightarrow\quad
+D\text{ is closed and bounded}.
+\]
+If $D$ is nonempty and compact and $f:D\to\mathbb{R}$ is continuous, then
+there exist $x_{\min},x_{\max}\in D$ such that
+\[
+f(x_{\min})\leq f(x)\leq f(x_{\max})
+\qquad\text{for every }x\in D.
+\]
+\end{theorembox}
+
+\end{frame}
+
+\begin{frame}{Ordinal Utility}
 \begin{definitionbox}[Ordinal Utility]
 A function $u:X\to\mathbb{R}$ represents $\succeq$ if
 \[
 x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
 \]
 If $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then $\phi\circ u$
-represents the same preferences. Utility levels and differences have no intrinsic meaning.
+represents the same preferences.
 \end{definitionbox}
 
-\begin{block}{Existence}
-Every utility representation induces rational preferences. On finite or
-countable $X$, rationality is also sufficient. On the standard Euclidean
-choice set $X=\mathbb{R}_+^L$, a rational and continuous preference relation
-admits a continuous representation; Day 3 states the theorem.
-\end{block}
+\vspace{.5em}
+\textbf{Existence.}\quad On finite or countable $X$, rationality suffices.
+On $\mathbb{R}_+^L$ it does not: continuity is needed too.
 \end{frame}
 
-\begin{frame}[t]{Back to Economics - Utility Functions}
+\begin{frame}{Back to Economics - Utility Functions}
 \mwgscanstart
 {\centering
     \includegraphics[width=0.96\linewidth,trim=0 0 0 8pt,clip]{mwg-p023-p024-utility.pdf}
@@ -588,14 +542,14 @@ admits a continuous representation; Day 3 states the theorem.
 
 \end{frame}
 
-\begin{frame}[t]{Utility Representation Implies Rationality}
+\begin{frame}{Utility Representation Implies Rationality}
 \par
 \mwgscanstart
 {\centering
     \includegraphics[width=0.96\linewidth,trim=0 0 0 .5pt,clip]{mwg-p024-proposition.pdf}
 \par}
 \end{frame}
-\begin{frame}{Utility Generates the Same Choice from Every Menu}
+\begin{frame}{Representation and Choice}
 \begin{definitionbox}[Representation Preserves Maximizers]
 Suppose $u:X\to\mathbb{R}$ represents $\succeq$. For every nonempty menu
 $B\subseteq X$ on which a best alternative exists,
@@ -611,9 +565,6 @@ If $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then
 \]
 \end{definitionbox}
 
-\vspace{.45em}
-Only the ranking matters. A strictly increasing transformation can simplify
-the objective without changing the chosen alternatives.
 \end{frame}
 
 \end{document}

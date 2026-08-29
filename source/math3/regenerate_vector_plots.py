@@ -1,10 +1,11 @@
 """Regenerate the clean Day 3 Matplotlib figures as PDF and SVG assets.
 
-The palette is the one used in the original utility notebooks.  The figure
+Colours come from source/palette.py, shared with the slides.  The figure
 sizes and type sizes are chosen for the final Beamer placements, so labels
 remain readable after the vector art is scaled on a slide.
 """
 
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -15,17 +16,19 @@ import matplotlib.patheffects as path_effects
 import matplotlib.pyplot as plt
 import numpy as np
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from palette import SLIDE_BLUE, SLIDE_GREEN, SLIDE_RED, SLIDE_GRAY  # noqa: E402
+
 
 OUTPUT_DIR = Path(__file__).resolve().parent
 
-# Canonical notebook palette.
-CHAD_BLUE = (0.1, 0.1, 0.5)
-CHAD_GREEN = (0.0, 0.4, 0.0)
-SIGNAL_RED = (1.0, 0.0, 0.0)
-NEUTRAL_GRAY = (0.40, 0.40, 0.40)
+# Palette: see source/palette.py.
 
-LEVELS = [0.5, 0.8, 1.2, 1.8, 2.6]
-T_VALUES = [0.35, 0.50, 0.65, 0.80, 1.00]
+# Four levels rather than five: the two lowest curves used to meet in the
+# bottom-left corner, where their labels collided.  These spread evenly along
+# the diagonal, so every label sits clear of its neighbours.
+LEVELS = [0.8, 1.4, 2.2, 3.2]
+T_VALUES = [0.40, 0.58, 0.78, 1.00]
 PLOT_STEMS = ("2d-plot", "3d-plot", "monotonicity")
 
 
@@ -38,9 +41,9 @@ plt.rcParams.update(
         "axes.labelsize": 18,
         "xtick.labelsize": 13,
         "ytick.labelsize": 13,
-        "axes.edgecolor": NEUTRAL_GRAY,
+        "axes.edgecolor": SLIDE_GRAY,
         "axes.linewidth": 0.8,
-        "grid.color": NEUTRAL_GRAY,
+        "grid.color": SLIDE_GRAY,
         "grid.alpha": 0.18,
         "grid.linewidth": 0.6,
         "pdf.fonttype": 42,
@@ -55,7 +58,7 @@ def blend_with_white(rgb: tuple[float, float, float], amount: float) -> tuple[fl
     return tuple(((1 - amount) * white + amount * np.array(rgb)).tolist())
 
 
-COLORS = [blend_with_white(CHAD_BLUE, amount) for amount in T_VALUES]
+COLORS = [blend_with_white(SLIDE_BLUE, amount) for amount in T_VALUES]
 LABELS = {level: f"$u={level}$" for level in LEVELS}
 
 
@@ -113,15 +116,24 @@ def add_utility_contours(
         linewidths=2.2,
     )
     if show_labels:
-        ax.clabel(
+        labels = ax.clabel(
             contours,
             inline=True,
-            inline_spacing=2,
+            inline_spacing=3,
             use_clabeltext=True,
             fontsize=13,
             fmt=LABELS,
             manual=[(level, level) for level in LEVELS],
         )
+        # A white halo keeps a label legible where a neighbouring curve passes
+        # close behind it.
+        for label in labels:
+            label.set_path_effects(
+                [
+                    path_effects.Stroke(linewidth=2.7, foreground="white"),
+                    path_effects.Normal(),
+                ]
+            )
 
 
 def make_2d_plot() -> None:
@@ -141,7 +153,7 @@ def make_3d_plot() -> None:
         x1,
         x2,
         utility,
-        color=CHAD_GREEN,
+        color=SLIDE_GREEN,
         alpha=0.11,
         rcount=42,
         ccount=42,
@@ -182,37 +194,23 @@ def make_monotonicity_plot() -> None:
     add_utility_contours(ax, x1, x2, utility, show_labels=False)
     style_2d_axes(ax)
 
-    ax.scatter([1], [1], s=34, color=SIGNAL_RED, zorder=5)
-    arrow = {"arrowstyle": "->", "color": SIGNAL_RED, "lw": 2.2}
+    ax.scatter([1], [1], s=34, color=SLIDE_RED, zorder=5)
+    arrow = {"arrowstyle": "->", "color": SLIDE_RED, "lw": 2.2}
     ax.annotate("", xy=(1, 4.75), xytext=(1, 1), arrowprops=arrow)
     ax.annotate("", xy=(4.75, 1), xytext=(1, 1), arrowprops=arrow)
 
-    horizontal_text = ax.text(
-        2.85,
-        0.58,
-        "If $x_1$ increases,\nutility increases",
-        color=SIGNAL_RED,
-        fontsize=13,
-        ha="center",
-        va="center",
-    )
-    vertical_text = ax.text(
-        0.63,
-        3.0,
-        "If $x_2$ increases,\nutility increases",
-        color=SIGNAL_RED,
-        fontsize=13,
-        ha="center",
-        va="center",
-        rotation=90,
-    )
-    for text in (horizontal_text, vertical_text):
-        text.set_path_effects(
-            [
-                path_effects.Stroke(linewidth=2.7, foreground="white"),
-                path_effects.Normal(),
-            ]
-        )
+    # Single-line captions set outside the arrows.  The earlier two-line
+    # versions ran across the curves; an opaque backing keeps these readable
+    # wherever the lowest contour passes behind them.
+    caption = {
+        "color": SLIDE_RED,
+        "fontsize": 12,
+        "ha": "center",
+        "va": "center",
+        "bbox": {"facecolor": "white", "edgecolor": "none", "pad": 1.6},
+    }
+    ax.text(3.35, 0.42, r"more $x_1$ $\Rightarrow$ higher $u$", **caption)
+    ax.text(0.42, 3.35, r"more $x_2$ $\Rightarrow$ higher $u$", rotation=90, **caption)
 
     fig.tight_layout(pad=0.35)
     save_vector_pair(fig, "monotonicity")

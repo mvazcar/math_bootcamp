@@ -1,4 +1,4 @@
-\documentclass[11pt,aspectratio=169,t]{beamer}
+\documentclass[11pt,aspectratio=169,c]{beamer}
 \input{slides_header.tex}
 
 \usepackage{hyperref}
@@ -8,12 +8,14 @@
 \title{\textbf{Mathematics Bootcamp}}
 \subtitle{Properties of Preferences and Utility Functions}
 \author{Miguel Vázquez-Carrero} 
-\date{\textbf{September 2025}}
+\date{\textbf{Compilation Date: \today}}
 
 \begin{document}
 
 \begin{frame}
+\vfill
 \titlepage
+\vfill
 \end{frame}
 
 \begin{frame}{Today}
@@ -31,7 +33,7 @@
 % --- Slide 7 ---
 \begin{frame}{Preference Relations}
   \begin{itemize}
-    \item A \textbf{preference relation} $\succeq$ is a binary relation on $X$: a subset of $X \times X$ recording the comparisons made by the DM. It need not compare every pair unless completeness is imposed.
+    \item A \textbf{preference relation} $\succeq$ on $X$ is a subset of $X\times X$.
     \item $x \succeq y$ reads: $x$ is \textit{at least as good} as y (x is \textit{weakly better} than y).
     \vspace{1em}
     \item From $\succeq$ we derive:
@@ -94,9 +96,8 @@
     \[
       x\sim y \;\;\Leftrightarrow\;\; u(x) = u(y).
     \]
-    Thus, every equivalence class is mapped to a single utility level. Moreover, if
-    $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then $\phi\circ u$
-    represents the same preferences: utility is \textbf{ordinal}.
+    Every equivalence class maps to one utility level; utility is
+    \textbf{ordinal}.
   \end{block}
 
 \end{frame}
@@ -136,37 +137,17 @@
   
 \end{frame}
 
-\begin{frame}{A Representation Carries the Structure of Preferences}
-\renewcommand{\arraystretch}{1.35}
-\centering
-\begin{tabular}{@{}p{.42\textwidth}p{.50\textwidth}@{}}
-\toprule
-\textbf{Property of $\succeq$} & \textbf{Property of a representation $u$}\\
-\midrule
-Weak monotonicity & $u$ is non-decreasing.\\
-Strict monotonicity & $u$ is strictly increasing.\\
-Convexity & $u$ is quasiconcave.\\
-Strict convexity & $u$ is strictly quasiconcave.\\
-\bottomrule
-\end{tabular}
-
-\vspace{.85em}
-Continuity is different: a continuous representation gives continuous
-preferences, while Debreu's theorem gives conditions under which continuous
-preferences admit at least one continuous representation.
-\end{frame}
-
-
-\begin{frame}[t]{Represent Commodities with Ordered Lists}
+\begin{frame}{Represent Commodities with Ordered Lists}
 \mwgscanstart
 {\centering
      \includegraphics[width=0.72\linewidth,trim=0 0 0 6pt,clip]{mwg-p032-p033-commodity-vector.pdf}
 \par}
 \vspace{-0.2em}
  \begin{itemize}
-     \item Coordinatewise order: $x\geq y$ iff $x_\ell\geq y_\ell$ for every
-     $\ell\in\{1,\ldots,L\}$.
-     \item Hence, $x\geq y$ and $x\ne y$ imply $x_\ell>y_\ell$ for some $\ell$.
+     \item $x\geq y$ iff $x_\ell\geq y_\ell$ for every $\ell$; and $x\gg y$ iff
+     $x_\ell>y_\ell$ for every $\ell$.
+     \item So $x\geq y$ with $x\ne y$ means $x_\ell>y_\ell$ for \emph{some}
+     $\ell$ --- weaker than $x\gg y$.
  \end{itemize}
 \end{frame}
 
@@ -174,35 +155,30 @@ preferences admit at least one continuous representation.
 % Slide 3 / 17
 \begin{frame}{Monotonicity: More is Better}
 
-\begin{definitionbox}[Definitions]
-Let $X\subseteq\mathbb{R}^L$. A preference relation $\succeq$ on $X$ is\\
-\quad \emph{weakly monotone} if $x\geq y$ implies $x\succeq y$;\\
-\quad \emph{strictly monotone} if $x\geq y$ and $x\ne y$ imply $x\succ y$,\\
-for all $x,y\in X$.\par
-
-A function $f:X\to\mathbb{R}$ is\\
-\quad \emph{non-decreasing} if $x\geq y$ implies $f(x)\geq f(y)$;\\
-\quad \emph{strictly increasing} if $x\geq y$ and $x\ne y$ imply $f(x)>f(y)$,
-for all $x,y\in X$.
+\begin{definitionbox}[MWG 3.B.2: Monotonicity]
+Assume consuming more is always feasible: $x\in X$ and $y\geq x$ imply $y\in X$.
+The preference relation $\succeq$ on $X$ is\\
+\quad \emph{monotone} if $y\gg x$ implies $y\succ x$;\\
+\quad \emph{strongly monotone} if $y\geq x$ and $y\ne x$ imply $y\succ x$.
 \end{definitionbox}
 
 \begin{propositionbox}
 If $u:X\to\mathbb{R}$ represents $\succeq$, then\\
-\quad $\succeq$ is weakly monotone \emph{iff} $u$ is non-decreasing;\\
-\quad $\succeq$ is strictly monotone \emph{iff} $u$ is strictly increasing.
+\quad $\succeq$ is monotone \emph{iff} $u(y)>u(x)$ whenever $y\gg x$;\\
+\quad $\succeq$ is strongly monotone \emph{iff} $u$ is \emph{strictly
+increasing}: $u(y)>u(x)$ whenever $y\geq x$ and $y\ne x$.
 \end{propositionbox}
 \end{frame}
 
 \begin{frame}{Monotonicity: More is Better}
 
- \begin{figure}
-     \centering
-     \includegraphics[width=0.38\linewidth]{monotonicity.pdf}
-  \end{figure}
-  \vspace{-0.7em}
+ \vspace{-0.35em}
+ {\centering
+     \includegraphics[width=0.40\linewidth]{monotonicity.pdf}
+ \par}
+ \vspace{0.2em}
   \centering
-  \textbf{Domain:} $X=\mathbb{R}_{++}^2$. The function is not strictly
-  increasing on the axes of $\mathbb{R}_+^2$.
+  \textbf{Domain:} $X=\mathbb{R}_{++}^2$.
 \end{frame}
 
 % Slide 6 / 17
@@ -212,18 +188,14 @@ A preference relation $\succeq$ on $X$ is \emph{locally nonsatiated} if for ever
 every $\varepsilon > 0$, there exists $y \in X$ such that $\lVert x - y\rVert \le \varepsilon$ and $y \succ x$.
 \end{definitionbox}
 
-Thus, preferences are locally nonsatiated if for each $x$ you can find an
-arbitrarily close $y$ that is strictly better.\\[0.5em]
-Recall that we are in a Euclidean space, so
-\[
-\lVert x - y\rVert=\sqrt{\sum_{i=1}^L (x_i - y_i)^2}.
-\]
-Local nonsatiation rules out ``thick'' indifference sets.
+\centering
+Euclidean distance:
+$\lVert x - y\rVert=\sqrt{\sum_{i=1}^L (x_i - y_i)^2}$.
 \end{frame}
 
 % Slide 7 / 17
 
-\begin{frame}[t]{Local Nonsatiation: No Thick Indifference Curves}
+\begin{frame}{Local Nonsatiation: No Thick Indifference Curves}
 \par
 \mwgscanstart
 {\centering
@@ -234,26 +206,15 @@ Local nonsatiation rules out ``thick'' indifference sets.
 
 \begin{frame}{Monotonicity and Local Nonsatiation}
 \begin{propositionbox}
-On $X=\mathbb{R}_+^L$, strict monotonicity implies local nonsatiation.
+On $X=\mathbb{R}_+^L$, monotonicity implies local nonsatiation.
 \end{propositionbox}
 
-\textbf{Proof.}\quad Let $x\in\mathbb{R}_+^L$ and $\varepsilon>0$ be arbitrary.\par
-\vspace{.15em}
-\hspace*{1.8em}Define $y=x+\frac{\varepsilon}{L}\mathbf{1}$.\par
-\hspace*{3.6em}Then $y\in\mathbb{R}_+^L$, $y\geq x$, and $y\ne x$.\par
-\hspace*{3.6em}Strict monotonicity therefore implies $y\succ x$.\par
-\hspace*{3.6em}Moreover,
-\[
-\lVert x - y\rVert=\sqrt{\sum_{i=1}^L \left(\frac{\varepsilon}{L}\right)^2}
-=\sqrt{L\left(\frac{\varepsilon}{L}\right)^2}=\frac{\varepsilon}{\sqrt{L}}\le \varepsilon
-\]
-\hspace*{1.8em}Thus every $\varepsilon$-neighborhood of $x$ contains a strictly
-better bundle.\par\vspace{.3em}
-However, local nonsatiation does not imply monotonicity.
+\vspace{.5em}
+\centering However, local nonsatiation does not imply monotonicity.
 \end{frame}
 
 
-\begin{frame}[t]{Convexity: Taste for Variety}
+\begin{frame}{Convexity: Taste for Variety}
 \mwgscanstart
 {\centering
     \includegraphics[width=0.78\linewidth,trim=0 0 0 5pt,clip]{mwg-p059-convexity.pdf}
@@ -267,22 +228,19 @@ However, local nonsatiation does not imply monotonicity.
 A set $X\subseteq\mathbb{R}^L$ is \emph{convex} if $x,y\in X$ and
 $\alpha\in[0,1]$ imply $\alpha x+(1-\alpha)y\in X$.
 
-Let $X$ be convex. For each $x\in X$, define
-$U(x):=\{y\in X:y\succeq x\}$. A preference relation $\succeq$ on $X$ is
+Let $X$ be convex and $U(x):=\{y\in X:y\succeq x\}$. Then $\succeq$ is
 \emph{convex} if
 \[
 y,z\in U(x),\ \alpha\in[0,1]
 \quad\Longrightarrow\quad
-\alpha y+(1-\alpha)z\in U(x).
+\alpha y+(1-\alpha)z\in U(x),
 \]
-It is \emph{strictly convex} if $y\ne z$ and $\alpha\in(0,1)$ imply
-$\alpha y+(1-\alpha)z\succ x$ whenever $y,z\in U(x)$.
+and \emph{strictly convex} if that conclusion is $\succ x$ for $y\ne z$,
+$\alpha\in(0,1)$.
 \end{definitionbox}
 
-\begin{block}{Precise Geometric Statement}
-Convex preferences mean that every upper contour set $U(x)$ is convex. This is
-the precise statement behind the informal ``taste for variety'' description.
-\end{block}
+\vspace{.5em}
+\centering Every upper contour set $U(x)$ is convex.
 
 \end{frame}
 
@@ -301,14 +259,14 @@ f(\alpha x + (1-\alpha)y) > \min\{f(x),f(y)\}.
 \]
 \end{block}
 
-\begin{block}{A More Transparent Definition}
-A function $f : X \to \mathbb{R}$ is \emph{quasiconcave} if every upper level set of $f$ is convex. That is, $\{\,x \in X \mid f(x) \geq c\,\}$ is convex for every $c \in \mathbb{R}$.
-\end{block}
+\vspace{.5em}
+\textbf{Equivalently.}\quad $f$ is quasiconcave iff every upper level set
+$\{\,x\in X \mid f(x)\geq c\,\}$ is convex.
 \end{frame}
 
 \begin{frame}{Convex Preferences and Quasiconcave Utility}
 
-\begin{propositionbox}[Exact Equivalence]
+\begin{propositionbox}[Kreps 2.8(b)]
 Let $X$ be convex and let $u:X\to\mathbb{R}$ represent $\succeq$. Then
 \[
 \begin{aligned}
@@ -322,16 +280,27 @@ u\ \text{is strictly quasiconcave}.
 \]
 \end{propositionbox}
 
-\begin{block}{Why}
-\[
-U(x)=\{y\in X:y\succeq x\}
-=\{y\in X:u(y)\geq u(x)\}.
-\]
-Thus upper contour sets are upper level sets of $u$; replacing weak with
-strict inequalities gives the second equivalence.
-\end{block}
 
 \end{frame}
+
+\begin{frame}{Properties of a Representation}
+\renewcommand{\arraystretch}{1.35}
+\centering
+\begin{tabular}{@{}p{.42\textwidth}p{.50\textwidth}@{}}
+\toprule
+\textbf{Property of $\succeq$} & \textbf{Property of a representation $u$}\\
+\midrule
+Monotonicity & $u(y)>u(x)$ whenever $y\gg x$.\\
+Strong monotonicity & $u$ is strictly increasing.\\
+Convexity & $u$ is quasiconcave.\\
+Strict convexity & $u$ is strictly quasiconcave.\\
+\bottomrule
+\end{tabular}
+
+\vspace{.85em}
+Continuity is different: that is Debreu's theorem.
+\end{frame}
+
 
 \begin{frame}{Topology on the Choice Set}
 
@@ -347,9 +316,7 @@ B^X_\varepsilon(x)=\{y\in X:\lVert y-x\rVert<\varepsilon\}.
 \end{itemize}
 \end{definitionbox}
 
-\begin{block}{Why ``Relative'' Matters}
-At a boundary point of $X$---for example, where one commodity is zero---the ball is intersected with the feasible choice set $X$.
-\end{block}
+
 \end{frame}
 
 \begin{frame}{Closed Sets Contain Their Limits}
@@ -362,11 +329,6 @@ x_n\in F\ \text{for every }n,\qquad x_n\to x\in X
 \]
 \end{theorembox}
 
-\begin{block}{Why This Matters}
-Closedness says that a set keeps the limits of all its convergent sequences.
-Applied to contour sets, this turns the topological definition of continuous
-preferences into a test involving limits of rankings.
-\end{block}
 \end{frame}
 
 \begin{frame}{Lower and Upper Contour Sets}
@@ -390,45 +352,50 @@ If $\succeq$ is complete, then
 \end{propositionbox}
 \end{frame}
 
-\begin{frame}{Continuity: Equivalent Tests}
-\begin{definitionbox}[Continuity via Contour Sets]
-Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. We call
-$\succeq$ \emph{continuous} if, for every $x\in X$, the weak contour sets
-$U(x)$ and $L(x)$ are closed relative to $X$.
+\begin{frame}{Lexicographic Preferences}
+\begin{definitionbox}[Example 3.C.1: The Lexicographic Preference Relation]
+Let $X=\mathbb{R}_+^2$. Define $x\succeq y$ if either
+\[
+x_1>y_1,
+\qquad\text{or}\qquad
+x_1=y_1\ \text{and}\ x_2\geq y_2.
+\]
+It is complete, transitive, strongly monotone, and strictly convex --- yet no
+utility function represents it.
 \end{definitionbox}
 
-\begin{propositionbox}[Equivalent Open-Set Test]
-Under completeness, continuity is equivalent to requiring
-$\{y\in X:y\succ x\}$ and $\{y\in X:x\succ y\}$ to be open relative to $X$
-for every $x\in X$.
-\end{propositionbox}
-
-\begin{block}{Interpretation}
-Small changes in a bundle cannot cause a strict ranking to reverse abruptly.
-\end{block}
 \end{frame}
 
-\begin{frame}{Continuity: Rankings Survive Limits}
-\begin{propositionbox}[Equivalent Sequence Test]
-Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete and transitive.
-Continuity is equivalent to
+\begin{frame}{Continuity: Limits of Rankings}
+\begin{definitionbox}[MWG 3.C.1: Continuity]
+Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. Then $\succeq$ is
+\emph{continuous} if it is preserved under limits:
 \[
 (x_n,y_n)\to(x,y),\quad x_n\succeq y_n\ \text{for every }n
 \quad\Longrightarrow\quad x\succeq y.
 \]
-\end{propositionbox}
+\end{definitionbox}
 
-\begin{block}{Equivalent Local Test}
-Equivalently, strict preference is open in $X\times X$: if $x\succ y$, there
-exist $\varepsilon_x,\varepsilon_y>0$ such that
-\[
-x'\in B^X_{\varepsilon_x}(x),\quad y'\in B^X_{\varepsilon_y}(y)
-\quad\Longrightarrow\quad x'\succ y'.
-\]
-\end{block}
+
 \end{frame}
 
-\begin{frame}{A Continuous Representation Gives Closed Contours}
+\begin{frame}{Continuity: Equivalent Tests}
+\begin{propositionbox}[Kreps 1.14: Equivalent Characterizations]
+For complete, transitive $\succeq$, continuity is equivalent to each of:
+\begin{enumerate}
+    \item $U(x)$ and $L(x)$ are closed relative to $X$, for every $x$.
+    \item $\{y\in X:y\succ x\}$ and $\{y\in X:x\succ y\}$ are open relative to
+    $X$, for every $x$.
+    \item If $x\succ y$, there is $\varepsilon>0$ with $x'\succ y'$ whenever
+    $\lVert x'-x\rVert<\varepsilon$ and $\lVert y'-y\rVert<\varepsilon$.
+\end{enumerate}
+\end{propositionbox}
+
+\centering
+Kreps takes (3) as the definition; MWG takes the limit form.
+\end{frame}
+
+\begin{frame}{Continuous Representations and Closed Contours}
 \begin{theorembox}[Closed Level Sets]
 If $f:X\to\mathbb{R}$ is continuous, then for every $c\in\mathbb{R}$ the sets
 \[
@@ -439,19 +406,13 @@ f^{-1}\bigl((-\infty,c]\bigr)
 are closed relative to $X$.
 \end{theorembox}
 
-\begin{block}{Apply This to Utility}
-If $u$ represents $\succeq$, then
-\[
-U(x)=u^{-1}\bigl([u(x),\infty)\bigr),
-\qquad
-L(x)=u^{-1}\bigl((-\infty,u(x)]\bigr).
-\]
-Therefore, a continuous utility representation implies continuous preferences.
-\end{block}
+\vspace{.5em}
+\centering A continuous representation therefore implies continuous
+preferences.
 \end{frame}
 
 \begin{frame}{Debreu's Representation Theorem}
-\begin{theorembox}[Continuous Representation]
+\begin{theorembox}[Kreps 2.9: Debreu's Theorem]
 Let $X=\mathbb{R}_+^L$. If $\succeq$ is complete, transitive, and continuous on
 $X$, then there exists a \emph{continuous} utility function $u:X\to\mathbb{R}$ such that
 \[
@@ -460,14 +421,13 @@ x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
 \end{theorembox}
 
 \begin{itemize}
-    \item The theorem starts from continuous preferences, defined by closed contour sets.
-    \item The theorem guarantees at least one continuous representation; it does not make every utility representation continuous.
-    \item Rationality is necessary. On $\mathbb{R}_+^L$, continuity supplies enough additional structure for a continuous representation.
+    \item It gives \emph{at least one} continuous representation --- not every
+    representation is continuous.
 \end{itemize}
-    
+
 \end{frame}
 
-\begin{frame}{These Assumptions Solve Different Problems}
+\begin{frame}{Three Assumptions, Three Conclusions}
 \renewcommand{\arraystretch}{1.42}
 \centering
 \begin{tabular}{@{}p{.48\textwidth}p{.44\textwidth}@{}}
@@ -484,8 +444,7 @@ Local nonsatiation; $D=B(p,I)$ with $p\gg0$
 \end{tabular}
 
 \vspace{.9em}
-Existence, uniqueness, and a binding constraint are distinct conclusions.
-Day 4 studies the mathematics that produces each one.
+Day 4 takes each in turn.
 \end{frame}
 
 \end{document}

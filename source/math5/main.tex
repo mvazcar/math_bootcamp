@@ -1,4 +1,4 @@
-\documentclass[11pt,aspectratio=169,t]{beamer}
+\documentclass[11pt,aspectratio=169,c]{beamer}
 \input{slides_header.tex}
 
 \usepackage{hyperref}
@@ -17,27 +17,26 @@
 \title{\textbf{Mathematics Bootcamp}}
 \subtitle{General Equilibrium and the Social Planner}
 \author{Miguel V\'azquez-Carrero}
-\date{\textbf{September 2025}}
+\date{\textbf{Compilation Date: \today}}
 
 \begin{document}
 
 \begin{frame}
+  \vfill
   \titlepage
-  \sources{Fern\'andez-Villaverde and Krueger, Advanced Macroeconomics:
-  A Dynamic Approach, Chapters 4--5.}
+  \vfill
 \end{frame}
 
 \begin{frame}{Today}
   \begin{itemize}
-    \item \textbf{Infinite paths:} recurrence, initial condition, and boundary at infinity
-    \item \textbf{Household:} dated goods, shadow values, and the Euler equation
-    \item \textbf{Competitive equilibrium:} definition, clearing, and characterization
+    \item \textbf{The household:} an infinite path, boundary conditions, shadow values
+    \item \textbf{The Euler equation}, and the firm problem
+    \item \textbf{Competitive equilibrium:} definition, characterization, and market clearing
     \item \textbf{Planner:} efficiency, supporting prices, and existence
   \end{itemize}
-  \sources{AdvancedMacro Book, Chapters 4--5.}
 \end{frame}
 
-\begin{frame}{Day 4 Chose a Point; Day 5 Chooses an Infinite Path}
+\begin{frame}{From a Point to a Path}
   Day 4 studied a scalar choice
   \[
     x\in D\subseteq\mathbb{R}.
@@ -47,162 +46,54 @@
     z=(x_0,x_1,x_2,\ldots).
   \]
 
-  \vspace{.2em}
-  \centering
-  \begin{tikzpicture}
-    \foreach \x/\lab in {0/$x_0$,2.25/$x_1$,4.5/$x_2$,7.05/$\cdots$,9.55/$\infty$}{
-      \node[object,minimum width=1.25cm] at (\x,0) {\lab};
-    }
-    \draw[mutedroute] (.72,0) -- (1.52,0);
-    \draw[mutedroute] (2.97,0) -- (3.77,0);
-    \draw[mutedroute] (5.22,0) -- (6.25,0);
-    \draw[mutedroute] (7.82,0) -- (8.82,0);
-  \end{tikzpicture}
-
-  \vspace{.55em}
-  In the one-state model below, a candidate path satisfies one Euler equation
+    \vspace{.55em}
+  In the model that follows, a candidate path satisfies one Euler equation
   at every date and one transversality condition at infinity.
-  \sources{AdvancedMacro Book, printed pp. 39--40 and 51--53.}
 \end{frame}
 
-\begin{frame}{Every Dated Constraint Has Its Own Multiplier}
-  An infinite problem has one constraint at each date, so its formal
-  Lagrangean has one multiplier at each date:
-  \[
-    \max_{z=(z_t)_{t=0}^{\infty}} F(z)
-    \quad\text{s.t.}\quad
-    g_t(z)=0, t=0,1,\ldots,
-    \qquad
-    L(z;\lambda)=F(z)+\sum_{t=0}^{\infty}\lambda_t g_t(z).
-  \]
-
-  \centering
-  \begin{tikzpicture}
-    \foreach \x/\lab/\mul in {0/$g_0(z)=0$/$\lambda_0$,3.15/$g_1(z)=0$/$\lambda_1$,
-      6.30/$\cdots$/$\cdots$,9.45/$g_t(z)=0$/$\lambda_t$}{
-      \node[object,text width=2.0cm] at (\x,0) {\lab};
-      \node[text=slideblue] at (\x,-.80) {\mul};
-    }
-  \end{tikzpicture}
-
-  \vspace{.10em}
-  \begin{block}{What Is Formal Here?}
-    A general multiplier theorem for sequence spaces is beyond our scope. We
-    use this expression to generate date-by-date candidates; feasibility,
-    concavity, and a model-specific transversality condition do the verification.
-  \end{block}
-  \sources{AdvancedMacro Book, printed pp. 51--53 and 77; Sundaram, Chapter 5.}
-\end{frame}
-
-\begin{frame}{Next Period's State Appears in Two Neighboring Constraints}
-  To keep the notation concrete, call the linking choice $a_{t+1}$: saving
-  chosen at $t$ and carried into $t+1$. It appears twice:
-  \[
-    g_t(\ldots,a_{t+1})=0,
-    \qquad
-    g_{t+1}(a_{t+1},\ldots)=0.
-  \]
-
-  \centering
-  \begin{tikzpicture}
-    \node[object,text width=2.35cm] (left) at (0,0)
-      {Date-$t$ constraint\\$g_t=0$};
-    \node[object,fill=slidegold!9,draw=slidegold,text width=2.2cm] (state) at (4.0,0)
-      {Saving today\\$a_{t+1}$};
-    \node[object,text width=2.35cm] (right) at (8.0,0)
-      {Date-$(t+1)$ constraint\\$g_{t+1}=0$};
-    \draw[equality] (left) -- node[above,font=\small]{$\lambda_t$} (state);
-    \draw[equality] (state) -- node[above,font=\small]{$\lambda_{t+1}$} (right);
-  \end{tikzpicture}
-
-  \vspace{.5em}
-  Differentiating with respect to $a_{t+1}$ links adjacent multipliers.
-  Eliminating them typically produces
-  \[
-    \Phi(a_t,a_{t+1},a_{t+2})=0.
-  \]
-  In the household problem, this recurrence will be the Euler equation.
-  \sources{AdvancedMacro Book, printed pp. 51--53, 72--73, and 77--78.}
-\end{frame}
-
-\begin{frame}{The Euler Equation Alone Does Not Determine a Path}
-  A recurrence alone does not determine a path:
-  \[
-    \Phi(a_t,a_{t+1},a_{t+2})=0,
-    \qquad t=0,1,\ldots.
-  \]
-
-  \begin{columns}[t,onlytextwidth]
-    \begin{column}{\tightcolumnwidth}
-      \begin{block}{Beginning of the Path}
-        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
-          The initial state is fixed:
-          \[
-            a_0\ \text{is given}.
-          \]
-        \end{minipage}
-      \end{block}
-    \end{column}
-    \hspace{\twocolumngutter}
-    \begin{column}{\tightcolumnwidth}
-      \begin{block}{End of the Path}
-        \begin{minipage}[t][1.75cm][t]{\dimexpr\linewidth-.76em\relax}
-          A model-specific condition controls the tail as $t\to\infty$.
-        \end{minipage}
-      \end{block}
-    \end{column}
-  \end{columns}
-
-  \vspace{.45em}
-  The Euler equation is local. The initial state and the tail restriction select
-  among candidate paths; neither proves that a path exists.
-  \sources{AdvancedMacro Book, Appendix A, printed p. 86; Math Bootcamp Day 4.}
-\end{frame}
-
-\begin{frame}{In This Economy, the Recurrence Is the Euler Equation}
-  \renewcommand{\arraystretch}{1.35}
-  \centering
-  \begin{tabular}{@{}p{.31\textwidth}p{.59\textwidth}@{}}
-    \toprule
-    \textbf{Abstract mathematics} & \textbf{Dynamic economy}\\
-    \midrule
-    Sequence $z=(z_t)_{t=0}^{\infty}$ & Paths of consumption, assets, and capital\\
-    Constraint $g_t(z)=0$ & Dated budget or resource constraint\\
-    Linking choice $s_{t+1}$ & Saving or next-period capital\\
-    Multiplier $\lambda_t$ & Shadow value of resources at date $t$\\
-    Recurrence & Euler equation\\
-    \bottomrule
-  \end{tabular}
-
-  \sources{AdvancedMacro Book, Chapters 4--5; Math Bootcamp Day 4.}
-\end{frame}
-
-\begin{frame}{A Date Label Creates a Different Commodity}
+\begin{frame}{Dated Commodities}
   A commodity is identified not only by its physical features, but also by its
-  date and state. In this deterministic model, date is the key label:
+  date and state. In this deterministic model, date is the key label.
 
-  \vspace{.25em}
-  \centering
-  \begin{tikzpicture}
-    \foreach \x/\lab in {0/$c_0$,2.25/$c_1$,4.5/$c_2$,7.05/$\cdots$,9.55/$\infty$}{
-      \node[object,minimum width=1.25cm] at (\x,0) {\lab};
-    }
-    \draw[mutedroute] (.72,0) -- (1.52,0);
-    \draw[mutedroute] (2.97,0) -- (3.77,0);
-    \draw[mutedroute] (5.22,0) -- (6.25,0);
-    \draw[mutedroute] (7.82,0) -- (8.82,0);
-  \end{tikzpicture}
-
-  \vspace{.50em}
+    \vspace{.50em}
   \begin{block}{Different Date, Different Good}
     Consumption at $t$ and $t+1$ are distinct commodities. Saving exchanges
     the current commodity for a future one; the interest rate will determine
     their relative price.
   \end{block}
-  \sources{Lecture 3, slides 4--6; Macro1 GE Theory, slides 6 and 9--13.}
 \end{frame}
 
-\begin{frame}{Start with the Primitives, Not the Equilibrium}
+\begin{frame}{Two Market Structures}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Arrow--Debreu}
+        \begin{itemize}
+          \item Markets open only at date $0$.
+          \item Every dated good is traded there, at prices $\{p_t\}$.
+          \item A single lifetime budget constraint.
+          \item Perfect commitment: contracts signed at $0$ are honored.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \begin{block}{Sequential Markets}
+        \begin{itemize}
+          \item Markets reopen at every date.
+          \item Spot goods and one-period assets, at prices $\{w_t,r_t\}$.
+          \item One budget constraint per date.
+          \item Debt must be bounded by a no-Ponzi condition.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{.4em}
+  \centering Both assume perfect information and perfect competition, and both
+  deliver the same consumption allocations. We work with sequential markets.
+\end{frame}
+
+\begin{frame}{The Environment}
   \begin{definitionbox}[Dynamic Production Economy]
     The environment is
     \[
@@ -212,6 +103,8 @@
       \right).
     \]
     These primitives are fixed before prices and allocations are determined.
+    They define the \textbf{neoclassical growth model}, our canonical example
+    for the rest of the day.
   \end{definitionbox}
 
   \begin{columns}[t,onlytextwidth]
@@ -233,18 +126,15 @@
           \begin{itemize}
             \item The household owns $a_0=k_0>0$.
             \item Labor supply is one unit each date.
-            \item Capital does not depreciate: $\delta=0$.
+            \item Capital depreciates at rate $\delta\in(0,1]$.
           \end{itemize}
         \end{minipage}
       \end{block}
     \end{column}
   \end{columns}
-
-  \sources{Macro1 GE Theory, slides 3--5; Lecture 3, slides 3--19;
-  AdvancedMacro Book, printed pp. 39--41 and 61--69.}
 \end{frame}
 
-\begin{frame}{The Household Ranks Entire Consumption Paths}
+\begin{frame}{Lifetime Utility}
   \begin{definitionbox}[Lifetime Utility]
     For $c=(c_0,c_1,c_2,\ldots)$,
     \[
@@ -273,7 +163,6 @@
       Marginal utility falls with consumption.
     \end{column}
   \end{columns}
-  \sources{AdvancedMacro Book, printed pp. 41--49.}
 \end{frame}
 
 \begin{frame}{Saving Transfers Resources Across Dates}
@@ -301,64 +190,88 @@
     \draw[route] (in) -- (save);
     \draw[route] (save) -- (next);
   \end{tikzpicture}
-
-  \sources{AdvancedMacro Book, printed pp. 49--51.}
 \end{frame}
 
-\begin{frame}{The Household Chooses a Consumption--Saving Path}
-  Given the price paths $\left(w_t,r_t\right)_{t=0}^{\infty}$ and initial assets
-  $a_0$, the household solves
-  \[
-    \max_{\left(c_t,a_{t+1}\right)_{t=0}^{\infty}}
-    \sum_{t=0}^{\infty}\beta^t u(c_t)
-  \]
-  subject to
-  \[
-    c_t+a_{t+1}=w_t+(1+r_t)a_t,
-    \qquad c_t\geq0,
-    \qquad a_{t+1}\geq0,
-    \qquad t=0,1,\ldots,
-  \]
-  \[
-    a_0\ \text{given}.
-  \]
+\begin{frame}{The Household Problem}
+  \begin{definitionbox}[Given $\{w_t,r_t\}_{t=0}^{\infty}$ and $a_0$]
+    \[
+      \max_{\{c_t,a_{t+1}\}_{t=0}^{\infty}}\ \sum_{t=0}^{\infty}\beta^t u(c_t)
+    \]
+    subject to, for every $t$,
+    \[
+      c_t+a_{t+1}=w_t+(1+r_t)a_t,
+      \qquad
+      c_t\geq0 .
+    \]
+  \end{definitionbox}
 
-  \begin{block}{Admissibility and Price Taking}
-    \textbf{Admissibility:} $a_{t+1}\geq0$ forbids borrowing; it is stronger than
-    a no-Ponzi condition.\par\smallskip
-    \textbf{Price taking:} the household treats $(w_t,r_t)$ as given.
+  \begin{block}{State and Control}
+    The \textbf{state} $a_t$ is predetermined at date $t$; the \textbf{control}
+    $c_t$ is chosen there. The budget constraint is the law of motion
+    $a_{t+1}=w_t+(1+r_t)a_t-c_t$.
   \end{block}
-  \sources{AdvancedMacro Book, printed pp. 51--52.}
 \end{frame}
 
-\begin{frame}{Each Dated Budget Constraint Has Its Own Shadow Value}
-  At an interior path, write the formal Lagrangean
-  \[
-    L=
-    \sum_{t=0}^{\infty}\beta^t u(c_t)
-    +
-    \sum_{t=0}^{\infty}
-    \lambda_t\left[w_t+(1+r_t)a_t-c_t-a_{t+1}\right].
-  \]
+\begin{frame}{Boundary Conditions}
+  \begin{definitionbox}[An Infinite Path Needs Both Ends]
+    \[
+      a_0\ \text{given},
+      \qquad
+      \lim_{t\to\infty}\frac{a_{t+1}}{\prod_{i=1}^{t}(1+r_i)}=0 .
+    \]
+  \end{definitionbox}
 
-  The first-order conditions imply
-  \[
-    \beta^t u'(c_t)=\lambda_t,
-    \qquad t=0,1,\ldots,
-  \]
-  \[
-    \lambda_t=(1+r_{t+1})\lambda_{t+1},
-    \qquad t=0,1,\ldots.
-  \]
-
-  \begin{block}{Interpretation}
-    $\lambda_t$ is the increase in lifetime utility from one additional unit of
-    the consumption good available at date $t$.
+  \begin{block}{Where the Terminal Condition Comes From}
+    \textbf{No Ponzi}, imposed on the problem:
+    $\lim a_{t+1}/\prod(1+r_i)\geq0$. Without it the household rolls debt over
+    forever and no maximum exists.\par\smallskip
+    \textbf{Transversality}, implied by optimality:
+    $\lim a_{t+1}/\prod(1+r_i)\leq0$. Leaving value unspent is never optimal.
   \end{block}
-  \sources{AdvancedMacro Book, printed pp. 51--53.}
 \end{frame}
 
-\begin{frame}{Tangency Across Dates Gives the Euler Equation}
+\begin{frame}{Shadow Values}
+  There is one budget constraint at each date, so the Lagrangean carries one
+  multiplier at each date:
+  \[
+    L=\sum_{t=0}^{\infty}\beta^t u(c_t)
+     +\sum_{t=0}^{\infty}\lambda_t
+      \bigl[\,\underbrace{w_t+(1+r_t)a_t}_{\text{resources at }t}
+      -c_t-a_{t+1}\,\bigr].
+  \]
+
+  \begin{block}{What $\lambda_t$ Measures}
+    $\lambda_t$ is the shadow value of wealth at date $t$: the gain in lifetime
+    utility from one more unit of the good available at $t$. Differentiating in
+    $c_t$ gives
+    \[
+      \beta^t u'(c_t)=\lambda_t .
+    \]
+  \end{block}
+\end{frame}
+
+\begin{frame}{The State Across Two Dates}
+  The state $a_{t+1}$ is chosen at $t$ and carried into $t+1$, so it appears in
+  two constraints:
+  \[
+    \underbrace{c_t+a_{t+1}=w_t+(1+r_t)a_t}_{\text{date }t,\ \text{multiplier }\lambda_t},
+    \qquad
+    \underbrace{c_{t+1}+a_{t+2}=w_{t+1}+(1+r_{t+1})a_{t+1}}_{\text{date }t+1,\ \text{multiplier }\lambda_{t+1}} .
+  \]
+
+  Setting $\partial L/\partial a_{t+1}=0$ therefore couples the two shadow
+  values:
+  \[
+    \lambda_t=(1+r_{t+1})\,\lambda_{t+1}.
+  \]
+
+  \begin{block}{Why This Is the Euler Equation}
+    Saving one unit costs $\lambda_t$ today and returns $(1+r_{t+1})\lambda_{t+1}$
+    tomorrow. Substituting $\lambda_t=\beta^tu'(c_t)$ eliminates the multipliers.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Tangency Across Dates}
   \begin{columns}[c,onlytextwidth]
     \begin{column}{.45\textwidth}
       The household treats consumption at $t$ and $t+1$ as two different goods.
@@ -380,7 +293,6 @@
       \includegraphics[width=.98\linewidth]{intertemporal-choice.pdf}
     \end{column}
   \end{columns}
-  \sources{AdvancedMacro Book, printed pp. 53 and 57--60; Lecture 3, slides 4--6.}
 \end{frame}
 
 \begin{frame}{Saving One More Unit: Marginal Cost Equals Marginal Benefit}
@@ -419,10 +331,9 @@
 
   \vspace{.25em}
   At an interior optimum, these two marginal effects are equal.
-  \sources{AdvancedMacro Book, printed p. 53.}
 \end{frame}
 
-\begin{frame}{The Euler Equation Is Local; the TVC Disciplines the Tail}
+\begin{frame}{The Euler Equation and the Tail}
   For the interior candidate path in this model, impose the model-specific
   transversality condition
   \[
@@ -430,6 +341,10 @@
       \lim_{t\to\infty}\beta^t u'(c_t)a_{t+1}=0.
     }
   \]
+
+  Same condition as on \emph{Boundary Conditions}: $\lambda_t=\beta^tu'(c_t)$ and
+  $\lambda_t=\lambda_0/\prod_{i=1}^{t}(1+r_i)$, so the two limits differ only by the
+  constant $\lambda_0$.
 
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
@@ -453,16 +368,15 @@
   \vspace{.35em}
   Neither condition proves existence. Feasibility, concavity, and a separate
   existence argument remain necessary.
-  \sources{AdvancedMacro Book, printed pp. 49--53, 75--78, and 86.}
 \end{frame}
 
-\begin{frame}{The Firm Transforms Capital and Labor into Output}
-  In every date $t$, the firm rents capital $k_t$, hires labor $\ell_t$, and
+\begin{frame}{Technology}
+  In every date $t$, the firm rents capital $k_t$, hires labor $n_t$, and
   produces the single final good:
   \[
-    y_t=A_t f(k_t,\ell_t)
+    y_t=A_t f(k_t,n_t)
     =
-    A_t k_t^\alpha\ell_t^{1-\alpha},
+    A_t k_t^\alpha n_t^{1-\alpha},
     \qquad 0<\alpha<1.
   \]
 
@@ -489,62 +403,51 @@
   \end{columns}
 
   \vspace{.35em}
-  Throughout, $\delta=0$: capital is fully preserved between dates.
-  \sources{AdvancedMacro Book, printed pp. 61--65.}
 \end{frame}
 
-\begin{frame}{The Firm's Problem Is Static Each Date}
-  Normalize the final-good price to one. Given $w_t$ and $r_t$, the firm solves
-  \[
-    \max_{k_t,\ell_t\geq0}
-    \left\{
-      A_t f(k_t,\ell_t)-w_t\ell_t-r_t k_t
-    \right\}.
-  \]
+\begin{frame}{The Firm Problem}
+  \begin{definitionbox}[Given $w_t$ and $r_t$, at each date separately]
+    \[
+      \max_{k_t,n_t\geq0}\
+      \bigl\{k_t^\alpha(A_tn_t)^{1-\alpha}-w_tn_t-(r_t+\delta)k_t\bigr\}.
+    \]
+  \end{definitionbox}
 
-  At a positive-input optimum,
-  \[
-    w_t=
-    A_t\frac{\partial f(k_t,\ell_t)}{\partial\ell_t}
-    =A_t f_2(k_t,\ell_t),
-    \qquad
-    r_t=
-    A_t\frac{\partial f(k_t,\ell_t)}{\partial k_t}
-    =A_t f_1(k_t,\ell_t).
-  \]
-
-  \begin{block}{Why the Firm Problem Is Static}
-    This is the one-period problem from Day 4, repeated at every date. The firm
-    rents inputs, produces, and sells output within date $t$; the household owns
-    the capital and chooses how much to carry into the next date.
+  \begin{block}{Static, and Prices Equal Marginal Products}
+    There is no intertemporal link: the firm rents, produces and sells within
+    date $t$. At an interior optimum,
+    \[
+      w_t=A_tf_2(k_t,n_t),
+      \qquad
+      r_t+\delta=A_tf_1(k_t,n_t).
+    \]
   \end{block}
-  \sources{AdvancedMacro Book, printed pp. 65--67.}
 \end{frame}
 
-\begin{frame}{Capital Earns $r_t$ and Returns Intact}
+\begin{frame}{Factor Prices and the Return to Capital}
   For Cobb--Douglas production,
   \[
-    w_t=(1-\alpha)A_t k_t^\alpha\ell_t^{-\alpha},
+    w_t=(1-\alpha)A_t k_t^\alpha n_t^{-\alpha},
     \qquad
-    r_t=\alpha A_t k_t^{\alpha-1}\ell_t^{1-\alpha}.
+    r_t+\delta=\alpha A_t k_t^{\alpha-1}n_t^{1-\alpha}.
   \]
 
-  The firm pays $r_t$ for one unit of capital. Since capital is returned intact,
-  the household receives the gross payoff $1+r_t$.
+  A fraction $\delta$ of the machine wears out in production, so the rental must cover
+  depreciation on top of the net return. Save one unit today, receive $1+r_t$
+  tomorrow.
 
   Constant returns and the first-order conditions imply
   \[
-    A_t f(k_t,\ell_t)=w_t\ell_t+r_t k_t,
+    A_t f(k_t,n_t)=w_tn_t+(r_t+\delta)k_t,
   \]
   so competitive profits are zero.
-  \sources{AdvancedMacro Book, printed pp. 66--68, specialized to no depreciation.}
 \end{frame}
 
-\begin{frame}{Physical Feasibility Contains No Prices}
+\begin{frame}{Feasible Allocations}
   \begin{definitionbox}[Allocation and Feasibility]
     A physical allocation is a sequence
     \[
-      z=\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{\infty}.
+      z=\left(c_t,k_{t+1},n_t\right)_{t=0}^{\infty}.
     \]
   \end{definitionbox}
 
@@ -554,60 +457,27 @@
     \qquad
     k_{t+1}\geq0,
     \qquad
-    0\leq\ell_t\leq1,
+    0\leq n_t\leq1,
   \]
   and
   \[
     \boxed{
       c_t+k_{t+1}
       \leq
-      A_t k_t^\alpha\ell_t^{1-\alpha}+k_t.
+      A_t k_t^\alpha n_t^{1-\alpha}+(1-\delta)k_t.
     }
   \]
 
   Feasibility is physical and contains no prices. Monotonicity makes the
   resource inequality bind at an optimum.
-  \sources{Lecture 3, slides 20--22; AdvancedMacro Book, printed pp. 68--69.}
 \end{frame}
 
-\begin{frame}{Can Household and Firm Choices Coexist?}
-  The household and firm have now solved separate optimization problems.
-  General equilibrium asks whether their choices can hold at the same prices.
-
-  \vspace{.35em}
-  \centering
-  \begin{tikzpicture}
-    \node[object,text width=2.55cm] (prices) at (0,0)
-      {Candidate price paths\\$\{w_t,r_t\}_{t=0}^{\infty}$};
-    \node[object,text width=2.55cm] (household) at (3.25,.85)
-      {Household path\\$\{c_t,a_{t+1}\}_{t=0}^{\infty}$};
-    \node[object,text width=2.55cm] (firm) at (3.25,-.85)
-      {Firm path\\$\{k_t,\ell_t\}_{t=0}^{\infty}$};
-    \node[object,fill=slideblue!8,text width=2.65cm] (clearing) at (6.75,0)
-      {Compatibility test\\Do quantities match?};
-    \node[object,fill=slidegreen!8,draw=slidegreen,text width=2.05cm] (eq) at (9.85,0)
-      {Competitive\\equilibrium};
-    \draw[route] (prices) -- (household);
-    \draw[route] (prices) -- (firm);
-    \draw[route] (household) -- (clearing);
-    \draw[route] (firm) -- (clearing);
-    \draw[route,draw=slidegreen] (clearing) -- (eq);
-  \end{tikzpicture}
-
-  \vspace{.55em}
-  \begin{block}{The Definition Is a Test, Not an Adjustment Story}
-    It says which price-allocation paths qualify as equilibria. It does not say
-    how an economy discovers those prices.
-  \end{block}
-  \sources{AdvancedMacro Book, printed pp. 69--71; Lecture 3, slides 23--30.}
-\end{frame}
-
-\begin{frame}{Optimal Choice May Be Set-Valued}
+\begin{frame}{Correspondences}
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{definitionbox}[Household Correspondence]
         \begin{minipage}[t][2.75cm][t]{\dimexpr\linewidth-.76em\relax}
-          At prices $(w,r)$, define
+          At prices $(w,r)$, write
           \[
             H(w,r)=\{\text{household-optimal paths}\}.
           \]
@@ -619,11 +489,11 @@
     \begin{column}{\tightcolumnwidth}
       \begin{definitionbox}[Firm Correspondence]
         \begin{minipage}[t][2.75cm][t]{\dimexpr\linewidth-.76em\relax}
-          At prices $(w_t,r_t)$, define
+          At prices $(w_t,r_t)$, write
           \[
             F_t(w_t,r_t)=\{\text{optimal input pairs at }t\}.
           \]
-          It may contain more than one pair $(k,\ell)$.
+          It may contain more than one pair $(k,n)$.
         \end{minipage}
       \end{definitionbox}
     \end{column}
@@ -637,140 +507,117 @@
     \text{zero profit}\Longrightarrow F_t(w_t,r_t)\text{ may be set-valued}.
   \]
   Equilibrium selects mutually compatible elements of $H$ and $F_t$.
-  \sources{Lecture 3, slides 24 and 26--30; Macro1 GE Theory, slides 16--24.}
 \end{frame}
 
-\begin{frame}{Define Equilibrium Before Deriving Its Equations}
-  \begin{columns}[t,onlytextwidth]
-    \begin{column}{\tightcolumnwidth}
-      \begin{definitionbox}[DEFINITION]
-        \begin{minipage}[t][3.80cm][t]{\dimexpr\linewidth-.76em\relax}
-          \begin{itemize}
-            \item Names the objects that constitute an equilibrium.
-            \item States optimization and market clearing.
-            \item Does not require derivatives or first-order conditions.
-          \end{itemize}
-        \end{minipage}
-      \end{definitionbox}
-    \end{column}
-    \hspace{\twocolumngutter}
-    \begin{column}{\tightcolumnwidth}
-      \begin{propositionbox}[CHARACTERIZATION]
-        \begin{minipage}[t][3.80cm][t]{\dimexpr\linewidth-.76em\relax}
-          \begin{itemize}
-            \item Derives equations every equilibrium must satisfy.
-            \item Uses first-order conditions or KKT under their hypotheses.
-            \item Needs extra conditions for sufficiency, existence, or uniqueness.
-          \end{itemize}
-        \end{minipage}
-      \end{propositionbox}
-    \end{column}
-  \end{columns}
-  \sources{AdvancedMacro Book, printed pp. 70--74; Macro1 GE Theory,
-  slides 16--17 and 24--25.}
-\end{frame}
-
-\begin{frame}{Equilibrium Requires Optimality and Market Clearing}
-  \begin{definitionbox}[Competitive Equilibrium]
-    Given $a_0$, a competitive equilibrium is a collection
-    \[
-      \left((c_t,a_{t+1}),(k_t,\ell_t),(w_t,r_t)\right)_{t=0}^{\infty}
-    \]
-    with $(w_t,r_t)\in\mathbb{R}_{++}^2$ for every $t$, such that:
+\begin{frame}{Equilibrium: The General Definition}
+  \begin{definitionbox}[The Shape of Any Equilibrium Definition]
+    Given the primitives and the initial state, an equilibrium is a list of
+    \emph{quantities} and \emph{prices} such that
     \begin{enumerate}
-      \item $(c,a)\in H(w,r)$;
-      \item $(k_t,\ell_t)\in F_t(w_t,r_t)$ for every $t$;
-      \item markets clear at every date:
-      \[
-        a_t=k_t,
-        \qquad
-        \ell_t=1,
-        \qquad
-        c_t+k_{t+1}=A_t f(k_t,\ell_t)+k_t.
-      \]
+      \item households \textbf{optimize}, taking prices as given;
+      \item firms \textbf{optimize}, taking prices as given;
+      \item markets \textbf{clear}.
     \end{enumerate}
   \end{definitionbox}
 
-  \sources{AdvancedMacro Book, Definition 14, printed p. 70, specialized to no
-  depreciation; Macro1 GE Theory, slides 23--24; Lecture 3, slides 24--30.}
+  A definition \emph{names} the objects and \emph{states} the conditions. It
+  uses no derivatives, and it does not claim that such a list exists.
+
+  \vspace{.35em}
+  It is a \emph{test}, not an adjustment story: it says which lists qualify,
+  not how an economy would find one.
 \end{frame}
 
-\begin{frame}{Market Clearing Links Individual and Aggregate Quantities}
-  \begin{columns}[c,onlytextwidth]
-    \begin{column}{.42\textwidth}
-      \begin{block}{Asset Market}
-        \[
-          a_t=k_t.
-        \]
-      \end{block}
-      \begin{block}{Labor Market}
-        \[
-          \ell_t=1.
-        \]
-      \end{block}
-      \begin{block}{Goods Market}
-        \[
-          c_t+k_{t+1}
-          =
-          A_t f(k_t,\ell_t)+k_t.
-        \]
-      \end{block}
-    \end{column}
-    \begin{column}{.56\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \node[object,text width=2.05cm] (hh) at (0,1.05)
-          {Household\\supplies $a_t$ and $1$};
-        \node[object,text width=2.05cm] (firm) at (0,-1.05)
-          {Firm\\demands $k_t$ and $\ell_t$};
-        \node[object,fill=slideblue!8,text width=2.15cm] (market) at (3.25,.55)
-          {Markets\\match quantities};
-        \node[object,text width=2.15cm] (resource) at (3.25,-1.65)
-          {Goods market\\uses $=$ resources};
-        \draw[route] (hh) -- (market);
-        \draw[route] (firm) -- (market);
-        \draw[route] (market) -- (resource);
-      \end{tikzpicture}
-    \end{column}
-  \end{columns}
-  \sources{AdvancedMacro Book, printed pp. 69--70.}
+\begin{frame}{Equilibrium: The Actual Definition}
+  \emph{The general definition, filled in for the growth model.}
+
+  \vspace{.2em}
+  \begin{definitionbox}[Competitive Equilibrium]
+    Given $a_0$, a competitive equilibrium consists of household allocations
+    $\{c_t,a_{t+1}\}_{t=0}^{\infty}$, firm allocations
+    $\{k_t,n_t\}_{t=0}^{\infty}$ and prices $\{w_t,r_t\}_{t=0}^{\infty}$
+    such that
+    \begin{enumerate}
+      \item given $\{w_t,r_t\}$, the household allocation solves the
+      \textbf{household problem};
+      \item given $\{w_t,r_t\}$, the firm allocation solves the
+      \textbf{firm problem} at every date;
+      \item \textbf{markets clear} at every date.
+    \end{enumerate}
+  \end{definitionbox}
+
+  The firm pays $r_t+\delta$ per unit of capital, so the wage and the interest
+  rate describe the whole price system.
 \end{frame}
 
-\begin{frame}{Why Goods-Market Clearing Follows}
-  Suppose the household and firm optimize and the asset and labor markets clear.
+\begin{frame}{Market Clearing}
+  \begin{definitionbox}[Three Markets, Every Date]
+    \[
+      \underbrace{a_t=k_t}_{\text{capital}},
+      \qquad
+      \underbrace{n_t=1}_{\text{labor}},
+      \qquad
+      \underbrace{c_t+k_{t+1}=k_t^\alpha(A_tn_t)^{1-\alpha}+(1-\delta)k_t}_{\text{goods}} .
+    \]
+  \end{definitionbox}
 
-  \statementitem{1}{Substitute $a_t=k_t$ and $a_{t+1}=k_{t+1}$ into the
-  household budget:
-  \[
-    c_t+k_{t+1}=w_t+(1+r_t)k_t.
-  \]}
-  \statementitem{2}{Subtract the capital carried into date $t$:
-  \[
-    c_t+k_{t+1}-k_t=w_t+r_t k_t.
-  \]}
-  \statementitem{3}{Since $\ell_t=1$ and constant returns imply zero profit,
-  \[
-    w_t\ell_t+r_t k_t=A_t f(k_t,\ell_t).
-  \]}
-  \statementitem{4}{Therefore the goods market clears:
-  \[
-    c_t+k_{t+1}=A_t f(k_t,\ell_t)+k_t.
-  \]}
-  \sources{AdvancedMacro Book, Theorem 15, printed pp. 71--72.}
+  \begin{block}{Walras' Law}
+    If both problems are solved and two of the three markets clear, the third
+    clears automatically. Goods-market clearing is implied by the other two.
+  \end{block}
 \end{frame}
 
-\begin{frame}{Firm Optimality Makes Prices Functions of Capital}
-  To characterize equilibrium, set $A_t=1$ and use $\ell_t=1$.
+\begin{frame}{Equilibrium: Characterization}
+  \begin{definitionbox}[Definition versus Characterization]
+    \textbf{The definition} \emph{states} conditions: solve, solve, clear.\par
+    \smallskip
+    \textbf{The characterization} \emph{derives} what the conditions imply:
+    the first-order conditions of each problem, joined to the market-clearing
+    equations.
+  \end{definitionbox}
+
+  This is where derivatives enter, and nowhere earlier.
+
+  \vspace{.35em}
+  Existence and uniqueness are separate questions; a characterization settles
+  neither.
+\end{frame}
+
+\begin{frame}{The Equilibrium System}
+  \begin{propositionbox}[Every Equilibrium Path Satisfies, at Every Date]
+    \[
+      \begin{array}{l@{\qquad}l@{\qquad}l}
+        \text{\emph{household}}
+          & u'(c_t)=\beta(1+r_{t+1})u'(c_{t+1}),
+          & c_t+a_{t+1}=w_t+(1+r_t)a_t,\\[.3em]
+        \text{\emph{firm}}
+          & w_t=(1-\alpha)A_tk_t^\alpha n_t^{-\alpha},
+          & r_t+\delta=\alpha A_tk_t^{\alpha-1}n_t^{1-\alpha},\\[.3em]
+        \text{\emph{markets}}
+          & a_t=k_t,
+          & n_t=1 .
+      \end{array}
+    \]
+  \end{propositionbox}
+
+  Six equations each date for the six unknown sequences
+  $(c_t,a_{t+1},k_t,n_t,w_t,r_t)$. The initial condition $a_0=k_0$ and the
+  transversality condition select the path; goods-market clearing then follows
+  by Walras' law.
+\end{frame}
+
+\begin{frame}{Prices as Functions of Capital}
+  To reduce the system, set $A_t=1$ and substitute $n_t=1$.
 
   \begin{columns}[t,onlytextwidth]
     \begin{column}{\tightcolumnwidth}
       \begin{block}{General Technology}
         \begin{minipage}[t][2.05cm][t]{\dimexpr\linewidth-.76em\relax}
           \[
-            w_t=f_\ell(k_t,1),
+            w_t=f_n(k_t,1),
           \]
           \[
-            r_t=f_k(k_t,1).
+            r_t=f_k(k_t,1)-\delta.
           \]
         \end{minipage}
       \end{block}
@@ -783,7 +630,7 @@
             w_t=(1-\alpha)k_t^\alpha,
           \]
           \[
-            r_t=\alpha k_t^{\alpha-1}.
+            r_t=\alpha k_t^{\alpha-1}-\delta.
           \]
         \end{minipage}
       \end{block}
@@ -792,20 +639,19 @@
 
   \vspace{.45em}
   Firm optimality and market clearing remove prices as independent unknowns.
-  \sources{AdvancedMacro Book, printed pp. 72--73.}
 \end{frame}
 
-\begin{frame}{Feasibility Recovers Consumption from Capital}
-  With $\ell_t=1$ and $A_t=1$, the resource constraint is
+\begin{frame}{Consumption from Capital}
+  With $n_t=1$ and $A_t=1$, the resource constraint is
   \[
-    c_t+k_{t+1}=k_t^\alpha+k_t.
+    c_t+k_{t+1}=k_t^\alpha+(1-\delta)k_t.
   \]
   Hence,
   \[
     \boxed{
       c_t
       =
-      k_t^\alpha+k_t-k_{t+1}.
+      k_t^\alpha+(1-\delta)k_t-k_{t+1}.
     }
   \]
 
@@ -818,14 +664,13 @@
       {Next capital\\$k_{t+1}$};
     \node[object,fill=slideblue!8,text width=3.2cm] (cons) at (8.0,0)
       {Consumption $c_t$\\
-      $k_t^\alpha+k_t-k_{t+1}$};
+      $k_t^\alpha+(1-\delta)k_t-k_{t+1}$};
     \draw[route] (current) -- (choice);
     \draw[route] (choice) -- (cons);
   \end{tikzpicture}
 
   \vspace{.55em}
   Once the capital path is known, the allocation and prices can be recovered.
-  \sources{AdvancedMacro Book, printed pp. 72--73.}
 \end{frame}
 
 \begin{frame}{Three Substitutions Produce the Capital Recurrence}
@@ -833,31 +678,29 @@
   \setlength{\belowdisplayskip}{.28em}
   \statementitem{1}{Firm optimality replaces the return:
   \[
-    r_{t+1}=\alpha k_{t+1}^{\alpha-1}.
+    r_{t+1}=\alpha k_{t+1}^{\alpha-1}-\delta.
   \]}
   \statementitem{2}{Feasibility replaces consumption at both dates:
   \[
-    c_j=k_j^\alpha+k_j-k_{j+1},
+    c_j=k_j^\alpha+(1-\delta)k_j-k_{j+1},
     \qquad j=t,t+1.
   \]}
   \statementitem{3}{Insert both expressions into the household Euler equation:
   \[
     \boxed{
       \begin{aligned}
-        u'\!\left(k_t^\alpha+k_t-k_{t+1}\right)
-        ={}&\beta\left[1+\alpha k_{t+1}^{\alpha-1}\right]\\
-        &\times u'\!\left(k_{t+1}^\alpha+k_{t+1}-k_{t+2}\right).
+        u'\!\left(k_t^\alpha+(1-\delta)k_t-k_{t+1}\right)
+        ={}&\beta\left[1+\alpha k_{t+1}^{\alpha-1}-\delta\right]\\
+        &\times u'\!\left(k_{t+1}^\alpha+(1-\delta)k_{t+1}-k_{t+2}\right).
       \end{aligned}
     }
   \]}
 
   The result is a second-order difference equation in
   $(k_t,k_{t+1},k_{t+2})$.
-
-  \sources{AdvancedMacro Book, equation (4.40), printed pp. 72--73.}
 \end{frame}
 
-\begin{frame}{Solving the Euler System Does Not Prove Existence}
+\begin{frame}{Necessity and Sufficiency}
   \begin{block}{Necessary Direction}
     \[
       \text{interior equilibrium}
@@ -880,13 +723,12 @@
   \vspace{.30em}
   \centering
   Neither implication proves that a solution exists or that it is unique.
-  \sources{AdvancedMacro Book, printed pp. 72--75 and 86.}
 \end{frame}
 
-\begin{frame}{Efficiency Asks Whether Any Feasible Path Is Better}
+\begin{frame}{Pareto Efficiency}
   \begin{definitionbox}[Efficiency]
     A feasible allocation
-    $z^*=\left(c_t^*,k_{t+1}^*,\ell_t^*\right)_{t=0}^{\infty}$ is efficient if
+    $z^*=\left(c_t^*,k_{t+1}^*,n_t^*\right)_{t=0}^{\infty}$ is efficient if
     there is no feasible $\widetilde z$ such that
     $U(\widetilde c)>U(c^*)$.
   \end{definitionbox}
@@ -894,20 +736,19 @@
   Efficiency uses only preferences and physical feasibility: no prices and no
   ownership rule. With one household, the planner selects the efficient path by
   maximizing the household's lifetime utility over feasible allocations.
-  \sources{Lecture 3, slides 21--22; Macro1 GE Theory, slides 34--40.}
 \end{frame}
 
-\begin{frame}{The Planner Chooses the Best Feasible Path}
+\begin{frame}{The Planner Problem}
   With $A_t=1$, the planner solves
   \[
-    \max_{\left(c_t,k_{t+1},\ell_t\right)_{t=0}^{\infty}}
+    \max_{\left(c_t,k_{t+1},n_t\right)_{t=0}^{\infty}}
     \sum_{t=0}^{\infty}\beta^t u(c_t)
   \]
   subject to
   \[
     c_t+k_{t+1}
     =
-    k_t^\alpha\ell_t^{1-\alpha}+k_t,
+    k_t^\alpha n_t^{1-\alpha}+(1-\delta)k_t,
     \qquad t=0,1,\ldots,
   \]
   \[
@@ -915,21 +756,19 @@
     \qquad
     k_{t+1}\geq0,
     \qquad
-    0\leq\ell_t\leq1,
+    0\leq n_t\leq1,
     \qquad
     k_0>0\ \text{given}.
   \]
 
   Since leisure does not enter utility and production increases in labor,
-  $\ell_t=1$. At an interior optimum,
+  $n_t=1$. At an interior optimum,
   \[
     \lim_{t\to\infty}\beta^t u'(c_t)k_{t+1}=0.
   \]
-  \sources{AdvancedMacro Book, printed pp. 75--78, specialized to no
-  depreciation; Macro1 GE Theory, slides 24--26.}
 \end{frame}
 
-\begin{frame}{The Planner Has the Same Euler Equation}
+\begin{frame}{The Planner Euler Equation}
   For the reduced problem, define
   \[
     L=
@@ -938,7 +777,7 @@
     \sum_{t=0}^{\infty}
     \lambda_t
     \left[
-      k_t^\alpha+k_t-c_t-k_{t+1}
+      k_t^\alpha+(1-\delta)k_t-c_t-k_{t+1}
     \right].
   \]
 
@@ -952,7 +791,7 @@
     =
     \lambda_{t+1}
     \left[
-      \alpha k_{t+1}^{\alpha-1}+1
+      \alpha k_{t+1}^{\alpha-1}+1-\delta
     \right],
     \qquad t=0,1,\ldots.
   \]
@@ -963,15 +802,14 @@
       =
       \beta
       \left[
-        \alpha k_{t+1}^{\alpha-1}+1
+        \alpha k_{t+1}^{\alpha-1}+1-\delta
       \right]
       u'(c_{t+1}).
     }
   \]
-  \sources{AdvancedMacro Book, printed pp. 77--78.}
 \end{frame}
 
-\begin{frame}{The Market and Planner Euler Equations Coincide}
+\begin{frame}{Comparing the Two Euler Equations}
   \begin{columns}[c,onlytextwidth]
     \begin{column}{.455\textwidth}
       \begin{block}{Competitive Equilibrium}
@@ -984,7 +822,7 @@
           \[
             1+r_{t+1}
             =
-            1+\alpha k_{t+1}^{\alpha-1}.
+            1+\alpha k_{t+1}^{\alpha-1}-\delta.
           \]
         \end{minipage}
       \end{block}
@@ -998,7 +836,7 @@
         \begin{minipage}[t][3.15cm][t]{\dimexpr\linewidth-.76em\relax}
           Planner return:
           \[
-            1+\alpha k_{t+1}^{\alpha-1}.
+            1+\alpha k_{t+1}^{\alpha-1}-\delta.
           \]
           Planner Euler equation:
           \[
@@ -1006,7 +844,7 @@
             =
             \beta
             \left[
-              1+\alpha k_{t+1}^{\alpha-1}
+              1+\alpha k_{t+1}^{\alpha-1}-\delta
             \right]
             u'(c_{t+1}).
           \]
@@ -1018,7 +856,6 @@
   \vspace{.25em}
   The equality is economically powerful only because concavity and
   transversality make these equations sufficient.
-  \sources{AdvancedMacro Book, printed pp. 77--78.}
 \end{frame}
 
 \begin{frame}{The Market and Planner Choose the Same Allocation}
@@ -1056,17 +893,16 @@
   \end{columns}
 
   \vspace{.20em}
-  For an infinite horizon, these hypotheses are part of the theorem; the Euler
+  For an infinite horizon, these assumptions are part of the theorem; the Euler
   equations alone are not sufficient.
-  \sources{AdvancedMacro Book, Theorems 18--19, printed pp. 78--79.}
 \end{frame}
 
-\begin{frame}{Supporting Prices Decentralize the Planner Allocation}
+\begin{frame}{Supporting Prices}
   Start from an interior planner solution $(c_t^*,k_{t+1}^*)_{t=0}^{\infty}$ and define
   \[
     w_t^*=(1-\alpha)(k_t^*)^\alpha,
     \qquad
-    r_t^*=\alpha(k_t^*)^{\alpha-1}.
+    r_t^*=\alpha(k_t^*)^{\alpha-1}-\delta.
   \]
 
   \centering
@@ -1093,69 +929,40 @@
   \raggedright
   \statementitem{1}{Concavity makes the firm's marginal-product conditions sufficient.}
   \statementitem{2}{The planner Euler equation and transversality verify household optimality.}
-  \statementitem{3}{Set $a_t^*=k_t^*$ and $\ell_t^*=1$; planner feasibility is goods clearing.}
-
-  \sources{AdvancedMacro Book, proof of Theorem 19, printed pp. 78--79.}
+  \statementitem{3}{Set $a_t^*=k_t^*$ and $n_t^*=1$; planner feasibility is goods clearing.}
 \end{frame}
 
-\begin{frame}{Infinite-Horizon Existence Requires a Separate Theorem}
-  This is a problem over sequences, so the finite-dimensional Extreme Value
-  Theorem does not apply directly. A rigorous existence proof must specify:
-  \statementitem{1}{a topology on the path space;}
-  \statementitem{2}{compactness or sequential compactness of the feasible set;}
-  \statementitem{3}{continuity and uniform control of the discounted tail.}
+\begin{frame}{Existence of Equilibrium}
+  The definition says what an equilibrium \emph{is}, not that one exists.
+  Existence is a separate theorem: Arrow and Debreu (1954) and, independently,
+  McKenzie (1954), by fixed-point arguments.
 
-  \begin{block}{Two Separate Conclusions}
-    \[
-      \begin{aligned}
-        \text{planner solution exists}+\text{supporting-price theorem}
-        &\Longrightarrow \text{equilibrium exists},\\[.35em]
-        \begin{gathered}
-          \text{planner solution is unique},\\[-.1em]
-          \text{equilibrium}\Longrightarrow\text{planner solution}
-        \end{gathered}
-        &\Longrightarrow
-        \begin{gathered}
-          \text{at most one}\\[-.1em]
-          \text{equilibrium allocation}.
-        \end{gathered}
-      \end{aligned}
-    \]
-  \end{block}
-  \sources{AdvancedMacro Book, Appendix A, printed p. 86; Macro1 GE Theory,
-  slides 3 and 24--26.}
-\end{frame}
+  \vspace{.5em}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{\tightcolumnwidth}
+      \centering
+      \IfFileExists{debreu-cover.jpg}
+        {\includegraphics[height=.44\textheight,keepaspectratio]{debreu-cover.jpg}}
+        {\fbox{\parbox[c][.44\textheight][c]{.62\linewidth}{\centering
+          \textcolor{slidegray}{\itshape cover:}\\[.3em]
+          \texttt{debreu-cover.jpg}}}}
 
-\begin{frame}{Definition Comes First; Characterization Makes It Usable}
-  \vspace{1.15em}
-  \centering
-  \begin{tikzpicture}
-    % Coordinate map:
-    % (primitives) at (0,0) -- 1.85cm x .95cm
-    % (optima) at (2.55,0)  -- 2.15cm x .95cm
-    % (clearing) at (5.25,0)-- 2.00cm x .95cm
-    % (eq) at (7.75,0)      -- 2.05cm x .95cm
-    % (planner) at (10.55,0)-- 1.90cm x .95cm
-    \node[object,text width=1.85cm,minimum height=.95cm] (primitives) at (0,0)
-      {Primitives};
-    \node[object,text width=2.15cm,minimum height=.95cm] (optima) at (2.55,0)
-      {Individual\\optimization};
-    \node[object,text width=2.00cm,minimum height=.95cm] (clearing) at (5.25,0)
-      {Market\\clearing};
-    \node[object,fill=slideblue!8,text width=2.05cm,minimum height=.95cm] (eq) at (7.75,0)
-      {Competitive\\equilibrium};
-    \node[object,fill=slidegreen!8,draw=slidegreen,text width=1.90cm,minimum height=.95cm] (planner) at (10.55,0)
-      {Planner\\optimum};
-    \draw[route] (primitives) -- (optima);
-    \draw[route] (optima) -- (clearing);
-    \draw[route] (clearing) -- (eq);
-    \draw[equality] (eq) -- (planner);
-  \end{tikzpicture}
+      \vspace{.4em}
+      {\small Debreu, \emph{Theory of Value} (1959). Cowles Monograph 17.}
+    \end{column}
+    \hspace{\twocolumngutter}
+    \begin{column}{\tightcolumnwidth}
+      \centering
+      \IfFileExists{weintraub-cover.jpg}
+        {\includegraphics[height=.44\textheight,keepaspectratio]{weintraub-cover.jpg}}
+        {\fbox{\parbox[c][.44\textheight][c]{.62\linewidth}{\centering
+          \textcolor{slidegray}{\itshape cover:}\\[.3em]
+          \texttt{weintraub-cover.jpg}}}}
 
-  \vspace{1.20em}
-  \Large\textcolor{slideblue}{\bfseries General equilibrium is optimization
-  made mutually consistent.}
-  \sources{AdvancedMacro Book, Chapters 4--5; Lecture 3; Macro1 GE Theory.}
+      \vspace{.4em}
+      {\small D\"uppe and Weintraub, \emph{Finding Equilibrium} (2014).}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \end{document}
