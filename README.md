@@ -21,6 +21,21 @@ from Python.
 
 Slide counts in parentheses.
 
+<table>
+  <tr>
+    <td width="50%"><img src="assets/preview/classes-and-curves.png"
+      alt="Equivalence classes partition the set; indifference curves are those classes, so they never cross or touch."></td>
+    <td width="50%"><img src="assets/preview/proofs-as-programming.png"
+      alt="A do/if/else/while block above the proof skeleton it models: let x be arbitrary, suppose P(x), conclude Q(x)."></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/preview/books.png"
+      alt="The two source texts: Bartle and Sherbert's Introduction to Real Analysis, and Mas-Colell, Whinston and Green's Microeconomic Theory."></td>
+    <td width="50%"><img src="assets/preview/utility-and-hessian.png"
+      alt="Indifference curves beside the utility surface, and the three Hessian cases: negative definite, positive definite, indefinite."></td>
+  </tr>
+</table>
+
 ## Building
 
 ```
@@ -34,7 +49,8 @@ the figure script before compiling, so the PDFs in `output/` can always be
 reproduced from what is in this repository.
 
 Requires a TeX distribution with `pdflatex` and `latexmk`, and Python with
-`matplotlib` and `numpy`.
+`matplotlib` and `numpy`. The preview images additionally need poppler
+(`pdftoppm`, `pdftotext`) and Pillow.
 
 ## How the slides are put together
 
@@ -93,6 +109,10 @@ Claude Fable 5 and GPT Sol 5.6 helped draft, check and revise these decks.
 
 `FIGURES.md` lists every figure and the slide it appears on. Regenerate it
 with `python tools/make_figure_map.py`.
+
+The preview images above are built from the compiled decks by
+`python tools/make_previews.py`, which finds each slide by its title rather
+than by page number. It needs `pdftoppm` and `pdftotext` (poppler) and Pillow.
 
 Reference material used in preparing these notes is not redistributed here;
 `reference/` is git-ignored.
