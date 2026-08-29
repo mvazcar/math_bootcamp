@@ -8,7 +8,10 @@ Slides are found by their title text rather than by page number, so the
 previews survive edits that move a slide within its deck.  Requires
 ``pdftoppm`` (poppler) on PATH, and Pillow.
 
-Usage:  python tools/make_previews.py
+Usage:  python tools/make_previews.py [--dpi N] [--out DIR]
+
+The defaults write the README images. A higher --dpi and a different
+--out give the same pairings sized for sharing elsewhere.
 """
 
 import re
@@ -96,7 +99,28 @@ def stack(top, bottom):
     return canvas
 
 
-def main():
+def show(path):
+    """Repo-relative when it is inside the repo, absolute otherwise."""
+    try:
+        return path.relative_to(ROOT)
+    except ValueError:
+        return path
+
+
+def parse_args(argv):
+    import argparse
+    ap = argparse.ArgumentParser(description="Build the README preview images.")
+    ap.add_argument("--dpi", type=int, default=DPI,
+                    help="render resolution (default %d)" % DPI)
+    ap.add_argument("--out", type=Path, default=OUT_DIR,
+                    help="output directory (default assets/preview)")
+    return ap.parse_args(argv)
+
+
+def main(argv=None):
+    global DPI, OUT_DIR
+    args = parse_args(argv if argv is not None else sys.argv[1:])
+    DPI, OUT_DIR = args.dpi, args.out
     if not shutil.which("pdftoppm") or not shutil.which("pdftotext"):
         raise SystemExit("pdftoppm and pdftotext (poppler) are required")
     missing = [d for d, _ in {(d, t) for _, pairs in PREVIEWS for d, t in pairs}
@@ -117,9 +141,9 @@ def main():
                 print("  %-22s %s p%d  %s" % (name, deck, page, title))
             out = OUT_DIR / (name + ".png")
             stack(*images).save(out, "PNG", optimize=True)
-            print("  -> %s  (%.1f MB)" % (out.relative_to(ROOT),
+            print("  -> %s  (%.1f MB)" % (show(out),
                                           out.stat().st_size / 1048576))
-    print("previews written to %s" % OUT_DIR.relative_to(ROOT))
+    print("previews written to %s" % show(OUT_DIR))
 
 
 if __name__ == "__main__":
