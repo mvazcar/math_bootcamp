@@ -179,7 +179,10 @@ def make_3d_plot() -> None:
     ax.set_ylabel(r"$x_2$", labelpad=4)
     ax.set_zlabel(r"$u(x_1,x_2)$", labelpad=5)
     ax.view_init(elev=25, azim=-58)
-    ax.set_box_aspect((1, 1, 0.82))
+    # The default 3D framing leaves a wide empty margin, so the cube reads as
+    # much smaller than the 2D axes beside it on the Utility Representation
+    # slide.  Zooming fills that margin and matches the two panels by eye.
+    ax.set_box_aspect((1, 1, 0.82), zoom=1.28)
     for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
         axis.pane.set_facecolor((1, 1, 1, 0))
         axis.pane.set_edgecolor((1, 1, 1, 0))

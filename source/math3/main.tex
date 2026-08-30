@@ -121,20 +121,24 @@
 
 \end{frame}
 
+% The two panels are matched on height, not width: the plots have different
+% canvas aspect ratios, so equal widths left them unequal in size and pushed
+% the headings off a common baseline.  [t] then keeps both headings on the
+% first line of their columns.
 \begin{frame}{Utility Representation}
-  \begin{columns}[c,onlytextwidth] % fixed narrow gutter
+  \begin{columns}[t,onlytextwidth] % fixed narrow gutter
     \column{\tightcolumnwidth}
       \centering
-      \textcolor{slideblue}{\bfseries Indifference curves}\\
-      \includegraphics[width=.81\linewidth]{2d-plot.pdf}
+      \textcolor{slideblue}{\bfseries Indifference curves}\\[.45em]
+      \includegraphics[height=.65\textheight]{2d-plot.pdf}
 
     \hspace{\twocolumngutter}
     \column{\tightcolumnwidth}
       \centering
-      \textcolor{slideblue}{\bfseries Utility surface}\\
-      \includegraphics[width=.81\linewidth]{3d-plot.pdf}
+      \textcolor{slideblue}{\bfseries Utility surface}\\[.45em]
+      \includegraphics[height=.65\textheight]{3d-plot.pdf}
   \end{columns}
-  
+
 \end{frame}
 
 \begin{frame}{Represent Commodities with Ordered Lists}
