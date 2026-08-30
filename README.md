@@ -13,13 +13,13 @@ from Python.
 
 | day | topic | slides | source |
 | --- | --- | --- | --- |
-| 1 | Introduction to Proofs and Choice Theory | [math1.pdf](output/pdf/math1.pdf) (33) | [`source/math1`](source/math1) |
-| 2 | Functions, Counting, The Real Numbers | [math2.pdf](output/pdf/math2.pdf) (27) | [`source/math2`](source/math2) |
-| 3 | Properties of Preferences and Utility Functions | [math3.pdf](output/pdf/math3.pdf) (28) | [`source/math3`](source/math3) |
-| 4 | Optimization | [math4.pdf](output/pdf/math4.pdf) (39) | [`source/math4`](source/math4) |
-| 5 | General Equilibrium and the Social Planner | [math5.pdf](output/pdf/math5.pdf) (36) | [`source/math5`](source/math5) |
+| 1 | Introduction to Proofs and Choice Theory | [math1.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/math1.pdf) (33) | [`source/math1`](source/math1) |
+| 2 | Functions, Counting, The Real Numbers | [math2.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/math2.pdf) (27) | [`source/math2`](source/math2) |
+| 3 | Properties of Preferences and Utility Functions | [math3.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/math3.pdf) (28) | [`source/math3`](source/math3) |
+| 4 | Optimization | [math4.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/math4.pdf) (39) | [`source/math4`](source/math4) |
+| 5 | General Equilibrium and the Social Planner | [math5.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/math5.pdf) (36) | [`source/math5`](source/math5) |
 
-Slide counts in parentheses.
+Slide counts in parentheses. The slide links download the PDF; the source links open the folder on GitHub.
 
 <table>
   <tr>
