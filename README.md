@@ -22,15 +22,11 @@ from Python.
 Slide counts in parentheses. The slide links download the PDF; the source links open the folder on GitHub.
 
 Day 1 also has a problem set drawn from MWG Chapter 1, Sections 1.B and 1.C:
-[mwg1-questions.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/mwg1-questions.pdf)
-and
-[mwg1-solutions.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/mwg1-solutions.pdf).
-Each is a single self-contained `main.tex` -- preamble and content in one file,
-no `\input` of anything else in the repository -- so either one can be handed
-over or dropped into Overleaf on its own. The statements are therefore kept in
-step by hand: edit one, edit the other. Every solution states what it must
-produce -- the *Need to Show* -- before any of it is produced, and is then laid
-out with the indentation of the structured-programming slides.
+[mwg1-questions.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/mwg1-questions.pdf).
+It is a single self-contained `main.tex` -- preamble and content in one file,
+no `\input` of anything else in the repository -- so it can be handed over or
+dropped into Overleaf on its own. Worked solutions exist but are not published
+here.
 
 <table>
   <tr>
