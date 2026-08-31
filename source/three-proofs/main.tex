@@ -1,0 +1,417 @@
+% Mathematics Bootcamp --- One Statement, Three Proofs
+% A single implication about parity, proved directly, by contrapositive,
+% and by contradiction, with every step justified.
+%
+% Self-contained: this file needs no other file in the repository.
+% Compile with pdflatex, twice, or with latexmk -pdf.
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{
+  amsmath,
+  amssymb,
+  amsfonts,
+  amsthm,
+}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\onehalfspacing
+
+% ---------------------------------------------------------------------------
+% Same additions as the Day 1 exercise handout: a heading for each item, a
+% "Need to Show" block, and one level of indentation for a structured proof.
+% ---------------------------------------------------------------------------
+
+% \method{number}{name}{one-line description}
+\newcommand{\method}[3]{%
+  \par\penalty-250\bigskip
+  \noindent\textbf{\large Proof #1}\quad\textnormal{(#2)}%
+  \par\nobreak\smallskip
+  \noindent\textit{#3}%
+  \par\nobreak\smallskip
+  \noindent\rule{\linewidth}{0.4pt}%
+  \par\nobreak\smallskip}
+
+% What the proof is obliged to produce, written before any of it is written.
+\newenvironment{nts}
+  {\par\medskip\noindent\textbf{Need to Show:}\par\nobreak\smallskip}
+  {\par\medskip}
+
+% One level of indentation. Nest to indent further: the structure of the
+% argument is carried by the indentation, as in the Day 1 slides.
+\newlength{\plevel}\setlength{\plevel}{2.25em}
+\newenvironment{pstep}
+  {\begin{list}{}{%
+     \setlength{\leftmargin}{\plevel}%
+     \setlength{\rightmargin}{0pt}%
+     \setlength{\labelwidth}{0pt}\setlength{\labelsep}{0pt}%
+     \setlength{\itemindent}{0pt}\setlength{\listparindent}{0pt}%
+     \setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}%
+     \setlength{\parsep}{0pt}\setlength{\itemsep}{0pt}}%
+   \item\relax}
+  {\end{list}}
+
+% Right-flushed justification for a line of a proof. Ends the line.
+\newcommand{\by}[1]{%
+  \unskip\nobreak\hfil\penalty50\hskip1em\null\nobreak\hfil
+  \textnormal{[#1]}%
+  {\parfillskip=0pt \finalhyphendemerits=0 \par}}
+
+\newenvironment{remark}
+  {\par\medskip\noindent\textit{Remark.}\enspace}
+  {\par\medskip}
+
+% Contradiction. The single arrow is the one the Day 1 slides use for
+% implication, so this reads as "then, and then back the other way".
+\newcommand{\contra}{\ensuremath{\rightarrow\leftarrow}}
+
+\title{\textbf{Mathematics Bootcamp --- One Statement, Three Proofs}\\[.4em]
+       \large Direct, contrapositive, and contradiction on a single claim}
+\author{Miguel V\'azquez-Carrero}
+\date{Companion to Day 1: Formal Language and Proof Structure\\[.3em]
+      \normalsize Compilation Date: \today}
+
+\begin{document}
+
+\maketitle
+
+\noindent
+One claim, proved three times. The arithmetic is deliberately trivial, so that
+nothing on the page competes with the thing being taught: what changes between
+the three methods is not the mathematics but the \emph{bookkeeping} --- what you
+are allowed to assume, and what you are obliged to produce.
+
+\section*{The claim}
+
+\begin{quote}
+\textbf{Claim.} Let $n\in\mathbb{Z}$. If $n$ is even, then $n+3$ is odd.
+\end{quote}
+
+\noindent
+Write
+\[
+P:\ \text{``$n$ is even''},\qquad Q:\ \text{``$n+3$ is odd''},
+\]
+so the claim is $P\rightarrow Q$, to be proved for every $n\in\mathbb{Z}$.
+
+\begin{quote}
+\textbf{Definition.}
+An integer $n$ is \emph{even} if $n=2k$ for some $k\in\mathbb{Z}$, and
+\emph{odd} if $n=2k+1$ for some $k\in\mathbb{Z}$.
+\end{quote}
+
+\noindent
+Read the definition as a contract in both directions. To \emph{use} ``$n$ is
+even'' is to obtain a $k$; to \emph{prove} ``$n$ is even'' is to exhibit one.
+Every step below is one of those two moves, an application of a background fact,
+or ordinary algebra.
+
+The only arithmetic assumed: $\mathbb{Z}$ is closed under addition, subtraction
+and multiplication.
+
+\section*{Two background facts}
+
+The three proofs do not all rest on the same ground, and it is worth knowing
+which fact each one spends. Both facts below are about parity alone; neither
+mentions the claim, and both are taken as given here.
+
+\begin{quote}
+\textbf{Fact 1 (every integer has a parity).}
+Every $n\in\mathbb{Z}$ is even or odd.
+
+\medskip
+\textbf{Fact 2 (no integer has two parities).}
+No $n\in\mathbb{Z}$ is both even and odd.
+\end{quote}
+
+\noindent
+Neither is proved here. They are the case $d=2$ of the statement that dividing
+by $d$ leaves exactly one remainder in $\{0,\dots,d-1\}$, which is where they
+belong; assume them today and take them up when the tools are available. Fact~1
+in particular is the sort of ``obviously true'' statement whose proof needs
+induction, which we have not reached yet --- a good illustration that obvious
+and easy to prove are different properties.
+
+What matters here is only how they get \emph{used}:
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,topsep=.3em,itemsep=.2em]
+  \item Fact 1 turns ``$n$ is not odd'' into ``$n$ is even'' --- a negative
+        hypothesis, which offers nothing to compute with, into a positive one
+        that hands you a $k$;
+  \item Fact 2 turns ``$n$ is odd'' into ``$n$ is not even'' --- letting a
+        negative conclusion be reached by proving a positive statement.
+\end{enumerate}
+Between them, ``not odd'' and ``even'' are interchangeable, and so are ``not
+even'' and ``odd''.
+
+\begin{remark}
+Keep an eye on where these get used below. Fact~1 appears twice --- once in
+each of Proofs 2 and 3, in both cases on the very first line --- and never in
+Proof~1. That is not an accident, and it is the point the three proofs together
+are making.
+\end{remark}
+
+\section*{Why there are three methods at all}
+
+Each method is licensed by a logical equivalence, and each equivalence is a
+column of a truth table that the Day 1 slides already carry:
+\[
+\begin{array}{cc@{\qquad}cc@{\qquad}ccc}
+\toprule
+P & Q & \lnot P & \lnot Q &
+P\rightarrow Q & \lnot Q\rightarrow\lnot P & \lnot(P\land\lnot Q)\\
+\midrule
+T & T & F & F & T & T & T\\
+T & F & F & T & F & F & F\\
+F & T & T & F & T & T & T\\
+F & F & T & T & T & T & T\\
+\bottomrule
+\end{array}
+\]
+The last three columns are identical. So proving any one of them proves the
+other two, and you may pick whichever is easiest to attack:
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,topsep=.3em,itemsep=.2em]
+  \item $P\rightarrow Q$ --- assume $P$, produce $Q$;
+  \item $\lnot Q\rightarrow\lnot P$ --- assume $\lnot Q$, produce $\lnot P$;
+  \item $\lnot(P\land\lnot Q)$ --- assume both $P$ and $\lnot Q$, produce a
+        contradiction.
+\end{enumerate}
+Nothing distinguishes them logically. They differ only in what lands in your
+hands when you start, and that is a practical matter, not a matter of truth.
+
+\section*{The three skeletons}
+
+Written as programs, before any of the bodies are known. The indentation is not
+decoration: a line is available exactly to the lines indented under it, and a
+block is closed by the line that returns to the outer margin. The bracket is the
+hole you still owe.
+
+\begin{quote}
+\textbf{Direct}\par
+Let $n\in\mathbb{Z}$ be arbitrary.\par
+\hspace*{2.25em}Suppose $n$ is even.\par
+\hspace*{4.5em}[Proof that $n+3$ is odd goes here.]\par
+\hspace*{2.25em}Thus, if $n$ is even then $n+3$ is odd.\par
+Thus, for all $n\in\mathbb{Z}$, if $n$ is even then $n+3$ is odd.
+\end{quote}
+
+\begin{quote}
+\textbf{Contrapositive}\par
+Let $n\in\mathbb{Z}$ be arbitrary.\par
+\hspace*{2.25em}Suppose $n+3$ is not odd.\par
+\hspace*{4.5em}[Proof that $n$ is not even goes here.]\par
+\hspace*{2.25em}Thus, if $n+3$ is not odd then $n$ is not even.\par
+Thus $\lnot Q\rightarrow\lnot P$ for all $n$, which is $P\rightarrow Q$.
+\end{quote}
+
+\begin{quote}
+\textbf{Contradiction}\par
+Let $n\in\mathbb{Z}$ be arbitrary.\par
+\hspace*{2.25em}Suppose $n$ is even and $n+3$ is not odd.\par
+\hspace*{4.5em}[Proof of a contradiction goes here.]\par
+\hspace*{2.25em}Thus $n$ even and $n+3$ not odd is impossible.\par
+Thus $\lnot(P\land\lnot Q)$ for all $n$, which is $P\rightarrow Q$.
+\end{quote}
+
+\noindent
+Write these outer lines first. They are forced by the shape of the statement and
+the method alone --- before you have any idea why the claim is true.
+
+\newpage
+\section*{The three proofs}
+
+% ===========================================================================
+\method{1}{direct}{Assume $P$; produce $Q$.}
+
+\begin{nts}
+Assuming $n$ is even, produce an integer $j$ with $n+3=2j+1$. That is the whole
+obligation: ``$n+3$ is odd'' is by definition the existence of such a $j$, so
+the proof is finished exactly when one has been exhibited.
+\end{nts}
+
+\begin{proof}[Proof 1]
+Let $n\in\mathbb{Z}$ be arbitrary.
+\begin{pstep}
+Suppose $n$ is even.
+\begin{pstep}
+$n=2k$ for some $k\in\mathbb{Z}$. \by{definition of even}
+
+$n+3=2k+3$. \by{add $3$ to both sides}
+
+$2k+3=2k+2+1=2(k+1)+1$. \by{algebra}
+
+$k+1\in\mathbb{Z}$. \by{closure under addition}
+
+So $n+3=2j+1$ with $j=k+1\in\mathbb{Z}$: $n+3$ is odd.
+\by{definition of odd}
+\end{pstep}
+Thus, if $n$ is even then $n+3$ is odd.
+\end{pstep}
+Thus, for all $n\in\mathbb{Z}$, if $n$ is even then $n+3$ is odd.
+\end{proof}
+
+\begin{remark}
+The witness is $j=k+1$, and producing it is the entire proof. Notice what was
+\emph{not} used: neither fact. This argument would survive in a world where
+integers could be both even and odd, or neither. It is the cheapest of the
+three, and on a statement this shape it is the one to reach for.
+\end{remark}
+
+% ===========================================================================
+\method{2}{contrapositive}{Assume $\lnot Q$; produce $\lnot P$.}
+
+\begin{nts}
+Prove $\lnot Q\rightarrow\lnot P$: if $n+3$ is not odd, then $n$ is not even.
+Both ends need unfolding before there is anything to do:
+\begin{enumerate}[label=(\alph*),leftmargin=2.4em,topsep=.2em,itemsep=.1em]
+  \item the hypothesis ``$n+3$ is not odd'' is unusable as it stands --- it
+        offers no $k$ --- and Fact~1 converts it into ``$n+3$ is even'', which
+        does;
+  \item the conclusion ``$n$ is not even'' is a negative, and Fact~2 lets it be
+        reached by proving the positive statement ``$n$ is odd'' instead.
+\end{enumerate}
+So the work is: assuming $n+3=2m$, produce an integer $j$ with $n=2j+1$.
+\end{nts}
+
+\begin{proof}[Proof 2]
+Let $n\in\mathbb{Z}$ be arbitrary.
+\begin{pstep}
+Suppose $n+3$ is not odd.
+\begin{pstep}
+$n+3$ is even. \by{Fact 1: not odd, so even}
+
+$n+3=2m$ for some $m\in\mathbb{Z}$. \by{definition of even}
+
+$n=2m-3$. \by{subtract $3$ from both sides}
+
+$2m-3=2m-4+1=2(m-2)+1$. \by{algebra}
+
+$m-2\in\mathbb{Z}$. \by{closure under subtraction}
+
+So $n=2j+1$ with $j=m-2\in\mathbb{Z}$: $n$ is odd.
+\by{definition of odd}
+
+$n$ is not even. \by{Fact 2: odd, so not even}
+\end{pstep}
+Thus, if $n+3$ is not odd then $n$ is not even.
+\end{pstep}
+Thus $\lnot Q\rightarrow\lnot P$ holds for every $n\in\mathbb{Z}$; equivalently,
+for every $n\in\mathbb{Z}$, if $n$ is even then $n+3$ is odd.
+\by{contraposition}
+\end{proof}
+
+\begin{remark}
+The last line is not a flourish --- it is the step that converts what was proved
+into what was claimed, and omitting it leaves the proof formally incomplete. It
+is also the step students most often skip, because by that point the arithmetic
+feels finished. It isn't: the arithmetic established $\lnot Q\rightarrow\lnot
+P$, and only the truth table in \emph{Why there are three methods at all} turns
+that into $P\rightarrow Q$.
+\end{remark}
+
+% ===========================================================================
+\method{3}{contradiction}{Assume $P$ and $\lnot Q$; produce a contradiction.}
+
+\begin{nts}
+Assuming both that $n$ is even and that $n+3$ is not odd, derive a statement of
+the form $R$ and $\lnot R$. Nothing specifies which $R$ --- any contradiction
+will do, and finding one is the creative part. Here the target will be a
+violation of Fact~2: an integer exhibited as both even and odd.
+\end{nts}
+
+\begin{proof}[Proof 3]
+Let $n\in\mathbb{Z}$ be arbitrary.
+\begin{pstep}
+Suppose $n$ is even and $n+3$ is not odd.
+\begin{pstep}
+$n=2k$ for some $k\in\mathbb{Z}$. \by{definition of even}
+
+$n+3$ is even. \by{Fact 1: not odd, so even}
+
+$n+3=2m$ for some $m\in\mathbb{Z}$. \by{definition of even}
+
+$2k+3=2m$. \by{substituting $n=2k$}
+
+$3=2m-2k=2(m-k)$. \by{algebra}
+
+$m-k\in\mathbb{Z}$, so $3$ is even. \by{closure; definition of even}
+
+$3=2\cdot 1+1$ and $1\in\mathbb{Z}$, so $3$ is odd.
+\by{definition of odd}
+
+So $3$ is both even and odd, contradicting Fact~2. \contra
+\end{pstep}
+Thus $n$ even and $n+3$ not odd is impossible.
+\end{pstep}
+Thus $\lnot(P\land\lnot Q)$ holds for every $n\in\mathbb{Z}$; equivalently, for
+every $n\in\mathbb{Z}$, if $n$ is even then $n+3$ is odd.
+\end{proof}
+
+\begin{remark}
+Two hypotheses enter and both get used --- $n=2k$ and $n+3=2m$ --- and
+subtracting one from the other is what makes $n$ disappear, leaving a false
+statement about the constant $3$. That is characteristic: a contradiction proof
+often ends far from where it started, on a claim about something the original
+statement never mentioned.
+\end{remark}
+
+\section*{Comparison}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+ & Assume & Produce & Background used\\
+\midrule
+Direct         & $P$             & $Q$             & ---\\
+Contrapositive & $\lnot Q$       & $\lnot P$       & Facts 1 and 2\\
+Contradiction  & $P\land\lnot Q$ & \contra         & Facts 1 and 2\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Three observations worth making out loud.
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,topsep=.4em,itemsep=.5em]
+  \item \emph{The proofs are not equally cheap.} The direct proof spends
+        nothing but the definitions. The other two spend both facts, because
+        each begins with a negative hypothesis and a negative hypothesis gives
+        you nothing to compute with until it has been turned positive. On this
+        claim, then, the direct proof is simply the right one; the others are
+        run here for practice.
+
+  \item \emph{Contradiction hands you the most and demands the least.} You may
+        assume $P$ and $\lnot Q$ both, and any absurdity discharges the
+        obligation. That generosity is why it is the natural default when the
+        conclusion is itself a negative or an impossibility --- as in the
+        lexicographic argument later in the course, where the conclusion is that
+        no utility representation exists and there is nothing to construct.
+        The same generosity is why it is overused: an argument that could have
+        been direct is often written by contradiction out of habit, with the
+        second hypothesis never touched. If you finish a proof by contradiction
+        without having used $\lnot Q$, you have written a direct proof inside a
+        wrapper --- delete the wrapper.
+
+  \item \emph{The closing line is part of the proof.} Methods 2 and 3 each end
+        by converting what was established into what was claimed. That
+        conversion is licensed by the truth table, not by the algebra, and a
+        write-up that stops at the algebra has proved the wrong statement.
+\end{enumerate}
+
+\begin{remark}
+A useful exercise, and the natural next one: run the same three methods on
+\emph{if $n^{2}$ is odd, then $n$ is odd}. There the asymmetry is much sharper
+--- the contrapositive proof is three lines, and the direct proof is genuinely
+awkward. Comparing the two examples is what makes the point that choosing a
+method is a real decision rather than a formality.
+\end{remark}
+
+\end{document}

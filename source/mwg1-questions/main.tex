@@ -1,0 +1,270 @@
+% Mathematics Bootcamp --- Day 1 Exercises
+% Mas-Colell, Whinston and Green, Chapter 1, Sections 1.B and 1.C.
+%
+% Self-contained: this file needs no other file in the repository.
+% Compile with pdflatex, twice, or with latexmk -pdf.
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{
+  amsmath,
+  amssymb,
+  amsfonts,
+  amsthm,
+}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{setspace}
+\usepackage{float}
+
+% Added to the template: the roman/alpha labels in the exercise statements
+% need it. source/proofs/main.tex already loads it too.
+\usepackage{enumitem}
+
+\onehalfspacing
+
+% ---------------------------------------------------------------------------
+% The only additions to the template: a heading for each exercise, a
+% "Need to Show" block, and one level of indentation for a structured proof.
+% ---------------------------------------------------------------------------
+
+% \exercise{number}{MWG grade}{one-line description}
+\newcommand{\exercise}[3]{%
+  \par\penalty-250\bigskip
+  \noindent\textbf{\large Exercise #1}\quad\textnormal{(grade #2)}%
+  \par\nobreak\smallskip
+  \noindent\textit{#3}%
+  \par\nobreak\smallskip
+  \noindent\rule{\linewidth}{0.4pt}%
+  \par\nobreak\smallskip}
+
+% The statement, verbatim from the book.
+\newenvironment{statement}{\par\medskip}{\par\medskip}
+
+% What the proof is obliged to produce, written before any of it is written.
+\newenvironment{nts}
+  {\par\medskip\noindent\textbf{Need to Show:}\par\nobreak\smallskip}
+  {\par\medskip}
+
+% One level of indentation. Nest to indent further: the structure of the
+% argument is carried by the indentation, as in the Day 1 slides.
+\newlength{\plevel}\setlength{\plevel}{2.25em}
+\newenvironment{pstep}
+  {\begin{list}{}{%
+     \setlength{\leftmargin}{\plevel}%
+     \setlength{\rightmargin}{0pt}%
+     \setlength{\labelwidth}{0pt}\setlength{\labelsep}{0pt}%
+     \setlength{\itemindent}{0pt}\setlength{\listparindent}{0pt}%
+     \setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}%
+     \setlength{\parsep}{0pt}\setlength{\itemsep}{0pt}}%
+   \item\relax}
+  {\end{list}}
+
+% Right-flushed justification for a line of a proof. Ends the line.
+\newcommand{\by}[1]{%
+  \unskip\nobreak\hfil\penalty50\hskip1em\null\nobreak\hfil
+  \textnormal{[#1]}%
+  {\parfillskip=0pt \finalhyphendemerits=0 \par}}
+
+\newenvironment{remark}
+  {\par\medskip\noindent\textit{Remark.}\enspace}
+  {\par\medskip}
+
+% Contradiction. The single arrow is the one the Day 1 slides use for
+% implication, so this reads as "then, and then back the other way".
+\newcommand{\contra}{\ensuremath{\rightarrow\leftarrow}}
+
+\title{\textbf{Mathematics Bootcamp --- Day 1 Exercises}\\[.4em]
+       \large Mas-Colell, Whinston and Green, Chapter 1}
+\author{Miguel V\'azquez-Carrero}
+\date{Preference and Choice: Sections 1.B and 1.C\\[.3em]
+      \normalsize Compilation Date: \today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Notation}
+
+Throughout, $X$ is a set of alternatives and $\succeq$ is a binary relation on
+$X$, read ``at least as good as''. From it we derive
+\[
+x\succ y \iff x\succeq y \ \text{ and not } y\succeq x,
+\qquad
+x\sim y \iff x\succeq y \ \text{ and } y\succeq x .
+\]
+The relation $\succeq$ is \emph{rational} if it is
+\emph{complete} (for all $x,y\in X$, $x\succeq y$ or $y\succeq x$)
+and \emph{transitive} (for all $x,y,z\in X$, if $x\succeq y$ and $y\succeq z$
+then $x\succeq z$). A function $u:X\to\mathbb R$ \emph{represents} $\succeq$ if
+\[
+x\succeq y \iff u(x)\geq u(y)\qquad\text{for all }x,y\in X .
+\]
+
+A \emph{choice structure} is a pair $(\mathbb B,C(\cdot))$: $\mathbb B$ is a
+family of nonempty subsets of $X$, the observed menus, and $C$ assigns to each
+$B\in\mathbb B$ a nonempty set $C(B)\subseteq B$. MWG writes $\mathcal B$ for
+the menu domain; we keep the $\mathbb B$ of the slides.
+
+\begin{quote}
+\textbf{Definition 1.C.1 (Weak Axiom).}
+If for some $B\in\mathbb B$ with $x,y\in B$ we have $x\in C(B)$, then for any
+$B^{\prime}\in\mathbb B$ with $x,y\in B^{\prime}$ and $y\in C(B^{\prime})$, we
+must also have $x\in C(B^{\prime})$.
+
+\medskip
+\textbf{Definition 1.C.2 (Revealed preference).}
+$x\succeq^{*}y \iff$ there is some $B\in\mathbb B$ such that $x,y\in B$ and
+$x\in C(B)$.
+\end{quote}
+
+Exercises 1.B.1 and 1.B.2 ask for the proof of the following, which MWG states
+and does not prove.
+
+\begin{quote}
+\textbf{Proposition 1.B.1.} If $\succeq$ is rational then:
+\begin{enumerate}[label=(\roman*),leftmargin=2.4em,topsep=.3em,itemsep=.2em]
+  \item $\succ$ is both \emph{irreflexive} ($x\succ x$ never holds) and
+        \emph{transitive} (if $x\succ y$ and $y\succ z$, then $x\succ z$).
+  \item $\sim$ is \emph{reflexive} ($x\sim x$ for all $x$), \emph{transitive}
+        (if $x\sim y$ and $y\sim z$, then $x\sim z$), and \emph{symmetric}
+        (if $x\sim y$, then $y\sim x$).
+  \item if $x\succ y\succeq z$, then $x\succ z$.
+\end{enumerate}
+\end{quote}
+
+\section*{How to write these up}
+
+Write every proof the way a program is written: the skeleton first, then the
+body. Recall the skeleton from Day 1,
+\begin{quote}
+Let $x$ be arbitrary.\par
+\hspace*{2.25em}Suppose $P(x)$ is true.\par
+\hspace*{4.5em}[Proof of $Q(x)$ goes here.]\par
+\hspace*{2.25em}Thus, if $P(x)$ then $Q(x)$.\par
+Thus, for all $x$, if $P(x)$ then $Q(x)$.
+\end{quote}
+and note that the indentation is not decoration. A line is available exactly to
+the lines indented under it, and a block is closed by the line that returns to
+the outer margin. Write the outer lines first: they are forced by the shape of
+the statement alone, before you have any idea why it is true.
+
+Before any of that, state what the proof owes. Unfold every definition in the
+conclusion until what is left is a list of claims with no defined terms in
+them. That list is the \textbf{Need to Show}. A proof is finished when the list
+is exhausted, and not before.
+
+\newpage
+\section*{Preferences (Section 1.B)}
+
+% ===========================================================================
+\exercise{1.B.1}{B}{Property (iii) of Proposition 1.B.1}
+
+\begin{statement}
+Prove property (iii) of Proposition 1.B.1.
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.B.2}{A}{Properties (i) and (ii) of Proposition 1.B.1}
+
+\begin{statement}
+Prove properties (i) and (ii) of Proposition 1.B.1.
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.B.3}{B}{A strictly increasing transformation of a utility function}
+
+\begin{statement}
+Show that if $f:\mathbb R\to\mathbb R$ is a strictly increasing function and
+$u:X\to\mathbb R$ is a utility function representing preference relation
+$\succeq$, then the function $v:X\to\mathbb R$ defined by $v(x)=f(u(x))$ is
+also a utility function representing preference relation $\succeq$.
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.B.4}{A}{A sufficient condition for representation}
+
+\begin{statement}
+Consider a rational preference relation $\succeq$. Show that if $u(x)=u(y)$
+implies $x\sim y$ and if $u(x)>u(y)$ implies $x\succ y$, then $u(\cdot)$ is a
+utility function representing $\succeq$.
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.B.5}{B}{Representation on a finite set}
+
+\begin{statement}
+Show that if $X$ is finite and $\succeq$ is a rational preference relation on
+$X$, then there is a utility function $u:X\to\mathbb R$ that represents
+$\succeq$. [\emph{Hint}: Consider first the case in which the individual's
+ranking between any two elements of $X$ is strict (i.e., there is never any
+indifference), and construct a utility function representing these preferences;
+then extend your argument to the general case.]
+\end{statement}
+
+
+\newpage
+\section*{Choice Rules (Section 1.C)}
+
+% ===========================================================================
+\exercise{1.C.1}{B}{What the weak axiom leaves open}
+
+\begin{statement}
+Consider the choice structure $(\mathbb B,C(\cdot))$ with
+$\mathbb B=\bigl\{\{x,y\},\{x,y,z\}\bigr\}$ and $C(\{x,y\})=\{x\}$. Show that
+if $(\mathbb B,C(\cdot))$ satisfies the weak axiom, then we must have
+$C(\{x,y,z\})=\{x\}$, $=\{z\}$, or $=\{x,z\}$.
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.C.2}{B}{A symmetric restatement of the weak axiom}
+
+\begin{statement}
+Show that the weak axiom (Definition 1.C.1) is equivalent to the following
+property holding:
+\begin{quote}
+Suppose that $B,B^{\prime}\in\mathbb B$, that $x,y\in B$, and that
+$x,y\in B^{\prime}$. Then if $x\in C(B)$ and $y\in C(B^{\prime})$, we must have
+$\{x,y\}\subseteq C(B)$ and $\{x,y\}\subseteq C(B^{\prime})$.
+\end{quote}
+\end{statement}
+
+
+% ===========================================================================
+\exercise{1.C.3}{C}{Two revealed strict preferences}
+
+\begin{statement}
+Suppose that choice structure $(\mathbb B,C(\cdot))$ satisfies the weak axiom.
+Consider the following two possible revealed preferred relations, $\succ^{*}$
+and $\succ^{**}$:
+\[
+\begin{aligned}
+x\succ^{*}y \quad&\Longleftrightarrow\quad
+\text{there is some }B\in\mathbb B\text{ such that }x,y\in B,\ x\in C(B),
+\text{ and } y\notin C(B)\\
+x\succ^{**}y \quad&\Longleftrightarrow\quad
+x\succeq^{*}y\text{ but not }y\succeq^{*}x
+\end{aligned}
+\]
+where $\succeq^{*}$ is the revealed at-least-as-good-as relation defined in
+Definition 1.C.2.
+\begin{enumerate}[label=(\alph*),leftmargin=2.4em,topsep=.3em,itemsep=.25em]
+  \item Show that $\succ^{*}$ and $\succ^{**}$ give the same relation over $X$;
+        that is, for any $x,y\in X$, $x\succ^{*}y\iff x\succ^{**}y$. Is this
+        still true if $(\mathbb B,C(\cdot))$ does not satisfy the weak axiom?
+  \item Must $\succ^{*}$ be transitive?
+  \item Show that if $\mathbb B$ includes all three-element subsets of $X$,
+        then $\succ^{*}$ is transitive.
+\end{enumerate}
+\end{statement}
+
+\end{document}

@@ -15,6 +15,9 @@
 \titlespacing*{\subsection}{0pt}{1.5em}{.5em}
 \newcommand{\slideref}[1]{\par\vspace{-.3em}{\small\itshape Supports: #1.}\par\vspace{.55em}}
 \newcommand{\done}{\hfill$\blacksquare$}
+% Contradiction, as introduced on the Day 1 slide. The single arrow is the
+% one used for implication, so this reads as "then, and then back".
+\newcommand{\contra}{\ensuremath{\rightarrow\leftarrow}}
 
 \title{\color{slideblue}\bfseries Mathematics Bootcamp --- Proofs}
 \author{Miguel V\'azquez-Carrero}
@@ -68,11 +71,12 @@ $C(T)\neq\varnothing$, $T$ chooses at least one alternative.
 \begin{itemize}[nosep,leftmargin=1.6em]
   \item If $x\in C(T)$: both $x$ and $z$ lie in $T$ and in $\{x,z\}$, and
   $z\in C(\{x,z\})$. WARP forces $x\in C(\{x,z\})$, contradicting
-  $C(\{x,z\})=\{z\}$.
-  \item If $y\in C(T)$: the same argument against $C(\{x,y\})=\{x\}$.
-  \item If $z\in C(T)$: the same argument against $C(\{y,z\})=\{y\}$.
+  $C(\{x,z\})=\{z\}$. \contra
+  \item If $y\in C(T)$: the same argument against $C(\{x,y\})=\{x\}$. \contra
+  \item If $z\in C(T)$: the same argument against $C(\{y,z\})=\{y\}$. \contra
 \end{itemize}
-Every case fails, so $C(T)=\varnothing$ --- a contradiction. The cycle is
+Every case fails, so $C(T)=\varnothing$. \contra{}
+The cycle is
 therefore impossible, and $\succeq^*$ is transitive. \done
 
 \subsection{WARP is equivalent to rationalizability}
@@ -162,7 +166,7 @@ The map $r$ is injective: if $x_1>x_1'$ then $(x_1,1)\succ(x_1',2)$, so
 r(x_1)>u(x_1,1)>u(x_1',2)>r(x_1').
 \]
 So $r$ is a one-to-one map from $\mathbb{R}$ into $\mathbb{Q}$. But $\mathbb{R}$
-is uncountable and $\mathbb{Q}$ is countable (Bartle 1.3.6) --- impossible.
+is uncountable and $\mathbb{Q}$ is countable (Bartle 1.3.6).~\contra
 \done
 
 \noindent
