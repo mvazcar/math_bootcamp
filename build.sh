@@ -7,7 +7,7 @@
 # Requires: pdflatex + latexmk (TeX Live / TinyTeX) and python with matplotlib.
 set -u
 cd "$(dirname "$0")"
-DECKS=${1:-"math1 math2 math3 math4 math5 proofs three-proofs mwg1-questions mwg1-solutions"}
+DECKS=${1:-"math1 math2 math3 math4 math5 proofs handout mwg1-questions"}
 mkdir -p output/pdf
 fail=0
 for d in $DECKS; do

@@ -28,6 +28,12 @@ no `\input` of anything else in the repository -- so it can be handed over or
 dropped into Overleaf on its own. Worked solutions exist but are not published
 here.
 
+One worked example is published, though:
+[handout.pdf](https://raw.githubusercontent.com/mvazcar/math_bootcamp/main/output/pdf/handout.pdf)
+takes a single claim about parity and proves it three ways -- directly, by
+contrapositive, and by contradiction -- so the same statement can be compared
+across the three methods.
+
 <table>
   <tr>
     <td width="50%"><img src="assets/preview/classes-and-curves.png"
