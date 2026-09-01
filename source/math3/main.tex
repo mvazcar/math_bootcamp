@@ -84,22 +84,15 @@
 
 
 \begin{frame}{Equivalence Classes and Utility}
-  \begin{block}{Utility representation}
-    A function $u:X\to\mathbb{R}$ \emph{represents} $\succeq$ if
-    \[
-      x\succeq y \;\;\Leftrightarrow\;\; u(x)\ge u(y).
-    \]
-  \end{block}
-
-  \begin{block}{What the Representation Implies}
-    If $u$ represents $\succeq$, then
+  \begin{block}{What a Representation Does to the Partition}
+    Let $u$ represent $\succeq$, as on Day 2. Then
     \[
       x\sim y \;\;\Leftrightarrow\;\; u(x) = u(y).
     \]
-    Every equivalence class maps to one utility level; utility is
-    \textbf{ordinal}.
+    Every equivalence class maps to a single utility level, and distinct
+    classes to distinct levels. The partition of $X$ becomes a set of numbers,
+    ordered as the classes are.
   \end{block}
-
 \end{frame}
 
 \begin{frame}{Indifference Curves}
@@ -204,8 +197,8 @@ every $\varepsilon > 0$, there exists $y \in X$ such that $\lVert x - y\rVert \l
 \end{definitionbox}
 
 \centering
-Euclidean distance:
-$\lVert x - y\rVert=\sqrt{\sum_{i=1}^L (x_i - y_i)^2}$.
+Equivalently: every ball around $x$, however small, holds a strictly
+better bundle.
 \end{frame}
 
 % Slide 7 / 17
