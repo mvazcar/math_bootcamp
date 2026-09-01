@@ -84,8 +84,14 @@
 
 
 \begin{frame}{Equivalence Classes and Utility}
-  \begin{block}{What a Representation Does to the Partition}
-    Let $u$ represent $\succeq$, as on Day 2. Then
+  \begin{block}{Utility Representation}
+    A function $u:X\to\mathbb{R}$ \emph{represents} $\succeq$ if
+    \[
+      x\succeq y \;\;\Leftrightarrow\;\; u(x)\ge u(y).
+    \]
+  \end{block}
+
+  \begin{block}{What It Does to the Partition}
     \[
       x\sim y \;\;\Leftrightarrow\;\; u(x) = u(y).
     \]
@@ -163,6 +169,17 @@
 % Slide 3 / 17
 \begin{frame}{Monotonicity: More is Better}
 
+ \vspace{-0.35em}
+ {\centering
+     \includegraphics[width=0.40\linewidth]{monotonicity.pdf}
+ \par}
+ \vspace{0.2em}
+  \centering
+  \textbf{Domain:} $X=\mathbb{R}_{++}^2$.
+\end{frame}
+
+\begin{frame}{Monotonicity: More is Better}
+
 \begin{definitionbox}[MWG 3.B.2: Monotonicity]
 Assume consuming more is always feasible: $x\in X$ and $y\geq x$ imply $y\in X$.
 The preference relation $\succeq$ on $X$ is\\
@@ -178,18 +195,17 @@ increasing}: $u(y)>u(x)$ whenever $y\geq x$ and $y\ne x$.
 \end{propositionbox}
 \end{frame}
 
-\begin{frame}{Monotonicity: More is Better}
-
- \vspace{-0.35em}
- {\centering
-     \includegraphics[width=0.40\linewidth]{monotonicity.pdf}
- \par}
- \vspace{0.2em}
-  \centering
-  \textbf{Domain:} $X=\mathbb{R}_{++}^2$.
+% Slide 6 / 17
+\begin{frame}{Local Nonsatiation: No Thick Indifference Curves}
+\par
+\mwgscanstart
+{\centering
+    \includegraphics[width=0.68\linewidth,trim=0 0 0 6pt,clip]{mwg-p058-local-nonsatiation.pdf}
+\par}
 \end{frame}
 
-% Slide 6 / 17
+% Slide 7 / 17
+
 \begin{frame}{Local Nonsatiation: No Thick Indifference Curves}
 \begin{definitionbox}[Definition: Local Nonsatiation]
 A preference relation $\succeq$ on $X$ is \emph{locally nonsatiated} if for every $x \in X$ and
@@ -197,18 +213,11 @@ every $\varepsilon > 0$, there exists $y \in X$ such that $\lVert x - y\rVert \l
 \end{definitionbox}
 
 \centering
+Euclidean distance: $\lVert x - y\rVert=\sqrt{\sum_{i=1}^L (x_i - y_i)^2}$.
+
+\vspace{.2em}
 Equivalently: every ball around $x$, however small, holds a strictly
 better bundle.
-\end{frame}
-
-% Slide 7 / 17
-
-\begin{frame}{Local Nonsatiation: No Thick Indifference Curves}
-\par
-\mwgscanstart
-{\centering
-    \includegraphics[width=0.68\linewidth,trim=0 0 0 6pt,clip]{mwg-p058-local-nonsatiation.pdf}
-\par}
 \end{frame}
 
 
