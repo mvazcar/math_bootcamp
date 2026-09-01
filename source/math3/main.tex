@@ -141,6 +141,17 @@
 
 \end{frame}
 
+\begin{frame}{Useful Properties of Preferences}
+\begin{itemize}
+    \item In addition to rationality, we assume more structure on
+    preferences: more properties.
+    \item Each property has implications for the utility representation
+    and for the indifference curves.
+    \item The best way to learn them is by practicing proofs, many
+    times --- that is what the problem sets are for.
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Represent Commodities with Ordered Lists}
 \mwgscanstart
 {\centering
@@ -339,6 +350,8 @@ x_n\in F\ \text{for every }n,\qquad x_n\to x\in X
 \end{frame}
 
 \begin{frame}{Lower and Upper Contour Sets}
+\setlength{\abovedisplayskip}{.3em}
+\setlength{\belowdisplayskip}{.3em}
 \begin{definitionbox}[Contour Sets at $x$]
 \[
 U(x) := \{ y \in X \mid y \succeq x \} \qquad L(x) := \{ y \in X \mid x \succeq y \}.
@@ -357,6 +370,10 @@ If $\succeq$ is complete, then
 \{y\in X:x\succ y\}=X\setminus U(x).
 \]
 \end{propositionbox}
+
+The indifference set is both the intersection of the two contour sets and
+their shared boundary. If the contour sets are closed, that boundary is
+included: no gaps in the indifference curves.
 \end{frame}
 
 \begin{frame}{Lexicographic Preferences}
@@ -371,19 +388,22 @@ It is complete, transitive, strongly monotone, and strictly convex --- yet no
 utility function represents it.
 \end{definitionbox}
 
+Its contour sets are not closed: $(1+\tfrac1n,\,0)\succ(1,1)$ for every $n$, yet the
+limit $(1,0)$ falls strictly below $(1,1)$. The upper contour set of
+$(1,1)$ loses its boundary point.
 \end{frame}
 
-\begin{frame}{Continuity: Limits of Rankings}
-\begin{definitionbox}[MWG 3.C.1: Continuity]
+\begin{frame}{Continuity: Closed Contour Sets}
+\begin{definitionbox}[Continuity]
 Let $X\subseteq\mathbb{R}^L$ and let $\succeq$ be complete. Then $\succeq$ is
-\emph{continuous} if it is preserved under limits:
+\emph{continuous} if, for every $x\in X$,
 \[
-(x_n,y_n)\to(x,y),\quad x_n\succeq y_n\ \text{for every }n
-\quad\Longrightarrow\quad x\succeq y.
+U(x)\ \text{ and }\ L(x)\ \text{ are closed relative to }X.
 \]
 \end{definitionbox}
 
-
+Exactly the property the lexicographic relation just failed. No boundary
+point of a contour set escapes: no gaps.
 \end{frame}
 
 \begin{frame}{Continuity: Equivalent Tests}
@@ -398,8 +418,12 @@ For complete, transitive $\succeq$, continuity is equivalent to each of:
 \end{enumerate}
 \end{propositionbox}
 
-\centering
-Kreps takes (3) as the definition; MWG takes the limit form.
+MWG instead defines continuity through limits of rankings (3.C.1):
+\[
+(x_n,y_n)\to(x,y),\quad x_n\succeq y_n\ \text{for every }n\quad\Longrightarrow\quad x\succeq y,
+\]
+equivalent to all three. Kreps takes (3); we take (1), the one the
+pictures use.
 \end{frame}
 
 \begin{frame}{Continuous Representations and Closed Contours}
@@ -414,8 +438,8 @@ are closed relative to $X$.
 \end{theorembox}
 
 \vspace{.5em}
-\centering A continuous representation therefore implies continuous
-preferences.
+\centering Closed contour sets are the definition, so a continuous
+representation gives continuous preferences.
 \end{frame}
 
 \begin{frame}{Debreu's Representation Theorem}

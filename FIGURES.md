@@ -30,7 +30,7 @@ else is a third-party excerpt reproduced under fair use for teaching.
 | Back to Economics - Utility Functions | `mwg-p023-p024-utility.pdf` | scanned page excerpt |
 | Utility Representation Implies Rationality | `mwg-p024-proposition.pdf` | scanned page excerpt |
 
-## math3 (28 slides)
+## math3 (29 slides)
 
 | slide | figure | provenance |
 | --- | --- | --- |
