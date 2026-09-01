@@ -245,7 +245,7 @@ Cantor's diagonal argument proves the second claim:
     \begin{itemize}
         \item order, for comparisons;
         \item completeness, for limits and extrema;
-        \item distance, for neighborhoods and convergence.
+        \item distance, for balls and convergence.
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -309,23 +309,8 @@ For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
 in more than three?
 \end{frame}
 
-\begin{frame}{Neighborhoods in $\mathbb{R}$ and $\mathbb{R}^L$}
-\begin{definitionbox}[2.2.7 Definition]
-For $a\in\mathbb{R}$ and $\varepsilon>0$, the $\varepsilon$-\textbf{neighborhood} of $a$ is
-\[
-V_{\varepsilon}(a):=\{x\in\mathbb{R}:|x-a|<\varepsilon\}
-=(a-\varepsilon,a+\varepsilon).
-\]
-\end{definitionbox}
-
-\vspace{-.5em}
-\begin{center}
-\includegraphics[width=.5\linewidth]{neighborhood.pdf}
-\end{center}
-\vspace{-.1em}
-
-\vspace{-.85em}
-\begin{definitionbox}[Open Ball in $\mathbb{R}^L$]
+\begin{frame}{The Open Ball}
+\begin{definitionbox}[Open Ball]
 For $x\in\mathbb{R}^L$ and $\varepsilon>0$,
 \[
 B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
@@ -334,9 +319,15 @@ B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
 \]
 \end{definitionbox}
 
-\vspace{-.3em}
-When $L=1$ the ball \emph{is} the neighborhood: an interval on the line, a disc in the plane, a ball in space.
+\vspace{-.15em}
+\begin{center}
+\includegraphics[width=.58\linewidth]{neighborhood.pdf}
+\end{center}
 
+\vspace{-.35em}
+On the real line $\lVert z\rVert=|z|$, so $B_\varepsilon(a)=(a-\varepsilon,a+\varepsilon)$ --- the interval in the figure,
+which Bartle calls the $\varepsilon$-neighborhood $V_{\varepsilon}(a)$ (2.2.7 Definition). Same set, one name here:
+a ball --- an interval on the line, a disc in the plane, a ball in space.
 \end{frame}
 
 \begin{frame}{Bounds}
