@@ -563,21 +563,6 @@ f(x_{\min})\leq f(x)\leq f(x_{\max})
 
 \end{frame}
 
-\begin{frame}{Ordinal Utility}
-\begin{definitionbox}[Ordinal Utility]
-A function $u:X\to\mathbb{R}$ represents $\succeq$ if
-\[
-x\succeq y \quad\Longleftrightarrow\quad u(x)\geq u(y).
-\]
-If $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing, then $\phi\circ u$
-represents the same preferences.
-\end{definitionbox}
-
-\vspace{.5em}
-\textbf{Existence.}\quad On finite or countable $X$, rationality suffices.
-On $\mathbb{R}_+^L$ it does not: continuity is needed too.
-\end{frame}
-
 \begin{frame}{Back to Economics - Utility Functions}
 \mwgscanstart
 {\centering
@@ -592,7 +577,23 @@ On $\mathbb{R}_+^L$ it does not: continuity is needed too.
 {\centering
     \includegraphics[width=0.96\linewidth,trim=0 0 0 .5pt,clip]{mwg-p024-proposition.pdf}
 \par}
+
+\vspace{.4em}
+\textbf{Is rationality enough?}\quad On finite or countable $X$, yes. On $\mathbb{R}_+^L$
+it is not: continuity is needed too. That is Day 3.
 \end{frame}
+
+\begin{frame}{Utility Is Ordinal}
+\begin{propositionbox}[Invariance to Increasing Transformations]
+If $u$ represents $\succeq$ and $\phi:\mathbb{R}\to\mathbb{R}$ is strictly increasing,
+then $\phi\circ u$ represents $\succeq$ as well.
+\end{propositionbox}
+
+The numbers carry no information beyond the order they induce. Any relabelling
+that preserves that order represents the same preferences, so differences and
+ratios of utilities mean nothing.
+\end{frame}
+
 \begin{frame}{Representation and Choice}
 \begin{definitionbox}[Representation Preserves Maximizers]
 Suppose $u:X\to\mathbb{R}$ represents $\succeq$. For every nonempty menu
