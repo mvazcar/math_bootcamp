@@ -21,11 +21,12 @@ else is a third-party excerpt reproduced under fair use for teaching.
 | Choice-Based Approach | `mwg-p024-choice-rule.pdf` | scanned page excerpt |
 | Choice-Based Approach | `mwg-p025-choice-definitions.pdf` | scanned page excerpt |
 
-## math2 (27 slides)
+## math2 (28 slides)
 
 | slide | figure | provenance |
 | --- | --- | --- |
 | Bartle-Sherbert - Real Analysis | `bartle-cover.jpg` | book cover |
+| Neighborhoods in $\mathbb{R | `neighborhood.pdf` | generated |
 | Back to Economics - Utility Functions | `mwg-p023-p024-utility.pdf` | scanned page excerpt |
 | Utility Representation Implies Rationality | `mwg-p024-proposition.pdf` | scanned page excerpt |
 
