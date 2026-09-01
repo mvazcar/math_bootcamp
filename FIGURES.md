@@ -26,7 +26,7 @@ else is a third-party excerpt reproduced under fair use for teaching.
 | slide | figure | provenance |
 | --- | --- | --- |
 | Bartle-Sherbert - Real Analysis | `bartle-cover.jpg` | book cover |
-| The Open Ball | `neighborhood.pdf` | generated |
+| The Open Ball | `open-balls.pdf` | generated |
 | Back to Economics - Utility Functions | `mwg-p023-p024-utility.pdf` | scanned page excerpt |
 | Utility Representation Implies Rationality | `mwg-p024-proposition.pdf` | scanned page excerpt |
 
