@@ -25,7 +25,7 @@
     \item Cartesian Products and Functions
     \item Finite and Infinite Sets
     \item The Real Numbers: Order and Completeness
-    \item Distance, Sequences, and Compactness
+    \item Distance, Balls, and Compactness
     \item Ordinal Utility
 \end{itemize}
 \end{frame}
@@ -270,62 +270,6 @@ Both $\mathbb{Q}$ and $\mathbb{R}$ are ordered fields. Only $\mathbb{R}$ is
 \end{frame}
 
 
-\begin{frame}{Absolute Value and the Real Line}
-\begin{definitionbox}[2.2.1 Definition]
-\begin{minipage}[c]{.46\linewidth}
-For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
-\end{minipage}\hfill
-\begin{minipage}[c]{.49\linewidth}
-\[
-|a|:=
-\begin{cases}
- a,  & \text{if } a>0,\\
- 0,  & \text{if } a=0,\\
- -a, & \text{if } a<0.
-\end{cases}
-\]
-\end{minipage}
-\end{definitionbox}
-
-\vspace{.5em}
-\textbf{Distance} on the real line: $|a-b|$.
-
-\vspace{.2em}
-\begin{center}
-\begin{tikzpicture}[x=.74cm,y=.58cm,>=Stealth,font=\scriptsize]
-  \draw[thick,<->] (-4.65,0)--(4.75,0);
-  \foreach \x in {-4,-3,...,4}{
-    \draw[thick] (\x,-.13)--(\x,.18);
-    \node[above] at (\x,.18) {$\x$};
-  }
-  \draw[|-|,thick] (-2,-.82)--(3,-.82);
-  \node[fill=white,inner sep=2pt] at (.5,-.82) {$|(-2)-(3)|=5$};
-  \node[below] at (.05,-1.3) {\textbf{Figure 2.2.3}\qquad The distance between $a=-2$ and $b=3$};
-\end{tikzpicture}
-\end{center}
-
-\vspace{.1em}
-\centering How does a neighborhood look in two dimensions, in three,
-in more than three?
-\end{frame}
-
-\begin{frame}{The Open Ball}
-\begin{definitionbox}[Open Ball]
-For $x\in\mathbb{R}^L$ and $\varepsilon>0$,
-\[
-B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
-\qquad
-\lVert z\rVert:=\sqrt{\textstyle\sum_{\ell=1}^{L}z_\ell^2}.
-\]
-\end{definitionbox}
-
-\vfill
-\begin{center}
-\includegraphics[width=.84\linewidth]{open-balls.pdf}
-\end{center}
-\vfill
-\end{frame}
-
 \begin{frame}{Bounds}
 \begin{definitionbox}[2.3.1 Bounds]
 Let $\varnothing\ne S\subseteq\mathbb{R}$.
@@ -341,8 +285,30 @@ $S$ is \textbf{bounded} if it has both an upper and a lower bound.
 \end{definitionbox}
 
 \vspace{.5em}
-\textbf{Example.}\quad For $S=(0,1)$: upper bounds $=[1,\infty)$, lower bounds
-$=(-\infty,0]$.
+\textbf{Example.}\quad For $S=(0,1)$: upper bounds $=[1,\infty)$, lower bounds $=(-\infty,0]$.
+
+\vspace{-.2em}
+\begin{center}
+\begin{tikzpicture}[x=.78cm,y=.33cm,>=Stealth,font=\footnotesize]
+  \draw[thick,-{Stealth[length=2mm]}] (-5.2,0)--(5.25,0);
+  \foreach \x in {-5,-4.75,...,-2.5}{\draw (\x,-.12)--++(.18,.24);}
+  \foreach \x in {1.8,2.05,...,5}{\draw (\x,-.12)--++(.18,.24);}
+  \fill[pattern=north east lines] (-2.35,-.13) rectangle (-1.65,.13);
+  \fill[pattern=north east lines] (-1.15,-.13) rectangle (-.45,.13);
+  \fill[pattern=north east lines] (.05,-.13) rectangle (.75,.13);
+  \fill[pattern=north east lines] (1.05,-.13) rectangle (1.65,.13);
+  \node[above] at (-.35,1.22) {$S$};
+  \foreach \x in {-2,-.8,.4,1.35}{\draw[-{Stealth[length=1.7mm]}] (-.35,1.08)--(\x,.2);}
+  \node[above] at (-2.5,.42) {$\inf S$};
+  \draw[-{Stealth[length=1.7mm]}] (-2.5,.38)--(-2.35,.08);
+  \node[above] at (1.82,.42) {$\sup S$};
+  \draw[-{Stealth[length=1.7mm]}] (1.82,.38)--(1.65,.08);
+  \draw[decorate,decoration={brace,mirror,amplitude=3pt}] (-5,-.35)--(-2.35,-.35)
+    node[midway,below=4pt] {lower bounds of $S$};
+  \draw[decorate,decoration={brace,mirror,amplitude=3pt}] (1.65,-.35)--(5,-.35)
+    node[midway,below=4pt] {upper bounds of $S$};
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
 \begin{frame}{Suprema and Infima}
@@ -414,11 +380,16 @@ S\text{ bounded above}
 Consequently, if $S$ is bounded below, then $\inf S\in\mathbb{R}$.
 \end{theorembox}
 
-\vspace{.5em}
-\textbf{Why $\mathbb{Q}$ is not complete.}\quad
-$A=\{q\in\mathbb{Q}:q^2<2\}$ is bounded above, but its supremum in
-$\mathbb{R}$ is $\sqrt{2}\notin\mathbb{Q}$.
+\begin{block}{Two Different Words}
+A \emph{binary relation} is complete when it ranks every pair: for all $x,y$,
+$x\succeq y$ or $y\succeq x$. Nothing is left uncompared.
 
+The \emph{real numbers} are complete in an unrelated sense: no bounded set is left
+without a supremum. Nothing is left unfilled.
+\end{block}
+
+\centering Same word, unrelated properties. Days 1 and 3 use the first; Day 2 uses
+the second.
 \end{frame}
 
 \begin{frame}{Key Implications for Proofs}
@@ -444,16 +415,98 @@ $z$ such that $x<z<y$.}
 \end{theorembox}
 \end{frame}
 
-\begin{frame}{The Triangle Inequality Controls Distances}
-\begin{theorembox}[Triangle Inequality]
-For every $x,y,z\in\mathbb{R}^L$,
+\begin{frame}{Absolute Value and the Real Line}
+\begin{definitionbox}[2.2.1 Definition]
+\begin{minipage}[c]{.46\linewidth}
+For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
+\end{minipage}\hfill
+\begin{minipage}[c]{.49\linewidth}
 \[
-\lVert x-z\rVert
-\leq
-\lVert x-y\rVert+\lVert y-z\rVert.
+|a|:=
+\begin{cases}
+ a,  & \text{if } a>0,\\
+ 0,  & \text{if } a=0,\\
+ -a, & \text{if } a<0.
+\end{cases}
 \]
-\end{theorembox}
+\end{minipage}
+\end{definitionbox}
 
+\vspace{.5em}
+\textbf{Distance} on the real line: $|a-b|$.
+
+\vspace{.2em}
+\begin{center}
+\begin{tikzpicture}[x=.74cm,y=.58cm,>=Stealth,font=\scriptsize]
+  \draw[thick,<->] (-4.65,0)--(4.75,0);
+  \foreach \x in {-4,-3,...,4}{
+    \draw[thick] (\x,-.13)--(\x,.18);
+    \node[above] at (\x,.18) {$\x$};
+  }
+  \draw[|-|,thick] (-2,-.82)--(3,-.82);
+  \node[fill=white,inner sep=2pt] at (.5,-.82) {$|(-2)-(3)|=5$};
+  \node[below] at (.05,-1.3) {\textbf{Figure 2.2.3}\qquad The distance between $a=-2$ and $b=3$};
+\end{tikzpicture}
+\end{center}
+
+\vspace{.1em}
+\centering How does a neighborhood look in two dimensions, in three,
+in more than three?
+\end{frame}
+
+\begin{frame}{What Makes Something a Distance}
+\begin{definitionbox}[Properties of $\lVert x-y\rVert$]
+The \textbf{Euclidean distance} between $x$ and $y$ is $\lVert x-y\rVert$, where
+\[
+\lVert z\rVert:=\sqrt{\textstyle\sum_{\ell=1}^{L}z_\ell^2}.
+\]
+For every $x,y,z\in\mathbb{R}^L$ it satisfies:
+\begin{enumerate}
+    \item \textbf{Nonnegativity.} $\lVert x-y\rVert\geq0$, and $=0$ only when $x=y$.
+    \item \textbf{Symmetry.} $\lVert x-y\rVert=\lVert y-x\rVert$.
+    \item \textbf{Triangle inequality.} $\lVert x-z\rVert\leq\lVert x-y\rVert+\lVert y-z\rVert$.
+\end{enumerate}
+\end{definitionbox}
+
+Any function on pairs with these three properties is a \textbf{distance}.
+Everything that follows --- balls, convergence, continuity --- uses only
+these three.
+
+\vspace{.35em}
+\centering The third is the one that does the work: no detour through $y$ is shorter
+than going straight.
+\end{frame}
+
+\begin{frame}{The Open Ball}
+\begin{definitionbox}[Open Ball]
+For $x\in\mathbb{R}^L$ and $\varepsilon>0$,
+\[
+B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\}.
+\]
+\end{definitionbox}
+
+\vfill
+\begin{center}
+\includegraphics[width=.81\linewidth]{open-balls.pdf}
+\end{center}
+\vfill
+\end{frame}
+
+\begin{frame}{Open, Closed, Bounded}
+\begin{definitionbox}[Sets in $\mathbb{R}^L$]
+Let $D\subseteq\mathbb{R}^L$.
+\begin{itemize}
+    \item $D$ is \textbf{open} if every $x\in D$ has some
+    $\varepsilon>0$ with $B_{\varepsilon}(x)\subseteq D$.
+    \item $D$ is \textbf{closed} if its complement
+    $\mathbb{R}^L\setminus D$ is open.
+    \item $D$ is \textbf{bounded} if $D\subseteq B_{M}(0)$
+    for some $M>0$.
+\end{itemize}
+\end{definitionbox}
+
+All three rest on the same measurement: the ball $B_{\varepsilon}(x)$, and so
+the distance $\lVert y-x\rVert$.
 \end{frame}
 
 \begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
@@ -490,23 +543,6 @@ It is continuous on $X$ if it is continuous at every $x\in X$.
 \vspace{.5em}
 \textbf{Keep the objects separate.}\quad This is continuity of a
 \emph{function}. Day 3 defines continuity of a \emph{preference relation}.
-\end{frame}
-
-\begin{frame}{Open, Closed, Bounded}
-\begin{definitionbox}[Sets in $\mathbb{R}^L$]
-Let $D\subseteq\mathbb{R}^L$.
-\begin{itemize}
-    \item $D$ is \textbf{open} if every $x\in D$ has some
-    $\varepsilon>0$ with $B_{\varepsilon}(x)\subseteq D$.
-    \item $D$ is \textbf{closed} if its complement
-    $\mathbb{R}^L\setminus D$ is open.
-    \item $D$ is \textbf{bounded} if $D\subseteq B_{M}(0)$
-    for some $M>0$.
-\end{itemize}
-\end{definitionbox}
-
-All three rest on the same measurement: the ball $B_{\varepsilon}(x)$, and so
-the distance $\lVert y-x\rVert$.
 \end{frame}
 
 \begin{frame}{Compactness in $\mathbb{R}^L$}

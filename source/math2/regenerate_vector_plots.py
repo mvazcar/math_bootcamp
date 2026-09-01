@@ -62,7 +62,7 @@ def make_open_balls_plot() -> None:
     """
     eps = 1.0
     fig = plt.figure(figsize=(8.0, 2.6))
-    gs = fig.add_gridspec(1, 3, width_ratios=[1.5, 1.0, 1.1], wspace=0.18)
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.5, 1.05, 1.35], wspace=0.10)
 
     # --- L = 1: an interval ------------------------------------------------
     ax = fig.add_subplot(gs[0, 0])
@@ -120,9 +120,25 @@ def make_open_balls_plot() -> None:
                     linewidth=0, antialiased=True, shade=False)
     ax.plot(np.cos(u), np.sin(u), 0, linestyle=(0, (4, 3)),
             color=SLIDE_BLUE, linewidth=1.1, alpha=0.65)
-    ax.scatter([0], [0], [0], s=18, color=SLIDE_BLUE)
-    ax.set_box_aspect((1, 1, 1))
-    lim = 1.05
+
+    # The radius is the same to every point of the boundary: three of them,
+    # in unrelated directions, all of length epsilon.
+    radii = [
+        (0.0, 0.0, 1.0, (0.18, 0.10)),      # straight up
+        (0.94, 0.34, 0.0, (0.05, -0.20)),   # equatorial, toward the viewer
+        (-0.72, -0.24, -0.65, (-0.16, 0.16)),  # down and to the front
+    ]
+    for dx, dy, dz, (ox, oy) in radii:
+        ax.plot([0, dx], [0, dy], [0, dz], color=SLIDE_GRAY,
+                linewidth=1.2, zorder=6)
+        ax.scatter([dx], [dy], [dz], s=11, color=SLIDE_GRAY, zorder=7)
+        ax.text(0.55 * dx + ox, 0.55 * dy + oy, 0.55 * dz,
+                r"$\varepsilon$", fontsize=14, color=SLIDE_GRAY,
+                ha="center", va="center", zorder=8)
+
+    ax.scatter([0], [0], [0], s=18, color=SLIDE_BLUE, zorder=9)
+    ax.set_box_aspect((1, 1, 1), zoom=1.32)
+    lim = 1.02
     ax.set_xlim(-lim, lim)
     ax.set_ylim(-lim, lim)
     ax.set_zlim(-lim, lim)
