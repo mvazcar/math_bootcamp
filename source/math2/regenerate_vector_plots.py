@@ -61,7 +61,7 @@ def make_open_balls_plot() -> None:
     line, a dashed circle in the plane, a translucent shell in space.
     """
     eps = 1.0
-    fig = plt.figure(figsize=(8.4, 1.78))
+    fig = plt.figure(figsize=(8.0, 2.6))
     gs = fig.add_gridspec(1, 3, width_ratios=[1.5, 1.0, 1.1], wspace=0.18)
 
     # --- L = 1: an interval ------------------------------------------------
@@ -79,11 +79,11 @@ def make_open_balls_plot() -> None:
     ax.plot([0], [0], "o", markersize=6, color=SLIDE_BLUE, zorder=4)
     for x, label in ((-eps, r"$a-\varepsilon$"), (0, r"$a$"),
                      (eps, r"$a+\varepsilon$")):
-        ax.text(x, -0.46, label, ha="center", va="top", fontsize=12,
+        ax.text(x, -0.42, label, ha="center", va="top", fontsize=14,
                 color=SLIDE_BLUE if x == 0 else "black")
     ax.set_xlim(-2.45, 2.45)
-    ax.set_ylim(-1.5, 0.95)
-    ax.set_title(r"$L=1$: an interval", fontsize=12, color=SLIDE_GRAY, pad=1)
+    ax.set_ylim(-1.35, 1.0)
+    ax.set_title(r"$L=1$: an interval", fontsize=15, color=SLIDE_GRAY, pad=4)
     ax.axis("off")
 
     # --- L = 2: a disc -----------------------------------------------------
@@ -106,7 +106,7 @@ def make_open_balls_plot() -> None:
     ax.set_xlim(-1.45, 1.45)
     ax.set_ylim(-1.45, 1.45)
     ax.set_aspect("equal")
-    ax.set_title(r"$L=2$: a disc", fontsize=12, color=SLIDE_GRAY, pad=1)
+    ax.set_title(r"$L=2$: a disc", fontsize=15, color=SLIDE_GRAY, pad=4)
     ax.axis("off")
 
     # --- L = 3: a ball -----------------------------------------------------
@@ -126,10 +126,10 @@ def make_open_balls_plot() -> None:
     ax.set_xlim(-lim, lim)
     ax.set_ylim(-lim, lim)
     ax.set_zlim(-lim, lim)
-    ax.set_title(r"$L=3$: a ball", fontsize=12, color=SLIDE_GRAY, pad=0)
+    ax.set_title(r"$L=3$: a ball", fontsize=15, color=SLIDE_GRAY, pad=2)
     ax.set_axis_off()
 
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.84, bottom=0.04)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.87, bottom=0.05)
     save_vector_pair(fig, "open-balls")
 
 
