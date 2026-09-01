@@ -7,7 +7,7 @@ comes from. **generated** means the figure is drawn by that deck's own
 `regenerate_vector_plots.py` and can be reproduced from source; anything
 else is a third-party excerpt reproduced under fair use for teaching.
 
-## math1 (33 slides)
+## math1 (34 slides)
 
 | slide | figure | provenance |
 | --- | --- | --- |
@@ -21,7 +21,7 @@ else is a third-party excerpt reproduced under fair use for teaching.
 | Choice-Based Approach | `mwg-p024-choice-rule.pdf` | scanned page excerpt |
 | Choice-Based Approach | `mwg-p025-choice-definitions.pdf` | scanned page excerpt |
 
-## math2 (28 slides)
+## math2 (29 slides)
 
 | slide | figure | provenance |
 | --- | --- | --- |

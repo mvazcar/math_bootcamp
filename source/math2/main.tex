@@ -213,12 +213,17 @@ there is a bijection $\mathbb{N}\to S$.}
 
 
 \begin{frame}{Cardinalities of Infinite Sets}
+\emph{Many of our intuitions, and even formal notions, break at
+infinity.}
+
 \begin{definitionbox}[Comparing Sizes]
 Two sets have the same cardinality when there is a bijection between them.
 This definition applies to both finite and infinite sets.
 \end{definitionbox}
 
 \begin{itemize}
+    \item For finite sets, cardinality counts the elements;
+    for infinite sets, it grades the size of the infinity.
     \item $\mathbb{N}$, $\mathbb{Z}$, and $\mathbb{Q}$ are countably infinite:
     each can be put in bijection with $\mathbb{N}$.
     \item $\mathbb{R}$ is uncountable: there is no bijection
@@ -298,6 +303,10 @@ For $a\in\mathbb{R}$, its \textbf{absolute value}, denoted $|a|$, is
   \node[below] at (.05,-1.3) {\textbf{Figure 2.2.3}\qquad The distance between $a=-2$ and $b=3$};
 \end{tikzpicture}
 \end{center}
+
+\vspace{.1em}
+\centering How does a neighborhood look in two dimensions, in three,
+in more than three?
 \end{frame}
 
 \begin{frame}{Neighborhoods in $\mathbb{R}$ and $\mathbb{R}^L$}
@@ -552,6 +561,24 @@ On $\mathbb{R}_+^L$ it does not: continuity is needed too.
     \includegraphics[width=0.96\linewidth,trim=0 0 0 8pt,clip]{mwg-p023-p024-utility.pdf}
 \par} 
 
+\end{frame}
+
+\begin{frame}{Utility Functions are Real-Valued Functions}
+\begin{exercisebox}[Exercise A (Archimedean Property)]
+Let $u(x,y) = x^{\alpha} y^{\,1-\alpha}$ with $0<\alpha<1$ and $(x,y)\in\mathbb{R}^2_{++}$.
+Show that there exists $n\in\mathbb{N}$ such that
+\[
+u(n x, n y) > 1.
+\]
+\end{exercisebox}
+
+\begin{exercisebox}[Exercise B (Density of $\mathbb{Q}$)]
+Let $u(x,y) = x+y$ and consider the level set $u=1$.
+Show that there are infinitely many rational bundles $(r,s)\in\mathbb{Q}^2_{+}$ with $u(r,s)=1$.
+\end{exercisebox}
+
+\vspace{.2em}
+The two completeness implications, at work on economic objects.
 \end{frame}
 
 \begin{frame}{Utility Representation Implies Rationality}
