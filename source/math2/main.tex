@@ -319,12 +319,11 @@ V_{\varepsilon}(a):=\{x\in\mathbb{R}:|x-a|<\varepsilon\}
   \node[below] at (-1.55,-.12) {$a-\varepsilon$};
   \node[below] at (0,-.12) {$a$};
   \node[below] at (1.55,-.12) {$a+\varepsilon$};
-  \node[below] at (0,-.82) {An $\varepsilon$-neighborhood of $a$};
 \end{tikzpicture}
 \end{center}
 
-\vspace{-.45em}
-\begin{definitionbox}[Euclidean Neighborhood]
+\vspace{-.85em}
+\begin{definitionbox}[Open Ball in $\mathbb{R}^L$]
 For $x\in\mathbb{R}^L$ and $\varepsilon>0$,
 \[
 B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
@@ -332,6 +331,9 @@ B_\varepsilon(x):=\{y\in\mathbb{R}^L:\lVert y-x\rVert<\varepsilon\},
 \lVert z\rVert:=\sqrt{\textstyle\sum_{\ell=1}^{L}z_\ell^2}.
 \]
 \end{definitionbox}
+
+\vspace{-.3em}
+When $L=1$ the ball \emph{is} the neighborhood: an interval on the line, a disc in the plane, a ball in space.
 
 \end{frame}
 
@@ -499,6 +501,23 @@ It is continuous on $X$ if it is continuous at every $x\in X$.
 \vspace{.5em}
 \textbf{Keep the objects separate.}\quad This is continuity of a
 \emph{function}. Day 3 defines continuity of a \emph{preference relation}.
+\end{frame}
+
+\begin{frame}{Open, Closed, Bounded}
+\begin{definitionbox}[Sets in $\mathbb{R}^L$]
+Let $D\subseteq\mathbb{R}^L$.
+\begin{itemize}
+    \item $D$ is \textbf{open} if every $x\in D$ has some
+    $\varepsilon>0$ with $B_{\varepsilon}(x)\subseteq D$.
+    \item $D$ is \textbf{closed} if its complement
+    $\mathbb{R}^L\setminus D$ is open.
+    \item $D$ is \textbf{bounded} if $D\subseteq B_{M}(0)$
+    for some $M>0$.
+\end{itemize}
+\end{definitionbox}
+
+All three rest on the same measurement: the ball $B_{\varepsilon}(x)$, and so
+the distance $\lVert y-x\rVert$.
 \end{frame}
 
 \begin{frame}{Compactness in $\mathbb{R}^L$}
