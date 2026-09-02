@@ -25,7 +25,7 @@
     \item Cartesian Products and Functions
     \item Finite and Infinite Sets
     \item The Real Numbers: Order and Completeness
-    \item Distance, Balls, and Compactness
+    \item Distance, Balls, Sequences, and Compactness
     \item Ordinal Utility
 \end{itemize}
 \end{frame}
@@ -509,24 +509,46 @@ All three rest on the same measurement: the ball $B_{\varepsilon}(x)$, and so
 the distance $\lVert y-x\rVert$.
 \end{frame}
 
-\begin{frame}{Sequence Convergence in $\mathbb{R}^L$}
-\begin{definitionbox}[Convergence]
-A sequence $(x_n)$ in $\mathbb{R}^L$ \textbf{converges} to $x\in\mathbb{R}^L$ if
-\[
-\forall\varepsilon>0\;\exists N\in\mathbb{N}\;\forall n\geq N,
-\qquad \lVert x_n-x\rVert<\varepsilon.
-\]
-We write $x_n\to x$.
+\begin{frame}{Sequences}
+\begin{definitionbox}[Sequence]
+A \textbf{sequence} in $\mathbb{R}^L$ is a function $x:\mathbb{N}\to\mathbb{R}^L$.
+We write $x_n$ for $x(n)$, and $(x_n)$ or $(x_1,x_2,x_3,\ldots)$ for the sequence itself.
 \end{definitionbox}
 
-\begin{theorembox}[Coordinatewise Convergence]
-For $x_n=(x_{n1},\ldots,x_{nL})$ and $x=(x_1,\ldots,x_L)$,
+A list of points, one for each natural number, in order. Bartle 3.1.1 is the case
+$L=1$. The one question we ask of a sequence: where is it heading?
+\end{frame}
+
+\begin{frame}{Convergence and Divergence}
+\begin{definitionbox}[Convergence]
+$(x_n)$ \textbf{converges} to $x\in\mathbb{R}^L$ if
 \[
-x_n\to x
-\quad\Longleftrightarrow\quad
-x_{n\ell}\to x_\ell\quad\text{for every }\ell=1,\ldots,L.
+\forall\varepsilon>0\;\exists N\in\mathbb{N}\;\forall n\geq N,
+\qquad \lVert x_n-x\rVert<\varepsilon .
+\]
+We write $x_n\to x$. A sequence that converges to no point is \textbf{divergent}.
+\end{definitionbox}
+
+In words: every ball around $x$, however small, eventually holds every term.
+Convergence in $\mathbb{R}^L$ is convergence in each coordinate.
+
+\begin{theorembox}[Limits Keep Weak Inequalities]
+If $a_n\to a$ in $\mathbb{R}$ and $a_n\geq c$ for every $n$, then $a\geq c$.
+\end{theorembox}
+\end{frame}
+
+\begin{frame}{Closed Sets Contain Their Limits}
+\begin{theorembox}[Sequential Test for Closed Sets]
+Let $F\subseteq\mathbb{R}^L$. Then $F$ is closed if and only if
+\[
+x_n\in F\ \text{for every }n,\qquad x_n\to x
+\quad\Longrightarrow\quad x\in F.
 \]
 \end{theorembox}
+
+A closed set cannot be left by taking limits: whatever a sequence inside it
+approaches is inside it too. This is how closedness is checked in practice,
+and how Day 3 will check it for contour sets.
 \end{frame}
 
 \begin{frame}{Continuity of a Function}

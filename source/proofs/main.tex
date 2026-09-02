@@ -177,15 +177,11 @@ representation at all.
 \subsection{A continuous representation gives continuous preferences}
 \slideref{``Continuous Representations and Closed Contours''}
 \textbf{Proof.}
-If $f:X\to\mathbb{R}$ is continuous then $f^{-1}([c,\infty))$ and
-$f^{-1}((-\infty,c])$ are closed relative to $X$ for every $c\in\mathbb{R}$.
-Apply this to a continuous representation $u$ of $\succeq$:
-\[
-U(x)=u^{-1}\bigl([u(x),\infty)\bigr),
-\qquad
-L(x)=u^{-1}\bigl((-\infty,u(x)]\bigr)
-\]
-are then closed for every $x$. Closed contour sets are Day 3's definition of
+Fix $y\in X$ and let $x_n\in U(y)$ with $x_n\to x\in X$. Each $x_n\in U(y)$
+means $u(x_n)\geq u(y)$. Continuity of $u$ gives $u(x_n)\to u(x)$, and limits
+preserve weak inequalities, so $u(x)\geq u(y)$; that is, $x\in U(y)$. By the
+sequential test, $U(y)$ is closed relative to $X$. Replacing $\geq$ by $\leq$
+throughout closes $L(y)$. Closed contour sets are Day 3's definition of
 continuity (Kreps 1.14 gives the equivalent forms), so $\succeq$ is continuous. \done
 
 \section{Day 5 --- General Equilibrium}

@@ -21,7 +21,7 @@ else is a third-party excerpt reproduced under fair use for teaching.
 | Choice-Based Approach | `mwg-p024-choice-rule.pdf` | scanned page excerpt |
 | Choice-Based Approach | `mwg-p025-choice-definitions.pdf` | scanned page excerpt |
 
-## math2 (28 slides)
+## math2 (30 slides)
 
 | slide | figure | provenance |
 | --- | --- | --- |

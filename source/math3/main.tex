@@ -429,19 +429,18 @@ pictures use.
 \end{frame}
 
 \begin{frame}{Continuous Representations and Closed Contours}
-\begin{theorembox}[Closed Level Sets]
-If $f:X\to\mathbb{R}$ is continuous, then for every $c\in\mathbb{R}$ the sets
-\[
-f^{-1}\bigl([c,\infty)\bigr)
-\qquad\text{and}\qquad
-f^{-1}\bigl((-\infty,c]\bigr)
-\]
-are closed relative to $X$.
+\begin{theorembox}[Continuous Utility Gives Continuous Preferences]
+Let $u$ represent $\succeq$. If $u$ is continuous, then $U(y)$ and $L(y)$ are closed
+for every $y\in X$ --- so $\succeq$ is continuous.
 \end{theorembox}
 
-\vspace{.5em}
-\centering Closed contour sets are the definition, so a continuous
-representation gives continuous preferences.
+\textbf{Why.}\quad Take $x_n\in U(y)$ with $x_n\to x$. Each $u(x_n)\geq u(y)$; continuity
+gives $u(x_n)\to u(x)$; limits keep weak inequalities, so $u(x)\geq u(y)$: $x\in U(y)$.
+The sequential test then says $U(y)$ is closed. The same run with $\leq$ closes $L(y)$.
+
+\vspace{.3em}
+\centering Continuity of a \emph{function} (Day 2) and continuity of a \emph{preference} meet
+exactly here.
 \end{frame}
 
 \begin{frame}{Debreu's Representation Theorem}
